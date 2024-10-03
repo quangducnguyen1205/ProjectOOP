@@ -1,60 +1,63 @@
 package com.projectoop.base;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public abstract class Characters {
 
     protected float hp;
     protected String currentAnimName;
-    //protected HealthBar healthBar;
-    //protected CombatText combatTextPrefab;
+    protected Animation<TextureRegion> currentAnimation;
+    protected ObjectMap<String, Animation<TextureRegion>> animations;
+    protected float stateTime;
+
+    public Characters() {
+        animations = new ObjectMap<>();
+        stateTime = 0f;
+    }
 
     public boolean isDead() {
         return hp <= 0;
     }
 
-    // Khởi tạo nhân vật
-    public void start() {
-        onInit();
+    // Phương thức abstract cho lớp con tự định nghĩa
+    public abstract void onInit();
+    public abstract void onDespawn();
+    public abstract void onDeath();
+
+    // Thêm animation vào danh sách
+    public void addAnimation(String name, Animation<TextureRegion> animation) {
+        animations.put(name, animation);
     }
 
-    // Phương thức abstract để các lớp con tự định nghĩa
-    public abstract void onInit(); // Khởi tạp các giá trị ban đầu
-    public abstract void onDespawn(); // Khởi tạo logic khi object bị huỷ
-    public abstract void onDeath(); // Khởi tạo logic khi chết
-
     // Thay đổi animation
-//    protected void changeAnim(String animName) {
-//        if (!animName.equals(currentAnimName)) {
-//            // Reset animation (mã chi tiết sẽ tùy thuộc vào cách bạn quản lý animation trong LibGDX)
-//            resetTrigger(animName);
-//            currentAnimName = animName;
-//            setTrigger(currentAnimName);
-//        }
-//    }
-
-    // Phương thức xử lý khi bị tấn công
-    public void onHit(float damage) {
-        if (!isDead()) {
-            hp -= damage;
-            //healthBar.setNewHp(hp);
-            if (isDead()) {
-                hp = 0;
-                onDeath();
-            }
-
-            // Hiển thị combat text
-            //combatTextPrefab.onInit(damage, new Vector2(0, 1));
+    protected void changeAnim(String animName) {
+        if (animations.containsKey(animName)) {
+            currentAnimName = animName;
+            setTrigger(currentAnimName);
+        } else {
+            System.out.println("Animation không tồn tại: " + animName);
         }
     }
 
-    // Các phương thức giả định cho việc xử lý animation
-    //protected void resetTrigger(String animName) {
-        // Giả định hàm này sẽ reset animation (cần dựa vào cách bạn quản lý animation trong LibGDX)
-    //}
+    // Reset lại thời gian cho animation mới
+    private void setTrigger(String animName) {
+        currentAnimation = animations.get(animName);
+        if (currentAnimation == null) {
+            throw new IllegalArgumentException("Animation không tồn tại: " + animName);
+        }
+        stateTime = 0f;
+    }
 
-    //protected void setTrigger(String animName) {
-        // Giả định hàm này sẽ set animation (cần dựa vào cách bạn quản lý animation trong LibGDX)
-    //}
+
+    // Cập nhật thời gian của animation
+    public void update(float delta) {
+        stateTime += delta;
+    }
+
+    // Lấy frame hiện tại của animation
+    public TextureRegion getCurrentFrame() {
+        return currentAnimation.getKeyFrame(stateTime, true);
+    }
 }
-

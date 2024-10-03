@@ -3,6 +3,7 @@ package com.projectoop.utils;
 public class Constants {
 
     // Các hằng số liên quan đến animation
+    public static final String ANIM_ATTACK = "attack";
     public static final String ANIM_RUN = "run";
     public static final String ANIM_IDLE = "idle";
     public static final String ANIM_DANCE = "dance";

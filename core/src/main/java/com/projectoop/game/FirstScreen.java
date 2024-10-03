@@ -1,41 +1,58 @@
 package com.projectoop.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
-/** First screen of the application. Displayed after the application is created. */
 public class FirstScreen implements Screen {
+
+    private SpriteBatch batch;
+    private Player player;  // Quản lý player
+
     @Override
     public void show() {
-        // Prepare your screen here.
+        // Chuẩn bị các tài nguyên hiển thị
+        batch = new SpriteBatch();
+
+        // Khởi tạo player với vị trí ban đầu
+        player = new Player(new Vector2(50, 50));
+        player.onInit(); // Khởi tạo các giá trị ban đầu cho player
     }
 
     @Override
     public void render(float delta) {
-        // Draw your screen here. "delta" is the time since last render in seconds.
+        // Dọn dẹp màn hình
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Cập nhật trạng thái của player
+        player.update(delta);
+
+        // Bắt đầu vẽ các frame của player
+        batch.begin();
+        player.render(batch); // Sử dụng phương thức render của player để vẽ animation hiện tại
+        batch.end();
+
     }
 
     @Override
-    public void resize(int width, int height) {
-        // Resize your screen here. The parameters represent the new window size.
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void pause() {
-        // Invoked when your application is paused.
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-        // Invoked when your application is resumed after pause.
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-        // This method is called when another screen replaces this one.
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
-        // Destroy screen's assets here.
+        // Giải phóng tài nguyên
+        batch.dispose();
     }
+
 }
