@@ -14,6 +14,34 @@ buildscript {
   }
 }
 
+plugins {
+  id 'java'
+}
+
+repositories {
+  mavenCentral()
+  maven { url 'https://s01.oss.sonatype.org' }
+  mavenLocal()
+  google()
+  maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  // LibGDX core dependencies
+  implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+
+  // TiledMap dependencies
+  implementation "com.badlogicgames.gdx:gdx-tiled-preprocessor:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+
+  // Box2D (optional, nếu bạn cần vật lý trong game)
+  implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+}
+
 allprojects {
   apply plugin: 'eclipse'
   apply plugin: 'idea'
@@ -70,4 +98,8 @@ subprojects {
   }
 }
 
+
+
 eclipse.project.name = 'PrổojectOOP' + '-parent'
+
+
