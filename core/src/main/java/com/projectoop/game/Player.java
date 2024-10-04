@@ -30,7 +30,7 @@ public class Player extends Characters {
 
         addAnimation(Constants.ANIM_RUN, loadAnimation("assets/Ninja/Run/Run", 10, 0.1f));
         addAnimation(Constants.ANIM_IDLE, loadAnimation("assets/Ninja/Idle/Idle", 10, 0.1f));
-
+        addAnimation(Constants.ANIM_ATTACK, loadAnimation("assets/Ninja/Attack/Attack", 10, 0.1f));
         changeAnim(Constants.ANIM_IDLE);
     }
 
@@ -57,7 +57,8 @@ public class Player extends Characters {
         // Kiểm tra hướng di chuyển và thay đổi animation nếu cần
         if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && !currentAnimName.equals(Constants.ANIM_RUN)) {
             changeAnim(Constants.ANIM_RUN);
-        } else if (!Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !currentAnimName.equals(Constants.ANIM_IDLE)) {
+        }
+        else if (!Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !currentAnimName.equals(Constants.ANIM_IDLE)) {
             changeAnim(Constants.ANIM_IDLE);
         }
 
