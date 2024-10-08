@@ -18,6 +18,7 @@ public class Player extends Characters {
     private float frameWidth = 64f; // Chiều rộng của khung hình (giả định)
     private float frameHeight = 64f; // Chiều cao của khung hình (giả định)
     private boolean facingRight = true; // Để biết nhân vật đang quay hướng nào
+    private boolean isAttacking = false; // Biến để theo dõi trạng thái tấn công
 
     public Player(Vector2 startPosition) {
         this.position = startPosition;
@@ -51,14 +52,28 @@ public class Player extends Characters {
     public void onDeath() {}
 
     public void update(float delta) {
-
         super.update(delta);
+
+        // Nếu đang tấn công, không cho phép các hành động khác
+        if (isAttacking) {
+            if (currentAnimation.isAnimationFinished(stateTime)) {
+                isAttacking = false; // Kết thúc tấn công
+                changeAnim(Constants.ANIM_IDLE); // Trở lại trạng thái idle
+            }
+            return;
+        }
+
+        // Bắt đầu tấn công khi nhấn phím Q
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+            changeAnim(Constants.ANIM_ATTACK);
+            isAttacking = true; // Đặt trạng thái đang tấn công
+            return; // Không cho phép các hành động khác trong khi tấn công
+        }
 
         // Kiểm tra hướng di chuyển và thay đổi animation nếu cần
         if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && !currentAnimName.equals(Constants.ANIM_RUN)) {
             changeAnim(Constants.ANIM_RUN);
-        }
-        else if (!Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !currentAnimName.equals(Constants.ANIM_IDLE)) {
+        } else if (!Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && !currentAnimName.equals(Constants.ANIM_IDLE)) {
             changeAnim(Constants.ANIM_IDLE);
         }
 
@@ -71,6 +86,7 @@ public class Player extends Characters {
             facingRight = false; // Quay về bên trái
         }
     }
+
 
     public void render(Batch batch) {
         TextureRegion currentFrame = getCurrentFrame();
