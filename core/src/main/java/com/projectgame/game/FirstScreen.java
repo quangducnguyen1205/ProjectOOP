@@ -17,6 +17,7 @@ public class FirstScreen implements Screen {
 
     private OrthographicCamera camera;  // Camera để di chuyển trên map
     private TiledMap map;  // Bản đồ
+
     private OrthogonalTiledMapRenderer renderer;  // Render bản đồ
 
     @Override
@@ -35,6 +36,7 @@ public class FirstScreen implements Screen {
         // Load bản đồ .tmx
         map = new TmxMapLoader().load("assets/Map/mapman2.tmx");  // Đặt đúng đường dẫn tới file .tmx
         renderer = new OrthogonalTiledMapRenderer(map);
+
     }
 
     @Override

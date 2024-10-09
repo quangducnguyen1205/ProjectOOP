@@ -30,7 +30,6 @@ public class Player extends Characters {
 
         addAnimation(Constants.ANIM_RUN, loadAnimation("assets/Ninja/Run/Run", 10, 0.1f));
         addAnimation(Constants.ANIM_IDLE, loadAnimation("assets/Ninja/Idle/Idle", 10, 0.1f));
-
         changeAnim(Constants.ANIM_IDLE);
     }
 
