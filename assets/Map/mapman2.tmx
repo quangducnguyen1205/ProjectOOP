@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="25" tilewidth="18" tileheight="18" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="../TiledSet/tilemap_packed.tsx"/>
+ <tileset firstgid="113" source="../TiledSet/background.tsx"/>
+ <tileset firstgid="153" source="../TiledSet/vidumau.tsx"/>
+ <layer id="1" name="Tile Layer 1" width="50" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt0kEOgjAQBdAJ9Q5ewaOIC/V2LthCIhuVBTch8ToOYUhIbbDFgYbwFy+0tJnMH2iIqAEAAAh0S4heSfdsZSxnhazts2yw7++V7D4iF1P6K6X+gz2ln+G6YjXbm2WFZIhZ064f8j72bLTzz5njbL5d2PVHHdd9V50jS9lJ1i79uT2fdn/YTfc2HZ872v7pO6T/OfNoZNCawdpzaGSM3adPzz6ZYve+dWv+FvinAPR8AD1xXHY=
+  </data>
+ </layer>
+ <layer id="2" name="cotnhay" width="50" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztlk0OgkAMhecM6tKwUJbGhXIMo0eAC+j9l04TF01j/0AGxvQlLxlIp/QbmkJKoVAoFAqtW5vsrcO7ZcpUdcm+Otw5clvOqMS57B2xtGao75B9VNw6847hPzliac3tl3tjOLgc2j6sUhzP7NfH94o5sG4ODuCn3HNwSL3NcTwcHCDKPQeHVANeN8g9uf4Fh2deTeE4C67pfUzhwH1o/aZLM3sJDui7Iek9KM1IbT6W4LDGSjNSmytr52gY18Zhfd4/cXD/0h1ZSxxSDmusZS+XA2LfFSBUFg==
+  </data>
+ </layer>
+ <layer id="3" name="chuongngaivat" width="50" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAv0KKzfdQGokAshgOzI6lTo7/TSAIhSGxTNDlOPHKDGaC71RKHnBMJZjpCaWLSrT0QRyJhexLsQQbo/sCV5sRJMDMC6qYoII4mQR8HCWrRAb60YwbEmUCcBcTZZJjtQ6J6CTLsgAF8/nAD4kAC+q3wyJHqDw0sYtJE6sXlj1AgDgPicAL6vfDIkeoPbECbCmYQA6zxyFHDH/jMpyZAt0cWj1oeMsz3RuNL4VBHzzpCh4Zmj/qDeMANpWVoaAet/cEFxLZQ9lCPD3qAUX8MLuAKpW1wyIPSNzcOuVEwCkbBKBgFgwMAAPGVEO4=
+  </data>
+ </layer>
+</map>
