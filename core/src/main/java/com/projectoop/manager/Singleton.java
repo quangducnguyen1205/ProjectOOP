@@ -1,24 +1,31 @@
 package com.projectoop.manager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Singleton<T> {
 
-    // T là lớp con kế thừa từ Singleton
-    private static Singleton instance;
+    // Lưu trữ các instance của các class khác nhau
+    private static Map<Class<?>, Singleton<?>> instances = new HashMap<>();
 
-    // Constructor private để ngăn việc tạo đối tượng từ bên ngoài
+    // Constructor protected để ngăn việc tạo đối tượng từ bên ngoài
     protected Singleton() {}
 
-    // Lấy instance của Singleton (đảm bảo chỉ có một instance)
+    // Phương thức lấy instance, đảm bảo chỉ có một instance cho mỗi class
     @SuppressWarnings("unchecked")
-    public static <T extends Singleton> T getInstance(Class<T> clazz) {
-        if (instance == null) {
+    public static <T extends Singleton<T>> T getInstance(Class<T> clazz) {
+        // Kiểm tra xem instance của class này đã tồn tại chưa
+        if (!instances.containsKey(clazz)) {
             try {
-                instance = clazz.getDeclaredConstructor().newInstance();
+                // Sử dụng Reflection để khởi tạo instance mới
+                T instance = clazz.getDeclaredConstructor().newInstance();
+                instances.put(clazz, instance);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new RuntimeException("Error creating Singleton instance");
+                throw new RuntimeException("Error creating Singleton instance for class: " + clazz.getName());
             }
         }
-        return (T) instance;
+        // Trả về instance đã tồn tại hoặc mới tạo
+        return (T) instances.get(clazz);
     }
 }

@@ -6,6 +6,6 @@ import com.badlogic.gdx.Game;
 public class Main extends Game {
     @Override
     public void create() {
-        setScreen(new FirstScreen());  // Thiết lập màn hình đầu tiên là FirstScreen
+        setScreen(new PlayScreen());  // Thiết lập màn hình đầu tiên là FirstScreen
     }
 }

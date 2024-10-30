@@ -11,17 +11,18 @@ public abstract class Characters {
     protected Animation<TextureRegion> currentAnimation;
     protected ObjectMap<String, Animation<TextureRegion>> animations;
     protected float stateTime;
+    protected boolean loopAnimation; // Biến để kiểm soát việc loop animation
 
     public Characters() {
         animations = new ObjectMap<>();
         stateTime = 0f;
+        loopAnimation = true; // Mặc định là loop animation
     }
 
     public boolean isDead() {
         return hp <= 0;
     }
 
-    // Phương thức abstract cho lớp con tự định nghĩa
     public abstract void onInit();
     public abstract void onDespawn();
     public abstract void onDeath();
@@ -31,17 +32,20 @@ public abstract class Characters {
         animations.put(name, animation);
     }
 
-    // Thay đổi animation
-    protected void changeAnim(String animName) {
+    // Thay đổi animation hiện tại với kiểm soát việc loop
+    protected void changeAnim(String animName, boolean loop) {
         if (animations.containsKey(animName)) {
-            currentAnimName = animName;
-            setTrigger(currentAnimName);
+            if (!animName.equals(currentAnimName)) {  // Chỉ thay đổi nếu animation khác với hiện tại
+                currentAnimName = animName;
+                loopAnimation = loop;  // Gán giá trị loop theo biến truyền vào
+                setTrigger(currentAnimName);
+            }
         } else {
             System.out.println("Animation không tồn tại: " + animName);
         }
     }
 
-    // Reset lại thời gian cho animation mới
+
     private void setTrigger(String animName) {
         currentAnimation = animations.get(animName);
         if (currentAnimation == null) {
@@ -50,14 +54,18 @@ public abstract class Characters {
         stateTime = 0f;
     }
 
-
-    // Cập nhật thời gian của animation
     public void update(float delta) {
         stateTime += delta;
     }
 
-    // Lấy frame hiện tại của animation
+    // Lấy khung hình hiện tại của animation, kiểm soát việc loop
     public TextureRegion getCurrentFrame() {
-        return currentAnimation.getKeyFrame(stateTime, true);
+        if (currentAnimation != null) {
+            TextureRegion frame = currentAnimation.getKeyFrame(stateTime, loopAnimation);
+
+            return frame;
+        }
+        return null; // Trường hợp không có animation
     }
+
 }

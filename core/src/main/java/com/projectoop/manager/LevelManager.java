@@ -1,60 +1,108 @@
 package com.projectoop.manager;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.projectoop.level.Level;
+import com.projectoop.level.Level1;
+import com.projectoop.utils.CollisionHandler;
 
 public class LevelManager extends Singleton<LevelManager> {
 
+    private World world; // Lưu trữ World toàn cục
     private Level currentLevel;
-    private Array<Level> levels;  // Danh sách các level
+    private Array<Level> levels;
+    private CollisionHandler collisionHandler; // Sử dụng CollisionHandler
 
     // Khởi tạo LevelManager
-    private LevelManager() {
-        levels = new Array<>();  // Khởi tạo danh sách các level
+    protected LevelManager() {
+        levels = new Array<>();
+        world = new World(new Vector2(0, -5f), true); // Khởi tạo World ở đây
+
+        // Khởi tạo CollisionHandler với World hiện tại
+        collisionHandler = new CollisionHandler(world);
+        System.out.println("CollisionHandler has been set for the world.");
     }
 
-    // Bắt đầu và tải level đầu tiên
+
+
+    // Bắt đầu game và tải level đầu tiên
     public void start() {
-        onLoadLevel(0);  // Tải level đầu tiên
-        onInit();
-    }
-
-    // Khởi tạo trạng thái game
-    public void onInit() {
-        //Gdx.app.log("LevelManager", "Game initialized");
-        // Khởi tạo player hoặc các yếu tố khác trong level
-    }
-
-    // Reset trạng thái game
-    public void onReset() {
-        //Gdx.app.log("LevelManager", "Game reset");
-        // Dọn dẹp và reset player hoặc các yếu tố khác nếu cần
-    }
-
-    // Tải một level mới
-    public void onLoadLevel(int levelIndex) {
-        //Gdx.app.log("LevelManager", "Loading level " + levelIndex);
-
-        // Nếu có level hiện tại, dọn dẹp trước khi tải level mới
-        if (currentLevel != null) {
-            currentLevel.onDespawn();  // Dọn dẹp level hiện tại
+        if (levels.isEmpty()) {  // Chỉ khởi tạo khi danh sách level chưa có phần tử nào
+            addLevel(new Level1("level1", world));
+            loadLevel(0);
         }
+    }
 
-        // Tải level mới từ danh sách level
+
+    // Tải level mới và thiết lập logic liên quan
+    public void loadLevel(int levelIndex) {
         if (levelIndex >= 0 && levelIndex < levels.size) {
+            if (currentLevel != null) {
+                currentLevel.onDespawn();
+                System.out.println("Level despawned: " + currentLevel.getLevelName());
+            }
             currentLevel = levels.get(levelIndex);
-            currentLevel.onInit();  // Khởi tạo level mới
+            Gdx.app.log("LevelManager", "Loading level: " + currentLevel.getLevelName()); // Sử dụng getter
+            currentLevel.onInit();
         } else {
-            Gdx.app.log("LevelManager", "Invalid level index");
+            Gdx.app.log("LevelManager", "Invalid level index: " + levelIndex);
+        }
+    }
+
+    // Cập nhật trạng thái của level hiện tại và thế giới vật lý
+    public void update(float deltaTime) {
+        if (currentLevel != null) {
+            currentLevel.update(deltaTime);
+        }
+        // Cập nhật World và xử lý va chạm
+        if (world != null) {
+            world.step(deltaTime, 6, 2);
+
+            // Thêm log kiểm tra thông tin về Player
+            if (currentLevel != null && currentLevel.getPlayer() != null) {
+                Vector2 playerPosition = currentLevel.getPlayer().getPosition();
+                System.out.println("Player position: " + playerPosition.x + ", " + playerPosition.y);
+            }
         }
     }
 
     // Render level hiện tại
-    public void render(Stage stage) {
+    public void render(OrthographicCamera camera) {
         if (currentLevel != null) {
-            currentLevel.render(stage);  // Render level hiện tại
+            currentLevel.render(camera); // Truyền camera vào phương thức render
         }
+    }
+
+    // Thêm level vào danh sách
+    public void addLevel(Level level) {
+        if (level != null) {
+            levels.add(level);
+            System.out.println("Level added: " + level.getLevelName());
+        }
+    }
+
+    // Lấy World hiện tại
+    public World getWorld() {
+        return world;
+    }
+
+    // Trả về level hiện tại
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
+
+    // Phương thức giải phóng tài nguyên
+    public void dispose() {
+        if (world != null) {
+            world.dispose();
+            System.out.println("World disposed.");
+        }
+        if (currentLevel != null) {
+            currentLevel.onDespawn();
+        }
+        levels.clear(); // Xóa danh sách các level để giải phóng tài nguyên
     }
 }

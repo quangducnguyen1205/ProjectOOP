@@ -1,48 +1,76 @@
 package com.projectoop.level;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.physics.box2d.World;
+import com.projectoop.game.Player;
+import com.projectoop.utils.MapBuilder;
 
-public class Level {
+public abstract class Level {
 
-    private String levelName;
-    private boolean isInitialized;
+    protected String levelName;
+    protected TiledMap map;
+    protected MapBuilder mapBuilder;
+    protected World world;
+    protected Player player;
 
-    // Constructor cho level
-    public Level(String name) {
-        this.levelName = name;
-        this.isInitialized = false;
+    // Constructor chung cho Level
+    public Level(String levelName, World world) {
+        this.levelName = levelName;
+        this.world = world;
+        this.mapBuilder = null;  // Khởi tạo MapBuilder sau khi có thông tin
     }
 
-    // Khởi tạo level
-    public void onInit() {
-        Gdx.app.log("Level", "Initializing level: " + levelName);
-        isInitialized = true;
+    // Phương thức khởi tạo level, mỗi level con sẽ định nghĩa riêng
+    public abstract void onInit();
 
-        // Khởi tạo các thành phần của level (ví dụ: tạo môi trường, thiết lập đối tượng)
-        // Bạn có thể thêm các đoạn mã cần thiết để khởi tạo các đối tượng trong level
-    }
-
-    // Xử lý dọn dẹp level khi chuyển sang level khác hoặc kết thúc
+    // Dọn dẹp khi level kết thúc
     public void onDespawn() {
-        Gdx.app.log("Level", "Disposing level: " + levelName);
-        isInitialized = false;
-
-        // Dọn dẹp các tài nguyên của level (ví dụ: xóa đối tượng, giải phóng bộ nhớ)
-        // Ví dụ: background.onDespawn(); hoặc các hình ảnh, âm thanh không còn cần thiết.
+        if (mapBuilder != null) {
+            mapBuilder.dispose();  // Giải phóng tài nguyên từ MapBuilder
+        }
     }
 
-    // Xử lý render cho level
-    public void render(Stage stage) {
-        if (!isInitialized) {
-            Gdx.app.log("Level", "Attempted to render uninitialized level: " + levelName);
-            return;
-        }
+    // Render level hiện tại
+    public void render(OrthographicCamera camera) {
+        if (mapBuilder != null) {
+            // Cập nhật camera để render các lớp trong bản đồ
+            mapBuilder.render(camera);
 
-        // Render các thành phần của level
-        // Stage render các actor trong level hoặc render các đối tượng khác bằng SpriteBatch
-        stage.act(Gdx.graphics.getDeltaTime());  // Cập nhật stage theo thời gian
-        stage.draw();  // Vẽ các actor trong stage
+//            if (player != null) {
+//                player.render();  // Giả định player có phương thức render() không cần batch
+//            }
+        }
+    }
+
+    // Cập nhật trạng thái của level hiện tại
+    public void update(float delta) {
+        if (world != null) {
+            // Cập nhật World trong mỗi frame
+            world.step(1 / 60f, 6, 2);
+        }
+        if (player != null) {
+            player.update(delta);
+        }
+    }
+
+    // Trả về player cho LevelManager quản lý
+    public Player getPlayer() {
+        return player;
+    }
+
+    // Thiết lập MapBuilder và tải map
+    protected void setupMap(String mapFilePath) {
+        System.out.println("Loading map from: " + mapFilePath);
+        mapBuilder = new MapBuilder(world, mapFilePath);
+        if (mapBuilder.getMap() == null) {
+            System.err.println("Error loading map for level: " + levelName);
+        } else {
+            this.map = mapBuilder.getMap();
+        }
+    }
+
+    public String getLevelName() {
+        return levelName;
     }
 }
