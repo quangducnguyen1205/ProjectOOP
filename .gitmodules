@@ -1,3 +1,6 @@
 [submodule "OOP_project_draft"]
 	path = OOP_project_draft
 	url = https://github.com/bonxom/OOP_project_draft
+[submodule "SuperMario"]
+	path = SuperMario
+	url = https://github.com/BrentAureli/SuperMario
