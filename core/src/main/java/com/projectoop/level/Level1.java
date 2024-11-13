@@ -18,32 +18,26 @@ public class Level1 extends Level {
         setupMap("SuperMario/android/assets/" + levelName + ".tmx");
 
         if (mapBuilder != null && map != null) {
-            // Tạo các body tĩnh cho các lớp trong map (mặt đất, vật cản, ...)
             createStaticBodies();
 
             // Khởi tạo player và thiết lập vị trí ban đầu
-            player = new Player(world, new Vector2(32f, 100f), 5f / Constants.PPM, 5f / Constants.PPM);
+            player = new Player(world, new Vector2(60f, 26f), 2f, 10f / Constants.PPM);
             player.onInit();
+
+            // Log vị trí của player để kiểm tra khởi tạo
+            System.out.println("Player initialized at position: " + player.getPosition());
         } else {
             System.err.println("Failed to initialize Level1 due to map loading issues.");
         }
     }
 
-    // Phương thức để tạo các body tĩnh từ các layer của bản đồ
+    // Phương thức tạo tất cả các body tĩnh từ RectangleMapObject trong map
     private void createStaticBodies() {
         System.out.println("Creating static bodies for Level1...");
 
-        mapBuilder.createStaticBodiesFromLayer("Ground");
-        System.out.println("Created Ground layer.");
+        // Sử dụng createStaticBodies để tự động tạo body từ tất cả RectangleMapObject trong map
+        mapBuilder.createStaticBodies();
 
-        mapBuilder.createStaticBodiesFromLayer("Pipes");
-        System.out.println("Created Pipes layer.");
-
-        mapBuilder.createStaticBodiesFromLayer("Bricks");
-        System.out.println("Created Bricks layer.");
-
-        mapBuilder.createStaticBodiesFromLayer("Coins");
-        System.out.println("Created Coins layer.");
+        System.out.println("Static bodies created for all layers in the map.");
     }
-
 }

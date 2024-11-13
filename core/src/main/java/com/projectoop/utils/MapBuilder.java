@@ -1,15 +1,14 @@
 package com.projectoop.utils;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class MapBuilder implements Disposable {
     private World world;
@@ -18,96 +17,71 @@ public class MapBuilder implements Disposable {
 
     public MapBuilder(World world, String mapFilePath) {
         this.world = world;
-        try {
-            // Thêm xử lý ngoại lệ khi tải file .tmx
-            this.map = new TmxMapLoader().load(mapFilePath);
-            // Khởi tạo OrthogonalTiledMapRenderer để render map
-            this.renderer = new OrthogonalTiledMapRenderer(map, 1 / Constants.PPM);
-        } catch (GdxRuntimeException e) {
-            System.err.println("Error loading map: " + e.getMessage());
-            this.map = null;
-        }
+        System.out.println("Loading map from: " + mapFilePath);
+        this.map = new TmxMapLoader().load(mapFilePath);
+
+        // Thêm hệ số tỷ lệ để đảm bảo các tile layer hiển thị đúng kích thước
+        this.renderer = new OrthogonalTiledMapRenderer(map, 1 / Constants.PPM, new SpriteBatch());
+        System.out.println("Map and renderer initialized successfully.");
     }
 
-    // Phương thức để render map
-    public void render(OrthographicCamera camera) {
-        if (renderer != null) {
-            renderer.setView(camera);
-            renderer.render();
-        }
-    }
-
-    // Phương thức tạo các Body tĩnh từ layer trong file .tmx
-    public void createStaticBodiesFromLayer(String layerName) {
+    public void createStaticBodies() {
         if (map == null) return;
 
-        MapLayer layer = map.getLayers().get(layerName);
-        if (layer instanceof TiledMapTileLayer) {
-            TiledMapTileLayer tileLayer = (TiledMapTileLayer) layer;
+        for (MapLayer layer : map.getLayers()) {
+            String layerName = layer.getName();
 
-            for (int x = 0; x < tileLayer.getWidth(); x++) {
-                for (int y = 0; y < tileLayer.getHeight(); y++) {
-                    TiledMapTileLayer.Cell cell = tileLayer.getCell(x, y);
-                    if (cell != null && cell.getTile() != null) {
-                        // Log thông tin về vị trí ô đang tạo
-                        System.out.println("Creating static body at (" + x + "," + y + ") in layer: " + layerName);
-                        createStaticBody(x, y, layerName);
-                    } else {
-                        // Log các ô không có dữ liệu
-                        System.out.println("No static body at (" + x + "," + y + ") in layer: " + layerName);
-                    }
+            // Duyệt qua các đối tượng trong layer
+            for (RectangleMapObject object : layer.getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = object.getRectangle();
+
+                if (layerName.equalsIgnoreCase("Ground") || layerName.equalsIgnoreCase("Bricks")) {
+                    createStaticBody(rect, Constants.GROUND_BIT, Constants.PLAYER_BIT, false, layerName);
+                } else if (layerName.equalsIgnoreCase("Pipes")) {
+                    createStaticBody(rect, Constants.OBSTACLE_BIT, Constants.PLAYER_BIT, false, layerName);
+                } else if (layerName.equalsIgnoreCase("KillZone")) {
+                    // KillZone là sensor
+                    createStaticBody(rect, Constants.KILLZONE_BIT, Constants.PLAYER_BIT, false, layerName);
+                } else if (layerName.equalsIgnoreCase("SavePoint")) {
+                    createStaticBody(rect, Constants.SAVEPOINT_BIT, Constants.PLAYER_BIT, true, layerName);
                 }
             }
         }
     }
 
+    private void createStaticBody(Rectangle rect, short categoryBits, short maskBits, boolean isSensor, String layerName) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(
+            (rect.getX() + rect.getWidth() / 2) / Constants.PPM,
+            (rect.getY() + rect.getHeight() / 2) / Constants.PPM
+        );
 
-    // Tạo Body tĩnh từ các tọa độ x, y và tên layer
-    private void createStaticBody(int x, int y, String layerName) {
+        Body body = world.createBody(bodyDef);
+
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f, 0.5f, new Vector2(x + 0.5f, y + 0.5f), 0);
+        shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0f;
         fixtureDef.friction = 0.5f;
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
+        fixtureDef.isSensor = isSensor;
 
-        if (layerName.equalsIgnoreCase("Ground")) {
-            fixtureDef.filter.categoryBits = Constants.GROUND_BIT;
-            fixtureDef.filter.maskBits = Constants.PLAYER_BIT;
-        } else if (layerName.equalsIgnoreCase("Pipes") || layerName.equalsIgnoreCase("Bricks")) {
-            fixtureDef.filter.categoryBits = Constants.OBSTACLE_BIT;
-            fixtureDef.filter.maskBits = Constants.PLAYER_BIT;
-        } else {
-            fixtureDef.filter.categoryBits = Constants.GROUND_BIT;
-            fixtureDef.filter.maskBits = Constants.PLAYER_BIT;
-        }
-        System.out.println("Static body created for layer " + layerName + " at (" + x + "," + y + ")");
-
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(x + 0.5f, y + 0.5f);  // Đảm bảo tọa độ đúng giữa các ô
-
-        Body body = world.createBody(bodyDef);
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(layerName);
-
+        body.createFixture(fixtureDef).setUserData(layerName);
         shape.dispose();
     }
 
-
-    // Getter để lấy renderer
     public OrthogonalTiledMapRenderer getRenderer() {
         return this.renderer;
     }
 
-    // Getter để lấy TiledMap
     public TiledMap getMap() {
         return this.map;
     }
 
-    // Phương thức giải phóng tài nguyên
     @Override
     public void dispose() {
         if (renderer != null) {

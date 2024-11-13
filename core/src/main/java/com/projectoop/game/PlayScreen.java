@@ -5,110 +5,111 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.projectoop.manager.LevelManager;
 import com.projectoop.utils.Constants;
 import com.projectoop.utils.Hud;
+import com.projectoop.utils.MapBuilder;
 
 public class PlayScreen implements Screen {
 
     private SpriteBatch batch;
     private Hud hud;
     private OrthographicCamera camera;
+    private OrthogonalTiledMapRenderer renderer;
     private FitViewport viewport;
     private Box2DDebugRenderer b2dr;
+    private World world;
 
-    // Khởi tạo LevelManager để quản lý các level
     private LevelManager levelManager;
+    private Player player;
+    private MapBuilder mapBuilder;
 
-    PlayScreen(){
-
-    }
+    PlayScreen() {}
 
     @Override
     public void show() {
-        // Khởi tạo SpriteBatch và Hud
         batch = new SpriteBatch();
         hud = new Hud(batch);
 
-        // Tạo camera và viewport
         camera = new OrthographicCamera();
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH / Constants.PPM, Constants.VIRTUAL_HEIGHT / Constants.PPM, camera);
 
-        // Khởi tạo LevelManager và tải level đầu tiên
         levelManager = LevelManager.getInstance(LevelManager.class);
         levelManager.start();
 
-        // Sử dụng World từ LevelManager
+        player = levelManager.getCurrentLevel().getPlayer();
+        world = levelManager.getWorld();
+        mapBuilder = levelManager.getCurrentLevel().getMapBuilder();
+        renderer = mapBuilder.getRenderer();
+
         b2dr = new Box2DDebugRenderer();
 
-        // Thiết lập camera ban đầu
         camera.position.set(Constants.VIRTUAL_WIDTH / 2f / Constants.PPM, Constants.VIRTUAL_HEIGHT / 2f / Constants.PPM, 0);
-
-        //camera.update();
     }
 
     @Override
     public void render(float delta) {
-        // Xóa màn hình
-        clearScreen();
-
-        // Cập nhật camera trước khi render
-        updateCamera();
-
-        // Cập nhật trạng thái game
         updateGame(delta);
 
-        // Render game
+        updateCamera();
+
+        clearScreen();
+
         renderGame();
     }
 
-    // Phương thức để xóa màn hình
     private void clearScreen() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    // Phương thức để cập nhật camera
     private void updateCamera() {
-        if (levelManager.getCurrentLevel().getPlayer() != null) {
-            Vector2 playerPos = levelManager.getCurrentLevel().getPlayer().getPosition();
-            if (playerPos.x != camera.position.x || playerPos.y != camera.position.y) {
-                camera.position.set(playerPos.x, playerPos.y, 0);
-                System.out.println("Camera position updated to player position: " + camera.position);
-            }
+        if (player != null) {
+            Vector2 playerPos = player.getPosition();
+
+            //camera.position.x = playerPos.x*Constants.PPM/Constants.PPM;
+            camera.position.set(playerPos.x*Constants.PPM/Constants.PPM, playerPos.y*Constants.PPM/Constants.PPM, 0);
+            //System.out.println("player position: " + playerPos);
         }
-        viewport.apply();
         camera.update();
+        viewport.apply();
+        renderer.setView(camera);
     }
 
-    // Phương thức để cập nhật trạng thái game
     private void updateGame(float delta) {
-        if (levelManager != null) {
-            levelManager.update(delta);
+        if (player != null) {
+            player.update(delta);
+        }
+        if (world != null) {
+            world.step(delta, 6, 2);
         }
         hud.update(delta);
     }
 
-    // Phương thức để render game
     private void renderGame() {
-        if (levelManager != null) {
-            // Render bản đồ qua LevelManager
-            levelManager.render(camera);
+
+        renderer.render();
+        b2dr.render(world, camera.combined);
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+        if (player != null) {
+            player.render(batch);
         }
-
-        // Render các yếu tố HUD
+        batch.end();
+        batch.setProjectionMatrix(hud.stage.getCamera().combined); //select camera position
         hud.stage.draw();
-
-        // Hiển thị debug Box2D (tùy chọn)
-        b2dr.render(levelManager.getWorld(), camera.combined);
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        //camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
     }
 
     @Override

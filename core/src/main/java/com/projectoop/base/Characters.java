@@ -1,10 +1,12 @@
 package com.projectoop.base;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ObjectMap;
 
-public abstract class Characters {
+public abstract class Characters extends Sprite {
 
     protected float hp;
     protected String currentAnimName;
@@ -14,6 +16,7 @@ public abstract class Characters {
     protected boolean loopAnimation; // Biến để kiểm soát việc loop animation
 
     public Characters() {
+        super();
         animations = new ObjectMap<>();
         stateTime = 0f;
         loopAnimation = true; // Mặc định là loop animation
@@ -39,12 +42,12 @@ public abstract class Characters {
                 currentAnimName = animName;
                 loopAnimation = loop;  // Gán giá trị loop theo biến truyền vào
                 setTrigger(currentAnimName);
+                //System.out.println("animation: " + currentAnimName);
             }
         } else {
             System.out.println("Animation không tồn tại: " + animName);
         }
     }
-
 
     private void setTrigger(String animName) {
         currentAnimation = animations.get(animName);
@@ -56,16 +59,30 @@ public abstract class Characters {
 
     public void update(float delta) {
         stateTime += delta;
+
+        // Cập nhật TextureRegion của Sprite theo animation
+        TextureRegion frame = getCurrentFrame();
+        if (frame != null) {
+            setRegion(frame); // Set khung hình hiện tại làm texture
+        }
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        super.draw(batch);
     }
 
     // Lấy khung hình hiện tại của animation, kiểm soát việc loop
     public TextureRegion getCurrentFrame() {
         if (currentAnimation != null) {
             TextureRegion frame = currentAnimation.getKeyFrame(stateTime, loopAnimation);
-
+            if (frame == null) {
+                System.out.println("Current frame is null for animation: " + currentAnimName);
+            }
             return frame;
+        } else {
+            System.out.println("Current animation is null. Animation name: " + currentAnimName);
         }
         return null; // Trường hợp không có animation
     }
-
 }

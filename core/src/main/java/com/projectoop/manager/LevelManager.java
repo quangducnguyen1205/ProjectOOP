@@ -1,7 +1,6 @@
 package com.projectoop.manager;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -19,14 +18,15 @@ public class LevelManager extends Singleton<LevelManager> {
     // Khởi tạo LevelManager
     protected LevelManager() {
         levels = new Array<>();
-        world = new World(new Vector2(0, -5f), true); // Khởi tạo World ở đây
+        world = new World(new Vector2(0, -9.8f), true); // Khởi tạo World ở đây
 
         // Khởi tạo CollisionHandler với World hiện tại
         collisionHandler = new CollisionHandler(world);
         System.out.println("CollisionHandler has been set for the world.");
     }
+    private void onInit() {
 
-
+    }
 
     // Bắt đầu game và tải level đầu tiên
     public void start() {
@@ -35,8 +35,6 @@ public class LevelManager extends Singleton<LevelManager> {
             loadLevel(0);
         }
     }
-
-
     // Tải level mới và thiết lập logic liên quan
     public void loadLevel(int levelIndex) {
         if (levelIndex >= 0 && levelIndex < levels.size) {
@@ -45,34 +43,11 @@ public class LevelManager extends Singleton<LevelManager> {
                 System.out.println("Level despawned: " + currentLevel.getLevelName());
             }
             currentLevel = levels.get(levelIndex);
-            Gdx.app.log("LevelManager", "Loading level: " + currentLevel.getLevelName()); // Sử dụng getter
+            Gdx.app.log("LevelManager", "Loading level: " + currentLevel.getLevelName());
             currentLevel.onInit();
+            //onInit();
         } else {
             Gdx.app.log("LevelManager", "Invalid level index: " + levelIndex);
-        }
-    }
-
-    // Cập nhật trạng thái của level hiện tại và thế giới vật lý
-    public void update(float deltaTime) {
-        if (currentLevel != null) {
-            currentLevel.update(deltaTime);
-        }
-        // Cập nhật World và xử lý va chạm
-        if (world != null) {
-            world.step(deltaTime, 6, 2);
-
-            // Thêm log kiểm tra thông tin về Player
-            if (currentLevel != null && currentLevel.getPlayer() != null) {
-                Vector2 playerPosition = currentLevel.getPlayer().getPosition();
-                System.out.println("Player position: " + playerPosition.x + ", " + playerPosition.y);
-            }
-        }
-    }
-
-    // Render level hiện tại
-    public void render(OrthographicCamera camera) {
-        if (currentLevel != null) {
-            currentLevel.render(camera); // Truyền camera vào phương thức render
         }
     }
 

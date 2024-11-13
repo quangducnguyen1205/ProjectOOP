@@ -6,13 +6,15 @@ public class Constants {
     public static final short PLAYER_BIT = 1;
     public static final short GROUND_BIT = 2;
     public static final short OBSTACLE_BIT = 4;
+    public static final short KILLZONE_BIT = 5;
+    public static final short SAVEPOINT_BIT = 6;
 
     // Pixels per meter (PPM) - used for scaling between the game world and the physical world in Box2D
     public static final float PPM = 100f; // 100 pixels per meter, keeps physics and map scaled properly
 
     // Virtual resolution for the game screen
-    public static final float VIRTUAL_WIDTH = 1280f;  // Width of the game screen
-    public static final float VIRTUAL_HEIGHT = 720f;  // Height of the game screen
+    public static final float VIRTUAL_WIDTH = 400f;  // Width of the game screen
+    public static final float VIRTUAL_HEIGHT = 300f;  // Height of the game screen
 
     // Animation constants
     public static final String ANIM_ATTACK = "attack";
@@ -22,6 +24,11 @@ public class Constants {
     public static final String ANIM_JUMP = "jump";
     public static final String ANIM_FALL = "fall";
     public static final String ANIM_DANCE = "dance";
+    public static final String ANIM_GLIDE = "glide";
+    public static final String ANIM_CLIMB = "climb";
+    public static final String ANIM_SLEEPIDLE = "sleepidle";
+    public static final String ANIM_SLIDE = "slide";
+    public static final String ANIM_THROW = "throw";
 
     // Tile size in pixels
     public static final int TILE_SIZE = 16; // Tile size is 16x16 pixels
