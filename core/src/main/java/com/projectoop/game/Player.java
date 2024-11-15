@@ -41,6 +41,9 @@ public class Player extends Characters {
     private float deathTimer = 0f;  // Bộ đếm thời gian cho hoạt ảnh chết
     private final float deathDuration = 1.0f; // Thời gian hoạt ảnh chết (giây)
 
+    private boolean levelCompleted; // Trạng thái hoàn thành cấp độ
+    private Vector2 levelEndPoint;  // Điểm kết thúc cấp độ
+
     public Player(World world, Vector2 startPosition, float speed, float jumpForce) {
         this.world = world;
         this.position = startPosition;
@@ -52,6 +55,8 @@ public class Player extends Characters {
 
         this.currentState = PlayerState.IDLE;
         this.previousState = PlayerState.IDLE;
+
+        this.levelEndPoint = null; // Điểm kết thúc cấp độ mặc định là nullv
 
         createBody();
     }
@@ -158,6 +163,9 @@ public class Player extends Characters {
             updateAnimation();
             previousState = currentState;
         }
+
+        // Kiểm tra hoàn thành cấp độ
+        checkLevelCompletion();
     }
 
     private void handleInput() {
@@ -233,8 +241,26 @@ public class Player extends Characters {
         }
     }
 
-    public Body getBody() {
-        return body;
+    private void checkLevelCompletion() {
+        if (levelEndPoint != null) {
+            float distanceToEnd = position.dst(levelEndPoint);
+            if (distanceToEnd < 0.5f) { // Khoảng cách nhỏ hơn 0.5 thì coi như đã hoàn thành cấp độ
+                levelCompleted = true;
+                System.out.println("Level completed!");
+            }
+        }
+    }
+
+    public boolean hasCompletedLevel() {
+        return levelCompleted;
+    }
+
+    public void setLevelEndPoint(Vector2 endPoint) {
+        this.levelEndPoint = endPoint;
+    }
+
+    public void resetLevelCompletion() {
+        this.levelCompleted = false;
     }
 
     public Vector2 getPosition() {

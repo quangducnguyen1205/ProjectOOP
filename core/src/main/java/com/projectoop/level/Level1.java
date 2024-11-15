@@ -21,7 +21,7 @@ public class Level1 extends Level {
             createStaticBodies();
 
             // Khởi tạo player và thiết lập vị trí ban đầu
-            player = new Player(world, new Vector2(60f, 26f), 2f, 10f / Constants.PPM);
+            player = new Player(world, new Vector2(60f, 26f), 2f, 2f / Constants.PPM);
             player.onInit();
 
             // Log vị trí của player để kiểm tra khởi tạo

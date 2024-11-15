@@ -1,42 +1,44 @@
 package com.projectoop.game;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 
-// Lớp này chứa dữ liệu về Player, bao gồm việc lưu Body và trạng thái va chạm
 public class PlayerData {
+    private Array<String> completedLevels; // Lưu danh sách các level đã hoàn thành
+    private String currentLevel; // Level hiện tại
+    private int score; // Điểm của người chơi
 
-    private final Player player;
-    private boolean isOnGround; // Biến để xác định nếu Player đang tiếp xúc với mặt đất
-
-    public PlayerData(Player player) {
-        this.player = player;
-        this.isOnGround = false;
+    public PlayerData() {
+        completedLevels = new Array<>();
+        currentLevel = "level1"; // Mặc định cấp độ đầu tiên
+        score = 0;
     }
 
-    // Getter cho Player
-    public Player getPlayer() {
-        return player;
-    }
-
-    // Kiểm tra xem Player có đang tiếp đất không
-    public boolean isOnGround() {
-        return isOnGround;
-    }
-
-    // Setter khi Player tiếp đất
-    public void setOnGround(boolean onGround) {
-        this.isOnGround = onGround;
-
-        // Log để kiểm tra trạng thái cập nhật
-        if (onGround) {
-            System.out.println("Player is now on the ground.");
-        } else {
-            System.out.println("Player is now in the air.");
+    // Thêm một level đã hoàn thành
+    public void addCompletedLevel(String level) {
+        if (!completedLevels.contains(level, false)) {
+            completedLevels.add(level);
         }
     }
 
-    // Lấy Body của Player để xử lý logic vật lý
-    public Body getBody() {
-        return player.getBody();
+    // Kiểm tra xem level đã được hoàn thành chưa
+    public boolean isLevelCompleted(String level) {
+        return completedLevels.contains(level, false);
+    }
+
+    // Getters và Setters
+    public String getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public void setCurrentLevel(String currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
