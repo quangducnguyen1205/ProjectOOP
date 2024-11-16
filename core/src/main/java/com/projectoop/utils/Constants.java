@@ -7,7 +7,7 @@ public class Constants {
     public static final short GROUND_BIT = 2;
     public static final short OBSTACLE_BIT = 4;
     public static final short KILLZONE_BIT = 5;
-    public static final short SAVEPOINT_BIT = 6;
+    public static final short FINISHZONE_BIT = 6;
 
     // Pixels per meter (PPM) - used for scaling between the game world and the physical world in Box2D
     public static final float PPM = 100f; // 100 pixels per meter, keeps physics and map scaled properly

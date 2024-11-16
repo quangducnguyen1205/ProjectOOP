@@ -1,8 +1,9 @@
 package com.projectoop.utils;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.projectoop.game.Player;
+import com.projectoop.ui.LevelCompleteCanvas;
+import com.projectoop.ui.UIManager;
 
 public class CollisionHandler implements ContactListener {
 
@@ -57,10 +58,10 @@ public class CollisionHandler implements ContactListener {
             handlePlayerKillZoneCollision(fixA, fixB);
         }
 
-        // Xử lý va chạm giữa Player và SavePoint
-        if ((categoryA == Constants.PLAYER_BIT && categoryB == Constants.SAVEPOINT_BIT) ||
-            (categoryB == Constants.PLAYER_BIT && categoryA == Constants.SAVEPOINT_BIT)) {
-            handlePlayerSavePointCollision(fixA, fixB);
+        // Xử lý va chạm giữa `Player` và `FinishZone`
+        if ((categoryA == Constants.PLAYER_BIT && categoryB == Constants.FINISHZONE_BIT) ||
+            (categoryB == Constants.PLAYER_BIT && categoryA == Constants.FINISHZONE_BIT)) {
+            handlePlayerFinishZoneCollision(fixA, fixB);
         }
     }
 
@@ -79,7 +80,6 @@ public class CollisionHandler implements ContactListener {
     private void handlePlayerKillZoneCollision(Fixture fixA, Fixture fixB) {
         // Xác định Fixture nào là của Player
         Fixture playerFixture = (fixA.getFilterData().categoryBits == Constants.PLAYER_BIT) ? fixA : fixB;
-
         if (playerFixture.getUserData() instanceof Player) {
             Player player = (Player) playerFixture.getUserData();
 
@@ -90,40 +90,8 @@ public class CollisionHandler implements ContactListener {
         }
     }
 
-
-    private void handlePlayerSavePointCollision(Fixture fixA, Fixture fixB) {
-        // Xác định Fixture của Player
-        Fixture playerFixture = (fixA.getFilterData().categoryBits == Constants.PLAYER_BIT) ? fixA : fixB;
-
-        if (playerFixture.getUserData() instanceof Player) {
-            Player player = (Player) playerFixture.getUserData();
-            Vector2 savePointPosition = getSavePointPosition(fixA, fixB);
-
-            if (savePointPosition != null) {
-                // Cập nhật SavePoint cho Player
-                player.setSavePoint(savePointPosition);
-                System.out.println("SavePoint updated to: " + savePointPosition);
-            } else {
-                // In log cảnh báo nếu không tìm thấy vị trí SavePoint
-                System.out.println("Warning: Unable to update SavePoint. Position is null.");
-            }
-        }
+    private void handlePlayerFinishZoneCollision(Fixture fixA, Fixture fixB) {
+        // Hiển thị UI hoàn thành màn chơi
+        UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
     }
-
-    private Vector2 getSavePointPosition(Fixture fixA, Fixture fixB) {
-        Fixture savePointFixture = (fixA.getFilterData().categoryBits == Constants.SAVEPOINT_BIT) ? fixA : fixB;
-
-        if (savePointFixture.getBody() != null) {
-            return savePointFixture.getBody().getPosition().cpy().scl(Constants.PPM); // Nhân PPM khi lưu
-        }
-
-        if (savePointFixture.getUserData() instanceof Vector2) {
-            return ((Vector2) savePointFixture.getUserData()).cpy();
-        }
-
-        System.out.println("Warning: SavePoint fixture does not contain a valid position or UserData: " + savePointFixture);
-        return null;
-    }
-
-
 }

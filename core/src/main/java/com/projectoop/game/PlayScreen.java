@@ -37,7 +37,7 @@ public class PlayScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        hud = new Hud(batch);
+        //hud = new Hud(batch);
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH / Constants.PPM, Constants.VIRTUAL_HEIGHT / Constants.PPM, camera);
@@ -96,7 +96,7 @@ public class PlayScreen implements Screen {
         if (world != null) {
             world.step(delta, 6, 2);
         }
-        hud.update(delta);
+        //hud.update(delta);
     }
 
     private void renderGame() {
@@ -110,8 +110,8 @@ public class PlayScreen implements Screen {
         }
         batch.end();
 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        //batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        //hud.stage.draw();
     }
 
     private void onLevelCompleted() {

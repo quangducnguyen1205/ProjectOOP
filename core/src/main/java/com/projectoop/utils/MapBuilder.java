@@ -40,10 +40,10 @@ public class MapBuilder implements Disposable {
                 } else if (layerName.equalsIgnoreCase("Pipes")) {
                     createStaticBody(rect, Constants.OBSTACLE_BIT, Constants.PLAYER_BIT, false, layerName);
                 } else if (layerName.equalsIgnoreCase("KillZone")) {
-                    // KillZone là sensor
                     createStaticBody(rect, Constants.KILLZONE_BIT, Constants.PLAYER_BIT, false, layerName);
-                } else if (layerName.equalsIgnoreCase("SavePoint")) {
-                    createStaticBody(rect, Constants.SAVEPOINT_BIT, Constants.PLAYER_BIT, true, layerName);
+                } else if (layerName.equalsIgnoreCase("FinishZone")) {
+                    // FinishZone là sensor
+                    createStaticBody(rect, Constants.FINISHZONE_BIT, Constants.PLAYER_BIT, true, layerName);
                 } else if (layerName.equalsIgnoreCase("Bot1")) {
                     createStaticBody(rect, Constants.ENEMY_BIT, Constants.PLAYER_BIT, true, layerName);
                 } else if (layerName.equalsIgnoreCase("Bot2")) {
