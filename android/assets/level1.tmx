@@ -237,11 +237,8 @@
  <objectgroup id="9" name="KillZone" opacity="0.42">
   <object id="156" x="-416.222" y="309.498" width="4621.13" height="138.741"/>
  </objectgroup>
- <objectgroup id="10" name="SavePoint">
+ <objectgroup id="10" name="FinishZone">
   <object id="159" x="357.659" y="123.848">
-   <point/>
-  </object>
-  <object id="161" x="31.6561" y="187.715">
    <point/>
   </object>
  </objectgroup>
