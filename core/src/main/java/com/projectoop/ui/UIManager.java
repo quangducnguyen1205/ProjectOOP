@@ -3,6 +3,7 @@ package com.projectoop.ui;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.projectoop.manager.Singleton;
+import com.projectoop.ui.story.StoryCanvas;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,4 +85,10 @@ public class UIManager extends Singleton<UIManager> {
             }
         }
     }
+
+    public void openStory(String levelName) {
+        StoryCanvas storyCanvas = new StoryCanvas(levelName);
+        getStage().addActor(storyCanvas);
+    }
+
 }
