@@ -4,3 +4,6 @@
 [submodule "SuperMario"]
 	path = SuperMario
 	url = https://github.com/BrentAureli/SuperMario
+[submodule "ProjectOOP"]
+	path = ProjectOOP
+	url = https://github.com/quangducnguyen1205/ProjectOOP

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.projectoop.entity.Enemy;
 import com.projectoop.manager.GameManager;
 import com.projectoop.manager.LevelManager;
 import com.projectoop.ui.MainMenuCanvas;
@@ -17,6 +18,9 @@ import com.projectoop.ui.UIManager;
 import com.projectoop.utils.Constants;
 import com.projectoop.utils.Hud;
 import com.projectoop.utils.MapBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayScreen implements Screen {
 
@@ -31,8 +35,12 @@ public class PlayScreen implements Screen {
     private LevelManager levelManager;
     private Player player;
     private MapBuilder mapBuilder;
+    // Danh sách Enemy trong PlayScreen
+    private List<Enemy> enemies = new ArrayList<>();
 
-    public PlayScreen() {}
+    public PlayScreen() {
+
+    }
 
     @Override
     public void show() {
@@ -95,6 +103,10 @@ public class PlayScreen implements Screen {
         }
         if (world != null) {
             world.step(delta, 6, 2);
+        }
+        // Cập nhật Enemy
+        for (Enemy enemy : enemies) {
+            enemy.update(delta);
         }
         //hud.update(delta);
     }
