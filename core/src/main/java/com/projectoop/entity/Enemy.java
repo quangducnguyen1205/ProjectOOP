@@ -1,70 +1,83 @@
 package com.projectoop.entity;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.projectoop.base.Characters;
+import com.projectoop.state.PatrolState;
 import com.projectoop.state.StateMachine;
 
 public abstract class Enemy extends Characters {
-    public World world; // Thay đổi phạm vi thành public
-    public Body b2body; // Thay đổi phạm vi thành public
-    public Vector2 velocity; // Thay đổi phạm vi thành public
-    public StateMachine<Enemy> stateMachine; // Thay đổi phạm vi thành public
-    public boolean isFacingRight = true; // Thay đổi phạm vi thành public
+    private Vector2 velocity;
+    private final StateMachine<Enemy> stateMachine;
+    protected Body body;
+    protected World world; // Quản lý vật lý Box2D
 
-    public Enemy(World world, float x, float y) {
-        this.world = world;
-        setPosition(x, y);
-        velocity = new Vector2(1, 0); // Tốc độ mặc định
-        stateMachine = new StateMachine<>(this);
-        onInit();
+    public Enemy(World world, Vector2 startPosition) {
+        super();
+        this.world = world; // Nhận `world` từ constructor
+        this.velocity = new Vector2(1f, 0); // Tốc độ di chuyển mặc định
+        this.stateMachine = new StateMachine<>(this); // Tạo StateMachine
+
+        setPosition(startPosition.x, startPosition.y); // Đặt vị trí ban đầu cho Enemy
+        defineEnemy(); // Tạo Body dựa trên vị trí ban đầu
+    }
+
+    protected abstract void defineEnemy(); // Phương thức trừu tượng để định nghĩa Body
+
+    @Override
+    public void onInit() {
+        hp = 100; // Đặt máu mặc định
+        stateMachine.changeState(new PatrolState()); // Đặt trạng thái ban đầu
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
-        stateMachine.update();
-        b2body.setLinearVelocity(velocity);
 
-        setPosition(
-            b2body.getPosition().x - getWidth() / 2,
-            b2body.getPosition().y - getHeight() / 2
-        );
+        // Cập nhật logic StateMachine
+        stateMachine.update();
+
+        // Cập nhật vị trí từ Body (Box2D)
+        if (body != null) {
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        }
     }
 
     @Override
-    public void draw(Batch batch) {
-        super.draw(batch);
+    public void onDeath() {
+        // Xử lý khi Enemy chết
+        changeAnim("death", false); // Thay đổi anim thành "death"
+        velocity.set(0, 0); // Ngừng di chuyển
+    }
+
+    @Override
+    public void onDespawn() {
+        System.out.println("Enemy has been despawned.");
+    }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
     }
 
     public StateMachine<Enemy> getStateMachine() {
         return stateMachine;
     }
 
-    public void reverseVelocity(boolean reverseX, boolean reverseY) {
-        if (reverseX) velocity.x = -velocity.x;
-        if (reverseY) velocity.y = -velocity.y;
-        isFacingRight = velocity.x > 0;
-    }
-
-    public abstract void defineEnemy();
-
     @Override
-    public void onInit() {
-        defineEnemy();
+    public void draw(Batch batch) {
+        super.draw(batch);
+
+        // Hiển thị animation hiện tại
+        TextureRegion frame = getCurrentFrame();
+        if (frame != null) {
+            batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+        }
     }
-
-    @Override
-    public void onDeath() {}
-
-    @Override
-    public void onDespawn() {
-        world.destroyBody(b2body);
-    }
-
-    public abstract void attack();
-
-    public abstract void patrol();
 }

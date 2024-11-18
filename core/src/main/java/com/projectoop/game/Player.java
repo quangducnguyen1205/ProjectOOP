@@ -2,8 +2,6 @@ package com.projectoop.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -125,15 +123,6 @@ public class Player extends Characters {
         }
     }
 
-    private Animation<TextureRegion> loadAnimation(String folderPath, int frameCount, float frameDuration) {
-        Array<TextureRegion> frames = new Array<>();
-        for (int i = 0; i < frameCount; i++) {
-            String fileName = folderPath + "__00" + i + ".png";
-            frames.add(new TextureRegion(new Texture(Gdx.files.internal(fileName))));
-        }
-        return new Animation<>(frameDuration, frames, Animation.PlayMode.LOOP);
-    }
-
     @Override
     public void update(float delta) {
         super.update(delta);
@@ -229,15 +218,6 @@ public class Player extends Characters {
         }
         for (Kunai kunai : kunaiArray) {
             kunai.render(batch);
-        }
-    }
-
-    public void setSavePoint(Vector2 savePoint) {
-        if (savePoint != null) {
-            this.currentSavePoint = savePoint.cpy(); // Cập nhật SavePoint
-            System.out.println("SavePoint updated to: " + currentSavePoint);
-        } else {
-            System.out.println("Warning: Attempted to set SavePoint to null.");
         }
     }
 

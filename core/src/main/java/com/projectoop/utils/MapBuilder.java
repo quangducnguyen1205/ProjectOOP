@@ -7,13 +7,23 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
+import com.projectoop.entity.Enemy;
+import com.projectoop.entity.Goomba;
+import com.projectoop.entity.Orc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapBuilder implements Disposable {
     private World world;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
+
+    // Danh sách các enemy được tạo
+    private final List<Enemy> enemies;
 
     public MapBuilder(World world, String mapFilePath) {
         this.world = world;
@@ -22,6 +32,7 @@ public class MapBuilder implements Disposable {
 
         // Thêm hệ số tỷ lệ để đảm bảo các tile layer hiển thị đúng kích thước
         this.renderer = new OrthogonalTiledMapRenderer(map, 1 / Constants.PPM, new SpriteBatch());
+        this.enemies = new ArrayList<>();
         System.out.println("Map and renderer initialized successfully.");
     }
 
@@ -42,12 +53,11 @@ public class MapBuilder implements Disposable {
                 } else if (layerName.equalsIgnoreCase("KillZone")) {
                     createStaticBody(rect, Constants.KILLZONE_BIT, Constants.PLAYER_BIT, false, layerName);
                 } else if (layerName.equalsIgnoreCase("FinishZone")) {
-                    // FinishZone là sensor
                     createStaticBody(rect, Constants.FINISHZONE_BIT, Constants.PLAYER_BIT, true, layerName);
-                } else if (layerName.equalsIgnoreCase("Bot1")) {
-                    createStaticBody(rect, Constants.ENEMY_BIT, Constants.PLAYER_BIT, true, layerName);
-                } else if (layerName.equalsIgnoreCase("Bot2")) {
-                    createStaticBody(rect, Constants.ENEMY_BIT, Constants.PLAYER_BIT, true, layerName);
+                } else if (layerName.equalsIgnoreCase("Goomba")) {
+                    createGoomba(rect);
+                } else if (layerName.equalsIgnoreCase("Orc")) {
+                    createOrc(rect);
                 }
             }
         }
@@ -76,6 +86,24 @@ public class MapBuilder implements Disposable {
 
         body.createFixture(fixtureDef).setUserData(layerName);
         shape.dispose();
+    }
+
+    private void createGoomba(Rectangle rect) {
+        float x = (rect.getX() + rect.getWidth() / 2) / Constants.PPM;
+        float y = (rect.getY() + rect.getHeight() / 2) / Constants.PPM;
+        Goomba goomba = new Goomba(world, new Vector2(x,y));
+        enemies.add(goomba);
+    }
+
+    private void createOrc(Rectangle rect) {
+        float x = (rect.getX() + rect.getWidth() / 2) / Constants.PPM;
+        float y = (rect.getY() + rect.getHeight() / 2) / Constants.PPM;
+        Orc orc = new Orc(world, new Vector2(x,y));
+        enemies.add(orc);
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 
     public OrthogonalTiledMapRenderer getRenderer() {

@@ -1,9 +1,12 @@
 package com.projectoop.base;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 public abstract class Characters extends Sprite {
@@ -36,7 +39,7 @@ public abstract class Characters extends Sprite {
     }
 
     // Thay đổi animation hiện tại với kiểm soát việc loop
-    protected void changeAnim(String animName, boolean loop) {
+    public void changeAnim(String animName, boolean loop) {
         if (animations.containsKey(animName)) {
             if (!animName.equals(currentAnimName)) {  // Chỉ thay đổi nếu animation khác với hiện tại
                 currentAnimName = animName;
@@ -84,5 +87,14 @@ public abstract class Characters extends Sprite {
             System.out.println("Current animation is null. Animation name: " + currentAnimName);
         }
         return null; // Trường hợp không có animation
+    }
+    // Thêm hàm loadAnimation
+    protected Animation<TextureRegion> loadAnimation(String folderPath, int frameCount, float frameDuration) {
+        Array<TextureRegion> frames = new Array<>();
+        for (int i = 0; i < frameCount; i++) {
+            String fileName = folderPath + "__00" + i + ".png";
+            frames.add(new TextureRegion(new Texture(Gdx.files.internal(fileName))));
+        }
+        return new Animation<>(frameDuration, frames, Animation.PlayMode.LOOP);
     }
 }
