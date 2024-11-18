@@ -7,3 +7,6 @@
 [submodule "ProjectOOP"]
 	path = ProjectOOP
 	url = https://github.com/quangducnguyen1205/ProjectOOP
+[submodule "ProjectOOP4"]
+	path = ProjectOOP4
+	url = https://github.com/anhnbd2005/ProjectOOP4
