@@ -13,20 +13,21 @@ import com.projectoop.utils.Constants;
 import static com.projectoop.utils.Constants.PPM;
 
 public abstract class Enemy extends Characters {
-    private static final float DETECTION_RADIUS = 0.3f; // Phạm vi phát hiện Player
+    private static final float ATTACK_RADIUS = 0.5f; // Phạm vi phát hiện Player
     private Vector2 velocity;
     private IState<Enemy> currentState;  // Trạng thái hiện tại
     protected Body body;
     protected World world; // Quản lý vật lý Box2D
     private Player player;
-    private boolean onGround = false; // Trạng thái tiếp đất
     private float width = 64f / PPM; // Kích thước cố định cho Enemy
     private float height = 64f / PPM; // Kích thước cố định cho Enemy
+    private boolean isFacingRight = true; // Trạng thái hướng hiện tại
+    private float moveSpeed = 0.5f;
 
     public Enemy(World world, Vector2 startPosition) {
         super();
         this.world = world;
-        this.velocity = new Vector2(0.5f, 0); // Tốc độ di chuyển mặc định
+        this.velocity = new Vector2(moveSpeed, 0); // Tốc độ di chuyển mặc định
         this.currentState = new IState<Enemy>() {
             @Override
             public void onEnter(Enemy enemy) {
@@ -121,6 +122,12 @@ public abstract class Enemy extends Characters {
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         }
     }
+    public void move() {
+        changeAnim(Constants.ANIM_RUN, true); // Animation di chuyển
+        if (body != null) {
+            body.setLinearVelocity(isFacingRight ? moveSpeed : -moveSpeed, body.getLinearVelocity().y);
+        }
+    }
 
     @Override
     public void onDeath() {
@@ -138,21 +145,28 @@ public abstract class Enemy extends Characters {
         System.out.println("Enemy has been despawned.");
     }
 
+    public void attack(){
+        changeAnim(Constants.ANIM_ATTACK, false);
+        System.out.println("Performing Attack!");
+    }
+
+    public void stopMoving() {
+        changeAnim(Constants.ANIM_IDLE, true);
+        setVelocity(Vector2.Zero); // Ngừng di chuyển
+    }
+
+    public void changeDirection(boolean isRight) {
+        if (isFacingRight != isRight) {
+            isFacingRight = isRight;
+            velocity.x = isRight ? moveSpeed : -moveSpeed; // Đặt hướng di chuyển
+        }
+    }
+
     public void setVelocity(Vector2 velocity) {
         this.velocity = velocity;
         if (body != null) {
             body.setLinearVelocity(velocity);
         }
-
-        // Lật hình ảnh dựa trên hướng di chuyển
-        if (velocity.x != 0) {
-            setFlip(velocity.x < 0); // Lật hình ảnh nếu vận tốc âm
-        }
-    }
-
-    // Phương thức lật hình ảnh
-    private void setFlip(boolean flipX) {
-        setScale(flipX ? -1 : 1, 1); // Đảo hướng trên trục X
     }
 
     public Vector2 getVelocity() {
@@ -176,26 +190,28 @@ public abstract class Enemy extends Characters {
     }
 
     public boolean isPlayerInRange() {
-        return getDistanceToPlayer() <= DETECTION_RADIUS;
+        return player != null && getDistanceToPlayer() <= ATTACK_RADIUS;
     }
 
     @Override
     public void draw(Batch batch) {
-        super.draw(batch);
-        TextureRegion frame = getCurrentFrame();
+        TextureRegion frame = getCurrentFrame(); // Lấy frame hiện tại
         if (frame != null) {
-            batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+            if (isFacingRight) {
+                // Vẽ hướng phải
+                batch.draw(frame, getX(), getY(), getWidth(), getHeight());
+            } else {
+                // Vẽ hướng trái (đảo ngược frameWidth)
+                batch.draw(frame, getX() + getWidth(), getY(), -getWidth(), getHeight());
+            }
         } else {
             System.out.println("Frame not available for enemy!");
         }
     }
 
-    public void setOnGround(boolean isOnGround) {
-        this.onGround = isOnGround;
-    }
 
-    public boolean isOnGround() {
-        return onGround;
+    public void setOnGround(boolean isOnGround) {
+        // Trạng thái tiếp đất
     }
 
     public Player getPlayer() {
@@ -204,20 +220,6 @@ public abstract class Enemy extends Characters {
 
     public float getDeltaTime() {
         return com.badlogic.gdx.Gdx.graphics.getDeltaTime();
-    }
-
-    public boolean isTouchingObstacle() {
-        // Logic kiểm tra va chạm obstacle (sử dụng user data hoặc filter từ Box2D)
-        return false; // Thay thế bằng logic cụ thể
-    }
-
-    public void performAttack() {
-        if (isPlayerInRange()) {
-            System.out.println("Attacking...");
-            // Gọi logic gây sát thương tại đây
-        } else {
-            System.out.println("Player out of range, cannot attack.");
-        }
     }
 
     // Thay đổi trạng thái

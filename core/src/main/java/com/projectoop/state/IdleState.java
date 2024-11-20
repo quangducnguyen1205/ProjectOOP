@@ -1,8 +1,6 @@
 package com.projectoop.state;
 
-import com.badlogic.gdx.math.Vector2;
 import com.projectoop.entity.Enemy;
-import com.projectoop.utils.Constants;
 
 import java.util.Random;
 
@@ -22,8 +20,7 @@ public class IdleState implements IState<Enemy> {
     public void onEnter(Enemy enemy) {
         timer = 0;
         randomTime = new Random().nextFloat() * (4f - 2f) + 2f; // Random từ 2 đến 4 giây
-        enemy.changeAnim(Constants.ANIM_IDLE, true); // Chuyển animation idle
-        enemy.setVelocity(Vector2.Zero); // Dừng hoàn toàn
+        enemy.stopMoving();
         System.out.println("Entering Idle State");
     }
 

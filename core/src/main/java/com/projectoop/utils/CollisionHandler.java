@@ -133,8 +133,7 @@ public class CollisionHandler implements ContactListener {
             // Chỉ đổi hướng nếu thời gian đủ lâu kể từ lần va chạm gần nhất
             if ((currentTime - lastObstacleCollisionTime > 0.5f) &&
                 currentVelocity.len() > MIN_OBSTACLE_DISTANCE) {
-                currentVelocity.x = -currentVelocity.x; // Đảo hướng
-                enemy.setVelocity(currentVelocity);
+                enemy.changeDirection(enemy.getPlayer().getPosition().x > enemy.getPosition().x);
                 lastObstacleCollisionTime = currentTime; // Cập nhật thời gian
                 System.out.println("Enemy changed direction: " + currentVelocity);
             }
