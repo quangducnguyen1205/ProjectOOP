@@ -18,11 +18,11 @@ public class Level1 extends Level {
         setupMap("SuperMario/android/assets/" + levelName + ".tmx");
 
         if (mapBuilder != null && map != null) {
-            createStaticBodies();
-
             // Khởi tạo player và thiết lập vị trí ban đầu
-            player = new Player(world, new Vector2(60f, 26f), 1.2f, 6f / Constants.PPM);
+            player = new Player(world, new Vector2(60f, 26f), 1.2f, 5f / Constants.PPM);
             player.onInit();
+
+            createStaticBodies();
 
             // Log vị trí của player để kiểm tra khởi tạo
             System.out.println("Player initialized at position: " + player.getPosition());

@@ -4,8 +4,9 @@ public class Constants {
 
     // Bitmask for collision detection
     public static final short PLAYER_BIT = 1;
-    public static final short GROUND_BIT = 2;
-    public static final short OBSTACLE_BIT = 4;
+    public static final short ENEMY_BIT = 2;
+    public static final short GROUND_BIT = 3;
+    public static final short PIPES_BIT = 4;
     public static final short KILLZONE_BIT = 5;
     public static final short FINISHZONE_BIT = 6;
 
@@ -30,9 +31,6 @@ public class Constants {
     public static final String ANIM_SLIDE = "slide";
     public static final String ANIM_THROW = "throw";
 
-    // Tile size in pixels
-    public static final int TILE_SIZE = 16; // Tile size is 16x16 pixels
-
     public static final float WEAPON_WIDTH = 10f;
     public static final float WEAPON_HEIGHT = 10f;
 
@@ -40,5 +38,4 @@ public class Constants {
     public static final float KUNAI_OFFSET_X = 15f; // Độ lệch từ player
     public static final float KUNAI_OFFSET_Y = 5f;  // Độ lệch từ player
     public static final short WEAPON_BIT = 0x0004;
-    public static final short ENEMY_BIT = 0x0002;
 }

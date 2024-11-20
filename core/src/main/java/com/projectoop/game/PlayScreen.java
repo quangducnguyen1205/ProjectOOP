@@ -16,7 +16,6 @@ import com.projectoop.manager.LevelManager;
 import com.projectoop.ui.MainMenuCanvas;
 import com.projectoop.ui.UIManager;
 import com.projectoop.utils.Constants;
-import com.projectoop.utils.Hud;
 import com.projectoop.utils.MapBuilder;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.List;
 public class PlayScreen implements Screen {
 
     private SpriteBatch batch;
-    private Hud hud;
     private OrthographicCamera camera;
     private OrthogonalTiledMapRenderer renderer;
     private FitViewport viewport;
@@ -36,7 +34,7 @@ public class PlayScreen implements Screen {
     private Player player;
     private MapBuilder mapBuilder;
     // Danh sách Enemy trong PlayScreen
-    private List<Enemy> enemies = new ArrayList<>();
+    private final List<Enemy> enemies = new ArrayList<>();
 
     public PlayScreen() {
 
@@ -52,9 +50,17 @@ public class PlayScreen implements Screen {
 
         levelManager = LevelManager.getInstance(LevelManager.class);
 
+        updateLevel();
+
+        b2dr = new Box2DDebugRenderer();
+
+        camera.position.set(Constants.VIRTUAL_WIDTH / 2f / Constants.PPM, Constants.VIRTUAL_HEIGHT / 2f / Constants.PPM, 0);
+    }
+
+    private void updateLevel() {
         String currentLevel = GameManager.getInstance(GameManager.class).getPlayerData().getCurrentLevel();
         if (currentLevel == null || currentLevel.isEmpty()) {
-            currentLevel = "level1"; // Mặc định Level 1
+            currentLevel = "level1";
             GameManager.getInstance(GameManager.class).getPlayerData().setCurrentLevel(currentLevel);
         }
 
@@ -65,10 +71,12 @@ public class PlayScreen implements Screen {
         mapBuilder = levelManager.getCurrentLevel().getMapBuilder();
         renderer = mapBuilder.getRenderer();
 
-        b2dr = new Box2DDebugRenderer();
-
-        camera.position.set(Constants.VIRTUAL_WIDTH / 2f / Constants.PPM, Constants.VIRTUAL_HEIGHT / 2f / Constants.PPM, 0);
+        // Lấy danh sách Enemy từ MapBuilder
+        enemies.clear(); // Xóa danh sách Enemy trước khi thêm mới
+        enemies.addAll(mapBuilder.getEnemies());
     }
+
+
 
     @Override
     public void render(float delta) {
@@ -107,8 +115,11 @@ public class PlayScreen implements Screen {
         // Cập nhật Enemy
         for (Enemy enemy : enemies) {
             enemy.update(delta);
+            // Kiểm tra nếu Enemy đã chết và cần xóa
+            if (enemy.isDead() && enemy.getBody() != null) {
+                enemy.onDeath();
+            }
         }
-        //hud.update(delta);
     }
 
     private void renderGame() {
@@ -120,10 +131,12 @@ public class PlayScreen implements Screen {
         if (player != null) {
             player.render(batch);
         }
-        batch.end();
+        // Vẽ tất cả các Enemy
+        for (Enemy enemy : enemies) {
+            enemy.draw(batch); // Gọi phương thức draw cho mỗi Enemy
+        }
 
-        //batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        //hud.stage.draw();
+        batch.end();
     }
 
     private void onLevelCompleted() {
@@ -132,15 +145,18 @@ public class PlayScreen implements Screen {
 
         int nextLevelIndex = levelManager.getNextLevelIndex(completedLevel);
         if (nextLevelIndex != -1) {
-            levelManager.loadLevel(nextLevelIndex);
-            GameManager.getInstance(GameManager.class).getPlayerData().setCurrentLevel(
-                levelManager.getCurrentLevel().getLevelName()
-            );
+            String nextLevelName = levelManager.getCurrentLevel().getLevelName();
+            GameManager.getInstance(GameManager.class).getPlayerData().setCurrentLevel(nextLevelName);
+
+            // Tải màn chơi tiếp theo
+            updateLevel();
         } else {
             System.out.println("All levels completed!");
-            UIManager.getInstance(UIManager.class).openUI(MainMenuCanvas.class); // Mở MainMenu
+            UIManager.getInstance(UIManager.class).openUI(MainMenuCanvas.class);
         }
     }
+
+
 
     @Override
     public void resize(int width, int height) {
@@ -150,7 +166,6 @@ public class PlayScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        hud.dispose();
         b2dr.dispose();
         levelManager.dispose();
     }

@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.projectoop.entity.Enemy;
-import com.projectoop.entity.Goomba;
 import com.projectoop.entity.Orc;
 
 import java.util.ArrayList;
@@ -48,19 +47,45 @@ public class MapBuilder implements Disposable {
 
                 if (layerName.equalsIgnoreCase("Ground") || layerName.equalsIgnoreCase("Bricks")) {
                     createStaticBody(rect, Constants.GROUND_BIT, Constants.PLAYER_BIT, false, layerName);
+                    createStaticBody(rect, Constants.GROUND_BIT, Constants.ENEMY_BIT, false, layerName);
                 } else if (layerName.equalsIgnoreCase("Pipes")) {
-                    createStaticBody(rect, Constants.OBSTACLE_BIT, Constants.PLAYER_BIT, false, layerName);
+                    createStaticBody(rect, Constants.PIPES_BIT, Constants.PLAYER_BIT, false, layerName);
+                    createStaticBody(rect, Constants.PIPES_BIT, Constants.ENEMY_BIT, false, layerName);
                 } else if (layerName.equalsIgnoreCase("KillZone")) {
                     createStaticBody(rect, Constants.KILLZONE_BIT, Constants.PLAYER_BIT, false, layerName);
                 } else if (layerName.equalsIgnoreCase("FinishZone")) {
                     createStaticBody(rect, Constants.FINISHZONE_BIT, Constants.PLAYER_BIT, true, layerName);
-                } else if (layerName.equalsIgnoreCase("Goomba")) {
-                    createGoomba(rect);
                 } else if (layerName.equalsIgnoreCase("Orc")) {
                     createOrc(rect);
+                } else if (layerName.equalsIgnoreCase("Skeleton")) {
+                    createSkeleton(rect);
+                } else if (layerName.equalsIgnoreCase("Chest1")) {
+                    createChest(rect);
+                } else if (layerName.equalsIgnoreCase("Chest")) {
+                    createChest(rect);
+                } else if (layerName.equalsIgnoreCase("Eye")) {
+                    createEye(rect);
                 }
             }
         }
+    }
+
+    private void createEye(Rectangle rect) {
+
+    }
+
+    private void createChest(Rectangle rect) {
+    }
+
+    private void createSkeleton(Rectangle rect) {
+    }
+
+    private void createOrc(Rectangle rect) {
+        float x = rect.getX();
+        float y = rect.getY();
+
+        Orc orc = new Orc(world, new Vector2(x,y));
+        enemies.add(orc);
     }
 
     private void createStaticBody(Rectangle rect, short categoryBits, short maskBits, boolean isSensor, String layerName) {
@@ -86,20 +111,6 @@ public class MapBuilder implements Disposable {
 
         body.createFixture(fixtureDef).setUserData(layerName);
         shape.dispose();
-    }
-
-    private void createGoomba(Rectangle rect) {
-        float x = (rect.getX() + rect.getWidth() / 2) / Constants.PPM;
-        float y = (rect.getY() + rect.getHeight() / 2) / Constants.PPM;
-        Goomba goomba = new Goomba(world, new Vector2(x,y));
-        enemies.add(goomba);
-    }
-
-    private void createOrc(Rectangle rect) {
-        float x = (rect.getX() + rect.getWidth() / 2) / Constants.PPM;
-        float y = (rect.getY() + rect.getHeight() / 2) / Constants.PPM;
-        Orc orc = new Orc(world, new Vector2(x,y));
-        enemies.add(orc);
     }
 
     public List<Enemy> getEnemies() {

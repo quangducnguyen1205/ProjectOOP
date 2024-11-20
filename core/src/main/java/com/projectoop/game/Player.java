@@ -75,7 +75,7 @@ public class Player extends Characters {
         fixtureDef.density = 0.8f;
         fixtureDef.friction = 0.4f;
         fixtureDef.filter.categoryBits = PLAYER_BIT;
-        fixtureDef.filter.maskBits = GROUND_BIT | OBSTACLE_BIT;
+        fixtureDef.filter.maskBits = GROUND_BIT | PIPES_BIT;
 
         assert body != null;
         body.createFixture(fixtureDef).setUserData(this);
@@ -111,7 +111,6 @@ public class Player extends Characters {
     @Override
     public void onDeath() {
         if (!isDying) {
-            System.out.println("1");
             changeAnim(ANIM_DEATH, false); // Chạy hoạt ảnh chết
 
             // Dừng tất cả chuyển động vật lý
@@ -131,7 +130,6 @@ public class Player extends Characters {
             deathTimer += delta; // Tăng bộ đếm thời gian theo delta
             if (deathTimer >= deathDuration) { // Nếu đủ thời gian hoạt ảnh chết
                 onDespawn(); // Chạy logic hồi sinh tại SavePoint
-                System.out.println("2");
             }
             return; // Không cập nhật gì thêm khi Player đang chết
         }

@@ -47,8 +47,9 @@ public class LevelManager extends Singleton<LevelManager> {
     // Tải level dựa trên tên
     public void loadLevelByName(String levelName) {
         int levelIndex = getLevelIndexByName(levelName);
+        System.out.println("Loading level: " + levelIndex);
         if (levelIndex != -1) {
-            loadLevel(levelIndex);
+            loadLevel(levelIndex + 1);
         } else {
             Gdx.app.log("LevelManager", "Level not found: " + levelName);
         }
@@ -104,24 +105,26 @@ public class LevelManager extends Singleton<LevelManager> {
 
     // Trả về level hiện tại
     public Level getCurrentLevel() {
+        System.out.println("Getting current level: " + currentLevel.getLevelName());
         return currentLevel;
     }
 
     // Giải phóng tài nguyên
     public void dispose() {
-        if (world != null) {
-            world.dispose();
-            System.out.println("World disposed.");
-        }
+//        if (world != null) {
+//            world.dispose();
+//            System.out.println("World disposed.");
+//        }
         if (currentLevel != null) {
             currentLevel.onDespawn();
         }
-        levels.clear(); // Xóa danh sách các level
     }
 
     // Lấy chỉ số level theo tên
     public int getLevelIndexByName(String levelName) {
+        System.out.println("Getting level index: " + levelName);
         for (int i = 0; i < levels.size; i++) {
+            System.out.println(levels.get(i).getLevelName());
             if (levels.get(i).getLevelName().equals(levelName)) {
                 return i;
             }

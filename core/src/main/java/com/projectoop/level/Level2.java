@@ -15,14 +15,14 @@ public class Level2 extends Level {
     @Override
     public void onInit() {
         // Thiết lập MapBuilder với đường dẫn tới file map
-        setupMap("ProjectOOP/assets/" + levelName + ".tmx");
+        setupMap("ProjectOOP/OOP_project_draft-main/assets/" + levelName + ".tmx");
 
         if (mapBuilder != null && map != null) {
-            createStaticBodies();
-
             // Khởi tạo player và thiết lập vị trí ban đầu
-            player = new Player(world, new Vector2(60f, 160f), 2f, 10f / Constants.PPM);
+            player = new Player(world, new Vector2(1200f, 160f), 1.2f, 5f / Constants.PPM);
             player.onInit();
+
+            createStaticBodies();
 
             // Log vị trí của player để kiểm tra khởi tạo
             System.out.println("Player initialized at position: " + player.getPosition());
@@ -33,7 +33,7 @@ public class Level2 extends Level {
 
     // Phương thức tạo tất cả các body tĩnh từ RectangleMapObject trong map
     private void createStaticBodies() {
-        System.out.println("Creating static bodies for Level1...");
+        System.out.println("Creating static bodies for Level...");
 
         // Sử dụng createStaticBodies để tự động tạo body từ tất cả RectangleMapObject trong map
         mapBuilder.createStaticBodies();

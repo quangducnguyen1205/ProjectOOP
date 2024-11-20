@@ -34,7 +34,7 @@ public class Kunai extends Weapon {
         fixtureDef.friction = 0.1f;
         fixtureDef.restitution = 0f;
         fixtureDef.filter.categoryBits = Constants.WEAPON_BIT;
-        fixtureDef.filter.maskBits = Constants.ENEMY_BIT | Constants.OBSTACLE_BIT;
+        fixtureDef.filter.maskBits = Constants.ENEMY_BIT | Constants.PIPES_BIT;
 
         body.createFixture(fixtureDef).setUserData("Kunai");
 
