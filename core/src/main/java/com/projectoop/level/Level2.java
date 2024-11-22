@@ -31,13 +31,4 @@ public class Level2 extends Level {
         }
     }
 
-    // Phương thức tạo tất cả các body tĩnh từ RectangleMapObject trong map
-    private void createStaticBodies() {
-        System.out.println("Creating static bodies for Level...");
-
-        // Sử dụng createStaticBodies để tự động tạo body từ tất cả RectangleMapObject trong map
-        mapBuilder.createStaticBodies();
-
-        System.out.println("Static bodies created for all layers in the map.");
-    }
 }

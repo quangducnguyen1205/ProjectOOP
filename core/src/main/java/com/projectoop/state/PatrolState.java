@@ -18,14 +18,16 @@ public class PatrolState implements IState<Enemy> {
 
     @Override
     public void onEnter(Enemy enemy) {
+        System.out.println("Entering Patrol State");
         timer = 0;
         randomTime = new Random().nextFloat() * (6f - 3f) + 4f; // Random từ 4 đến 7 giây
-        System.out.println("Entering Idle State");
     }
 
     @Override
     public void onExecute(Enemy enemy) {
         timer += enemy.getDeltaTime();
+
+        enemy.changeDirection(enemy.getPlayer().getPosition().x > enemy.getPosition().x);
 
         // Chuyển sang AttackState nếu Player trong phạm vi
         if (enemy.isPlayerInRange()) {
@@ -38,7 +40,6 @@ public class PatrolState implements IState<Enemy> {
         if (timer >= randomTime) {
             enemy.changeState(IdleState.getInstance());
         }
-
     }
 
     @Override

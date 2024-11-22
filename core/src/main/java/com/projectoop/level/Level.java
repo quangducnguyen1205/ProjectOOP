@@ -2,8 +2,12 @@ package com.projectoop.level;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
+import com.projectoop.entity.Enemy;
 import com.projectoop.game.Player;
 import com.projectoop.utils.MapBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Level {
 
@@ -12,12 +16,14 @@ public abstract class Level {
     protected MapBuilder mapBuilder;
     protected World world;
     protected Player player;
+    private List<Enemy> enemies;// Danh sách Enemy
 
     // Constructor chung cho Level
     public Level(String levelName, World world) {
         this.levelName = levelName;
         this.world = world;
-        this.mapBuilder = null;  // Khởi tạo MapBuilder sau khi có thông tin
+        this.mapBuilder = null; // Khởi tạo MapBuilder sau khi có thông tin
+        this.enemies = new ArrayList<>();
     }
 
     // Phương thức khởi tạo level, mỗi level con sẽ định nghĩa riêng
@@ -27,6 +33,9 @@ public abstract class Level {
     public void onDespawn() {
         if (mapBuilder != null) {
             mapBuilder.dispose();  // Giải phóng tài nguyên từ MapBuilder
+        }
+        for (Enemy enemy : enemies) {
+            enemy.dispose(); // Giải phóng tài nguyên của Enemy
         }
     }
 
@@ -44,6 +53,21 @@ public abstract class Level {
             this.map = mapBuilder.getMap();
             System.out.println("Map loaded successfully for level: " + levelName);
         }
+    }
+    // Phương thức tạo tất cả các body tĩnh từ RectangleMapObject trong map
+    protected void createStaticBodies() {
+        System.out.println("Creating static bodies for Level...");
+
+        // Sử dụng createStaticBodies để tự động tạo body từ tất cả RectangleMapObject trong map
+        mapBuilder.createStaticBodies();
+
+        enemies.addAll(mapBuilder.getEnemies());
+
+        System.out.println("Static bodies created for all layers in the map.");
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 
     public String getLevelName() {

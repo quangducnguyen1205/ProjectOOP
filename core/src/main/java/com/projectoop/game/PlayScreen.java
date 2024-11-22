@@ -2,6 +2,7 @@ package com.projectoop.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.projectoop.entity.Enemy;
 import com.projectoop.manager.GameManager;
 import com.projectoop.manager.LevelManager;
@@ -33,17 +35,14 @@ public class PlayScreen implements Screen {
     private LevelManager levelManager;
     private Player player;
     private MapBuilder mapBuilder;
-    // Danh sách Enemy trong PlayScreen
-    private final List<Enemy> enemies = new ArrayList<>();
 
-    public PlayScreen() {
+    private final List<Enemy> enemies = new ArrayList<>(); // Danh sách Enemy
 
-    }
+    public PlayScreen() {}
 
     @Override
     public void show() {
         batch = new SpriteBatch();
-        //hud = new Hud(batch);
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH / Constants.PPM, Constants.VIRTUAL_HEIGHT / Constants.PPM, camera);
@@ -70,13 +69,9 @@ public class PlayScreen implements Screen {
         world = levelManager.getWorld();
         mapBuilder = levelManager.getCurrentLevel().getMapBuilder();
         renderer = mapBuilder.getRenderer();
-
-        // Lấy danh sách Enemy từ MapBuilder
-        enemies.clear(); // Xóa danh sách Enemy trước khi thêm mới
-        enemies.addAll(mapBuilder.getEnemies());
+        enemies.clear();
+        enemies.addAll(levelManager.getEnemies());
     }
-
-
 
     @Override
     public void render(float delta) {
@@ -115,7 +110,6 @@ public class PlayScreen implements Screen {
         // Cập nhật Enemy
         for (Enemy enemy : enemies) {
             enemy.update(delta);
-            // Kiểm tra nếu Enemy đã chết và cần xóa
             if (enemy.isDead() && enemy.getBody() != null) {
                 enemy.onDeath();
             }
@@ -129,13 +123,11 @@ public class PlayScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         if (player != null) {
-            player.render(batch);
+            player.render(batch); // Gọi Player.render(), bao gồm logic vẽ thanh máu
         }
-        // Vẽ tất cả các Enemy
         for (Enemy enemy : enemies) {
-            enemy.draw(batch); // Gọi phương thức draw cho mỗi Enemy
+            enemy.draw(batch);
         }
-
         batch.end();
     }
 
@@ -147,16 +139,12 @@ public class PlayScreen implements Screen {
         if (nextLevelIndex != -1) {
             String nextLevelName = levelManager.getCurrentLevel().getLevelName();
             GameManager.getInstance(GameManager.class).getPlayerData().setCurrentLevel(nextLevelName);
-
-            // Tải màn chơi tiếp theo
             updateLevel();
         } else {
             System.out.println("All levels completed!");
             UIManager.getInstance(UIManager.class).openUI(MainMenuCanvas.class);
         }
     }
-
-
 
     @Override
     public void resize(int width, int height) {
@@ -178,4 +166,12 @@ public class PlayScreen implements Screen {
 
     @Override
     public void hide() {}
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public Viewport getGamePort() {
+        return viewport;
+    }
 }

@@ -5,11 +5,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.projectoop.entity.Enemy;
 import com.projectoop.level.Level;
 import com.projectoop.level.Level1;
 import com.projectoop.level.Level2;
 import com.projectoop.ui.MainMenuCanvas;
 import com.projectoop.utils.CollisionHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelManager extends Singleton<LevelManager> {
 
@@ -17,6 +21,7 @@ public class LevelManager extends Singleton<LevelManager> {
     private Level currentLevel;
     private Array<Level> levels;
     private CollisionHandler collisionHandler; // Sử dụng CollisionHandler
+    private final List<Enemy> enemies = new ArrayList<>(); // Danh sách Enemy
 
     // Khởi tạo LevelManager
     protected LevelManager() {
@@ -49,7 +54,7 @@ public class LevelManager extends Singleton<LevelManager> {
         int levelIndex = getLevelIndexByName(levelName);
         System.out.println("Loading level: " + levelIndex);
         if (levelIndex != -1) {
-            loadLevel(levelIndex + 1);
+            loadLevel(levelIndex);
         } else {
             Gdx.app.log("LevelManager", "Level not found: " + levelName);
         }
@@ -111,10 +116,6 @@ public class LevelManager extends Singleton<LevelManager> {
 
     // Giải phóng tài nguyên
     public void dispose() {
-//        if (world != null) {
-//            world.dispose();
-//            System.out.println("World disposed.");
-//        }
         if (currentLevel != null) {
             currentLevel.onDespawn();
         }
@@ -140,4 +141,12 @@ public class LevelManager extends Singleton<LevelManager> {
         }
         return -1;
     }
+
+    public List<Enemy> getEnemies() {
+        if (currentLevel != null) {
+            return currentLevel.getEnemies();
+        }
+        return new ArrayList<>();
+    }
+
 }

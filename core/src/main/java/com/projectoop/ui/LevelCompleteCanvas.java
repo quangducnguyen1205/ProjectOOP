@@ -10,7 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.projectoop.game.PlayerData;
 import com.projectoop.manager.GameManager;
-import com.projectoop.ui.story.*;
+import com.projectoop.ui.story.StoryLevel1;
+import com.projectoop.ui.story.StoryLevel2;
+import com.projectoop.ui.story.StoryLevel3;
+import com.projectoop.ui.story.StoryLevel4;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +54,7 @@ public class LevelCompleteCanvas extends UICanvas {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                closeDirectly();
                 handleContinue();
             }
         });

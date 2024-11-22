@@ -34,11 +34,6 @@ public class Orc extends Enemy {
     public void defineBody() {
         super.defineBody();
     }
-    @Override
-    public void onDespawn() {
-        // Logic khi Orc bị hủy
-        System.out.println("Orc has been despawned.");
-    }
 
     @Override
     public void onDeath() {

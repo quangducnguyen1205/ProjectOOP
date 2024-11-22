@@ -2,6 +2,7 @@ package com.projectoop.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +16,7 @@ import static com.projectoop.utils.Constants.*;
 public class Player extends Characters {
 
     private enum PlayerState {
-        IDLE, RUNNING, JUMPING, FALLING, ATTACKING
+        IDLE, RUNNING, JUMPING, FALLING, ATTACKING, DYING
     }
 
     private final Vector2 position;
@@ -28,19 +29,26 @@ public class Player extends Characters {
     private PlayerState currentState;
     private PlayerState previousState;
 
-    private boolean isOnGround; // Trạng thái tiếp đất
+    private boolean isOnGround;
 
     private final World world;
     private Body body;
     private Array<Kunai> kunaiArray;
     private Vector2 currentSavePoint;
 
-    private boolean isDying = false; // Kiểm tra xem Player đang trong trạng thái chết
-    private float deathTimer = 0f;  // Bộ đếm thời gian cho hoạt ảnh chết
-    private final float deathDuration = 1.0f; // Thời gian hoạt ảnh chết (giây)
+    private boolean isDying = false;
+    private float deathTimer = 0f;
+    private final float deathDuration = 1.0f;
 
-    private boolean levelCompleted; // Trạng thái hoàn thành cấp độ
-    private Vector2 levelEndPoint;  // Điểm kết thúc cấp độ
+    private boolean levelCompleted;
+    private Vector2 levelEndPoint;
+
+    private float maxHp = 100; // Máu tối đa
+    private float currentHp; // Máu hiện tại
+
+    // **Thêm texture cho thanh máu**
+    private Texture healthBarBg;
+    private Texture healthBarFg;
 
     public Player(World world, Vector2 startPosition, float speed, float jumpForce) {
         this.world = world;
@@ -49,12 +57,18 @@ public class Player extends Characters {
         this.speed = speed;
         this.jumpForce = jumpForce;
         this.kunaiArray = new Array<>();
-        this.isOnGround = false; // Ban đầu không tiếp đất
+        this.isOnGround = false;
 
         this.currentState = PlayerState.IDLE;
         this.previousState = PlayerState.IDLE;
 
-        this.levelEndPoint = null; // Điểm kết thúc cấp độ mặc định là nullv
+        this.levelEndPoint = null;
+
+        this.currentHp = maxHp; // Khởi tạo máu đầy đủ
+
+        // **Khởi tạo texture cho thanh máu**
+        healthBarBg = new Texture("HealthBar/bg.png");
+        healthBarFg = new Texture("HealthBar/green.png");
 
         createBody();
     }
@@ -62,7 +76,6 @@ public class Player extends Characters {
     private void createBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-
         bodyDef.position.set(currentSavePoint.x / PPM, currentSavePoint.y / PPM);
 
         body = world.createBody(bodyDef);
@@ -84,7 +97,6 @@ public class Player extends Characters {
 
     @Override
     public void onInit() {
-        hp = 100;
         addAnimation(ANIM_RUN, loadAnimation("assets/Ninja/Run/Run", 10, 0.1f));
         addAnimation(ANIM_IDLE, loadAnimation("assets/Ninja/Idle/Idle", 10, 0.1f));
         addAnimation(ANIM_JUMP, loadAnimation("assets/Ninja/Jump/Jump", 6, 0.1f));
@@ -93,32 +105,26 @@ public class Player extends Characters {
         changeAnim(ANIM_IDLE, true);
     }
 
-    @Override
-    public void onDespawn() {
-        // Đặt lại vị trí Body tới SavePoint
-        body.setTransform(currentSavePoint.x / PPM, currentSavePoint.y / PPM, 0);
+    public void heal(float amount) {
+        currentHp = Math.min(maxHp, currentHp + amount);
+    }
 
-        // Reset trạng thái Player
-        currentState = PlayerState.IDLE;
-        previousState = PlayerState.IDLE;
+    public float getCurrentHealth() {
+        return currentHp;
+    }
 
-        // Đặt lại hoạt ảnh về IDLE
-        changeAnim(ANIM_IDLE, true);
-
-        isDying = false; // Reset trạng thái chết
+    public float getMaxHealth() {
+        return maxHp;
     }
 
     @Override
     public void onDeath() {
         if (!isDying) {
-            changeAnim(ANIM_DEATH, false); // Chạy hoạt ảnh chết
-
-            // Dừng tất cả chuyển động vật lý
-            body.setLinearVelocity(0, 0); // Ngừng di chuyển
-            body.setAngularVelocity(0); // Ngừng xoay
-
+            changeAnim(ANIM_DEATH, false);
+            body.setLinearVelocity(0, 0);
+            body.setAngularVelocity(0);
             isDying = true;
-            deathTimer = 0f; // Reset bộ đếm thời gian
+            deathTimer = 0f;
         }
     }
 
@@ -127,32 +133,43 @@ public class Player extends Characters {
         super.update(delta);
 
         if (isDying) {
-            deathTimer += delta; // Tăng bộ đếm thời gian theo delta
-            if (deathTimer >= deathDuration) { // Nếu đủ thời gian hoạt ảnh chết
-                onDespawn(); // Chạy logic hồi sinh tại SavePoint
+            deathTimer += delta;
+            if (deathTimer >= deathDuration) {
+                dispose(); // Chuyển sang gọi dispose thay vì onDespawn
             }
-            return; // Không cập nhật gì thêm khi Player đang chết
+            return;
         }
 
         handleInput();
         updateState();
 
-        // Update position based on Box2D physics
         position.set(body.getPosition().x - frameWidth / 2, body.getPosition().y - frameHeight / 2);
 
-        // Update Kunai logic
         for (Kunai kunai : kunaiArray) {
             kunai.update(delta);
         }
 
-        // Update animation if state changes
         if (currentState != previousState) {
             updateAnimation();
             previousState = currentState;
         }
 
-        // Kiểm tra hoàn thành cấp độ
         checkLevelCompletion();
+    }
+
+    @Override
+    public void dispose() {
+        // Giải phóng tài nguyên liên quan
+        if (healthBarBg != null) {
+            healthBarBg.dispose();
+        }
+        if (healthBarFg != null) {
+            healthBarFg.dispose();
+        }
+
+        if (body != null && world != null) {
+            world.destroyBody(body); // Hủy body khỏi world
+        }
     }
 
     private void handleInput() {
@@ -206,6 +223,7 @@ public class Player extends Characters {
     }
 
     public void render(Batch batch) {
+        // Vẽ nhân vật
         TextureRegion currentFrame = getCurrentFrame();
         if (currentFrame != null) {
             if (facingRight) {
@@ -214,17 +232,33 @@ public class Player extends Characters {
                 batch.draw(currentFrame, position.x + frameWidth, position.y, -frameWidth, frameHeight);
             }
         }
+
+        // Vẽ thanh máu
+        drawHealthBar(batch);
+
+        // Vẽ Kunai
         for (Kunai kunai : kunaiArray) {
             kunai.render(batch);
         }
     }
 
+    private void drawHealthBar(Batch batch) {
+        float healthPercentage = currentHp / maxHp;
+        float barWidth = 50 / PPM;
+        float barHeight = 8 / PPM;
+
+        float barX = body.getPosition().x - barWidth / 2;
+        float barY = body.getPosition().y + frameHeight;
+
+        batch.draw(healthBarBg, barX, barY, barWidth, barHeight);
+        batch.draw(healthBarFg, barX, barY, barWidth * healthPercentage, barHeight);
+    }
+
     private void checkLevelCompletion() {
         if (levelEndPoint != null) {
             float distanceToEnd = position.dst(levelEndPoint);
-            if (distanceToEnd < 0.5f) { // Khoảng cách nhỏ hơn 0.5 thì coi như đã hoàn thành cấp độ
+            if (distanceToEnd < 0.5f) {
                 levelCompleted = true;
-                System.out.println("Level completed!");
             }
         }
     }
@@ -252,8 +286,8 @@ public class Player extends Characters {
     public boolean isOnGround() {
         return isOnGround;
     }
+
     public boolean isDying() {
         return isDying;
     }
-
 }

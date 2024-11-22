@@ -1,5 +1,6 @@
 package com.projectoop.entity;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -13,7 +14,8 @@ import com.projectoop.utils.Constants;
 import static com.projectoop.utils.Constants.PPM;
 
 public abstract class Enemy extends Characters {
-    private static final float ATTACK_RADIUS = 0.5f; // Phạm vi phát hiện Player
+    private static final float DETECTED_RADIUS = 0.3f;
+    private static final float ATTACK_RADIUS = 0.2f; // Phạm vi phát hiện Player
     private Vector2 velocity;
     private IState<Enemy> currentState;  // Trạng thái hiện tại
     protected Body body;
@@ -23,6 +25,11 @@ public abstract class Enemy extends Characters {
     private float height = 64f / PPM; // Kích thước cố định cho Enemy
     private boolean isFacingRight = true; // Trạng thái hướng hiện tại
     private float moveSpeed = 0.5f;
+
+    // **Thêm thanh máu**
+    private Texture healthBarBg;
+    private Texture healthBarFg;
+    private float maxHealth = 100;  // Máu tối đa
 
     public Enemy(World world, Vector2 startPosition) {
         super();
@@ -54,6 +61,11 @@ public abstract class Enemy extends Characters {
 
         // Khởi động trạng thái đầu tiên
         currentState.onEnter(this);
+
+        // **Khởi tạo thanh máu**
+        healthBarBg = new Texture("HealthBar/bg.png");
+        healthBarFg = new Texture("HealthBar/green.png");
+        hp = maxHealth;
     }
 
     // Định nghĩa Body cho Enemy
@@ -131,23 +143,25 @@ public abstract class Enemy extends Characters {
 
     @Override
     public void onDeath() {
-        if (body != null) {
-            world.destroyBody(body);
-            body = null;
-        }
         changeAnim("death", false);
         velocity.set(0, 0);
+        dispose();
         System.out.println("Enemy has died.");
     }
-
     @Override
-    public void onDespawn() {
-        System.out.println("Enemy has been despawned.");
+    public void dispose() {
+        if (healthBarBg != null) healthBarBg.dispose();
+        if (healthBarFg != null) healthBarFg.dispose();
+        if (body != null && world != null) world.destroyBody(body);
+        System.out.println("Enemy resources disposed.");
     }
 
     public void attack(){
-        changeAnim(Constants.ANIM_ATTACK, false);
-        System.out.println("Performing Attack!");
+        if (isPlayerAttacked()) {
+            //changeAnim(Constants.ANIM_ATTACK, false);
+            player.takeDamage(10); // Giảm máu của Player
+            System.out.println("Enemy attacks Player!");
+        }
     }
 
     public void stopMoving() {
@@ -190,11 +204,28 @@ public abstract class Enemy extends Characters {
     }
 
     public boolean isPlayerInRange() {
+        return player != null && getDistanceToPlayer() <= DETECTED_RADIUS;
+    }
+
+    public boolean isPlayerAttacked() {
         return player != null && getDistanceToPlayer() <= ATTACK_RADIUS;
+    }
+
+    public void drawHealthBar(Batch batch) {
+        float healthPercentage = hp / maxHealth;
+        float barWidth = 50 / PPM;
+        float barHeight = 8 / PPM;
+
+        float barX = body.getPosition().x - barWidth / 2;
+        float barY = body.getPosition().y + height / 2 - 20/PPM; // Thanh máu trên đầu enemy
+
+        batch.draw(healthBarBg, barX, barY, barWidth, barHeight);  // Nền
+        batch.draw(healthBarFg, barX, barY, barWidth * healthPercentage, barHeight);  // Máu
     }
 
     @Override
     public void draw(Batch batch) {
+        //super.draw(batch);
         TextureRegion frame = getCurrentFrame(); // Lấy frame hiện tại
         if (frame != null) {
             if (isFacingRight) {
@@ -207,6 +238,7 @@ public abstract class Enemy extends Characters {
         } else {
             System.out.println("Frame not available for enemy!");
         }
+        drawHealthBar(batch);
     }
 
 
@@ -238,6 +270,10 @@ public abstract class Enemy extends Characters {
 
         // Kích hoạt trạng thái mới
         currentState.onEnter(this);
+    }
+
+    public Boolean getIsFacingRight() {
+        return isFacingRight;
     }
 
     public IState<Enemy> getCurrentState() {

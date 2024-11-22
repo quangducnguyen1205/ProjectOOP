@@ -28,12 +28,6 @@ public class IdleState implements IState<Enemy> {
     public void onExecute(Enemy enemy) {
         timer += enemy.getDeltaTime(); // Cập nhật thời gian trong trạng thái Idle
 
-        // Nếu Player trong phạm vi, chuyển sang AttackState
-        if (enemy.isPlayerInRange()) {
-            enemy.changeState(AttackState.getInstance());
-            return;
-        }
-
         // Chuyển sang PatrolState sau khi hết thời gian chờ
         if (timer >= randomTime) {
             enemy.changeState(PatrolState.getInstance());

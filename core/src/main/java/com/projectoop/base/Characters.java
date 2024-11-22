@@ -30,7 +30,41 @@ public abstract class Characters extends Sprite {
     }
 
     public abstract void onInit();
-    public abstract void onDespawn();
+
+    public void takeDamage(float damage) {
+        if (!isDead()) {
+            hp -= damage;
+            if (isDead()) {
+                hp = 0;
+                onDeath();
+            }
+        }
+    }
+
+    // Thay đổi từ onDespawn() thành dispose()
+    public void dispose() {
+        // Giải phóng các tài nguyên được quản lý trong Character
+        if (animations != null) {
+            for (Animation<TextureRegion> anim : animations.values()) {
+                if (anim != null) {
+                    for (TextureRegion region : anim.getKeyFrames()) {
+                        if (region != null) {
+                            region.getTexture().dispose(); // Giải phóng texture
+                        }
+                    }
+                }
+            }
+        }
+
+        if (currentAnimation != null) {
+            for (TextureRegion region : currentAnimation.getKeyFrames()) {
+                if (region != null) {
+                    region.getTexture().dispose(); // Giải phóng texture
+                }
+            }
+        }
+    }
+
     public abstract void onDeath();
 
     // Thêm animation vào danh sách
@@ -88,6 +122,7 @@ public abstract class Characters extends Sprite {
         }
         return null; // Trường hợp không có animation
     }
+
     // Thêm hàm loadAnimation
     protected Animation<TextureRegion> loadAnimation(String folderPath, int frameCount, float frameDuration) {
         Array<TextureRegion> frames = new Array<>();
