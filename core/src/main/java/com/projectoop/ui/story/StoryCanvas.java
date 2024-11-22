@@ -48,6 +48,7 @@ public class StoryCanvas extends UICanvas {
                     .getPlayerData()
                     .addFirstTimePlayedLevel(levelName);
 
+
                 closeDirectly();
                 GameManager.getInstance(GameManager.class).getPlayerData().setCurrentLevel(levelName);
                 GameManager.getInstance(GameManager.class).setScreen(new PlayScreen());

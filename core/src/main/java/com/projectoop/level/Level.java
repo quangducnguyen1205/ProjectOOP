@@ -37,6 +37,10 @@ public abstract class Level {
         for (Enemy enemy : enemies) {
             enemy.dispose(); // Giải phóng tài nguyên của Enemy
         }
+        enemies.clear();
+//        if (player != null) {
+//            player.dispose();
+//        }
     }
 
     // Trả về player cho LevelManager quản lý

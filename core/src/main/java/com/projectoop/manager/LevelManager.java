@@ -21,7 +21,6 @@ public class LevelManager extends Singleton<LevelManager> {
     private Level currentLevel;
     private Array<Level> levels;
     private CollisionHandler collisionHandler; // Sử dụng CollisionHandler
-    private final List<Enemy> enemies = new ArrayList<>(); // Danh sách Enemy
 
     // Khởi tạo LevelManager
     protected LevelManager() {
@@ -38,6 +37,9 @@ public class LevelManager extends Singleton<LevelManager> {
             addLevel(new Level2("level2", world));
         }
 
+         onInit();
+    }
+    public void onInit(){
         // Lấy cấp độ hiện tại từ PlayerData
         String currentLevel = GameManager.getInstance(GameManager.class).getPlayerData().getCurrentLevel();
 

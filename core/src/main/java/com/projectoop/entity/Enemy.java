@@ -14,8 +14,8 @@ import com.projectoop.utils.Constants;
 import static com.projectoop.utils.Constants.PPM;
 
 public abstract class Enemy extends Characters {
-    private static final float DETECTED_RADIUS = 0.3f;
-    private static final float ATTACK_RADIUS = 0.2f; // Phạm vi phát hiện Player
+    private static final float DETECTED_RADIUS = 0.5f; // Phạm vi phát hiện Player
+    private static final float ATTACK_RADIUS = 0.3f;
     private Vector2 velocity;
     private IState<Enemy> currentState;  // Trạng thái hiện tại
     protected Body body;
@@ -25,6 +25,10 @@ public abstract class Enemy extends Characters {
     private float height = 64f / PPM; // Kích thước cố định cho Enemy
     private boolean isFacingRight = true; // Trạng thái hướng hiện tại
     private float moveSpeed = 0.5f;
+    private boolean isDying = false; // Đánh dấu trạng thái đang chết
+    private float deathTimer = 0f; // Bộ đếm thời gian chết
+    private final float deathDuration = 0.4f; // Thời gian hiển thị anim chết
+
 
     // **Thêm thanh máu**
     private Texture healthBarBg;
@@ -124,6 +128,14 @@ public abstract class Enemy extends Characters {
     public void update(float delta) {
         super.update(delta);
 
+        if (isDying) {
+            deathTimer += delta;
+            if (deathTimer >= deathDuration) {
+                dispose(); // Hủy Enemy sau khi anim chết hoàn tất
+            }
+            return; // Không thực hiện các logic khác khi Enemy đang chết
+        }
+
         // Cập nhật logic của trạng thái hiện tại
         if (currentState != null) {
             currentState.onExecute(this);
@@ -143,22 +155,31 @@ public abstract class Enemy extends Characters {
 
     @Override
     public void onDeath() {
-        changeAnim("death", false);
-        velocity.set(0, 0);
-        dispose();
-        System.out.println("Enemy has died.");
+        if (!isDying) {
+            isDying = true;
+            changeAnim(Constants.ANIM_DEATH, false); // Hiển thị anim chết
+            velocity.set(0, 0);
+            System.out.println("Enemy is dying...");
+        }
     }
     @Override
     public void dispose() {
         if (healthBarBg != null) healthBarBg.dispose();
         if (healthBarFg != null) healthBarFg.dispose();
-        if (body != null && world != null) world.destroyBody(body);
+
+        if (body != null) {
+            assert world != null;
+            if (!world.isLocked()) { // Chỉ hủy nếu World không bị khóa
+                world.destroyBody(body);
+            }
+        }
+        body = null;
         System.out.println("Enemy resources disposed.");
     }
 
     public void attack(){
-        if (isPlayerAttacked()) {
-            //changeAnim(Constants.ANIM_ATTACK, false);
+        if (isPlayerAttacked() && player != null) {
+            changeAnim(Constants.ANIM_ATTACK, false);
             player.takeDamage(10); // Giảm máu của Player
             System.out.println("Enemy attacks Player!");
         }

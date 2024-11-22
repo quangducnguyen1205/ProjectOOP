@@ -5,8 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.projectoop.entity.Enemy;
 import com.projectoop.game.Player;
-import com.projectoop.ui.LevelCompleteCanvas;
-import com.projectoop.ui.UIManager;
+import com.projectoop.manager.LevelManager;
 
 public class CollisionHandler implements ContactListener {
     private static final float MIN_OBSTACLE_DISTANCE = 0.2f; // Khoảng cách tối thiểu trước khi đổi hướng
@@ -167,6 +166,7 @@ public class CollisionHandler implements ContactListener {
 
     private void handlePlayerFinishZoneCollision(Fixture fixA, Fixture fixB) {
         // Hiển thị UI hoàn thành màn chơi
-        UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
+        //UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
+        LevelManager.getInstance(LevelManager.class).onLevelCompleted();
     }
 }

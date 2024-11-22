@@ -20,9 +20,6 @@ import com.projectoop.ui.UIManager;
 import com.projectoop.utils.Constants;
 import com.projectoop.utils.MapBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class PlayScreen implements Screen {
 
     private SpriteBatch batch;
@@ -36,7 +33,7 @@ public class PlayScreen implements Screen {
     private Player player;
     private MapBuilder mapBuilder;
 
-    private final List<Enemy> enemies = new ArrayList<>(); // Danh sách Enemy
+    //private final List<Enemy> enemies = new ArrayList<>(); // Danh sách Enemy
 
     public PlayScreen() {}
 
@@ -69,8 +66,8 @@ public class PlayScreen implements Screen {
         world = levelManager.getWorld();
         mapBuilder = levelManager.getCurrentLevel().getMapBuilder();
         renderer = mapBuilder.getRenderer();
-        enemies.clear();
-        enemies.addAll(levelManager.getEnemies());
+        //enemies.clear();
+        //enemies.addAll(levelManager.getEnemies());
     }
 
     @Override
@@ -108,7 +105,7 @@ public class PlayScreen implements Screen {
             world.step(delta, 6, 2);
         }
         // Cập nhật Enemy
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : levelManager.getEnemies()) {
             enemy.update(delta);
             if (enemy.isDead() && enemy.getBody() != null) {
                 enemy.onDeath();
@@ -125,7 +122,7 @@ public class PlayScreen implements Screen {
         if (player != null) {
             player.render(batch); // Gọi Player.render(), bao gồm logic vẽ thanh máu
         }
-        for (Enemy enemy : enemies) {
+        for (Enemy enemy : levelManager.getEnemies()) {
             enemy.draw(batch);
         }
         batch.end();

@@ -27,10 +27,9 @@ public class PatrolState implements IState<Enemy> {
     public void onExecute(Enemy enemy) {
         timer += enemy.getDeltaTime();
 
-        enemy.changeDirection(enemy.getPlayer().getPosition().x > enemy.getPosition().x);
-
         // Chuyển sang AttackState nếu Player trong phạm vi
         if (enemy.isPlayerInRange()) {
+            //enemy.changeDirection(enemy.getPlayer().getPosition().x > enemy.getPosition().x);
             enemy.changeState(AttackState.getInstance());
         } else {
             enemy.move();
