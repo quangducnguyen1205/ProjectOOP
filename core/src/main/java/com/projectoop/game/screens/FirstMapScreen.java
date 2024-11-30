@@ -1,26 +1,22 @@
 package com.projectoop.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.projectoop.game.GameWorld;
+import com.projectoop.game.manager.GameManager;
 import com.projectoop.game.scences.PlayerEnergyBar;
 import com.projectoop.game.scences.PlayerHealthBar;
 import com.projectoop.game.sprites.effectedObject.EffectedObject;
 import com.projectoop.game.sprites.enemy.Enemy;
 import com.projectoop.game.sprites.Knight;
-import com.projectoop.game.sprites.enemy.GroundEnemy;
 import com.projectoop.game.sprites.items.Item;
 import com.projectoop.game.sprites.items.ItemDef;
 import com.projectoop.game.sprites.items.Potion;
@@ -28,6 +24,9 @@ import com.projectoop.game.sprites.items.Potion1;
 import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.tools.B2WorldCreator;
 import com.projectoop.game.tools.WorldContactListener;
+import com.projectoop.game.ui.GameOverScreen;
+import com.projectoop.game.ui.LevelCompleteCanvas;
+import com.projectoop.game.ui.UIManager;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -176,13 +175,14 @@ public class FirstMapScreen extends PlayScreen {
         batch.end();
 
         if (gameOver()) {
-            game.setScreen(new GameOverScreen(game));
-            dispose();
+            UIManager.getInstance(UIManager.class).openUI(GameOverScreen.class);
+            //dispose();
         }
 
         if (passThisRound){
-            game.setScreen(new ThirdMapScreen(game));
-            dispose();
+            UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
+            GameManager.getInstance(GameManager.class).setScreen(new SecondMapScreen(GameManager.getInstance(GameManager.class).getGameWorld()));
+            //dispose();
         }
     }
 }

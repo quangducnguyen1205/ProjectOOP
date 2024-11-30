@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.projectoop.game.GameWorld;
 import com.projectoop.game.screens.PlayScreen;
 import com.projectoop.game.sprites.Knight;
+import com.projectoop.game.ui.LevelCompleteCanvas;
+import com.projectoop.game.ui.UIManager;
 
 public class Portal extends InteractiveTileObject{
     public Portal(PlayScreen screen, MapObject object) {
@@ -23,6 +25,7 @@ public class Portal extends InteractiveTileObject{
         System.out.println("max_monster: " + screen.creator.getGroundEnemies().size + "  killed: " + screen.kill);
         if (screen.creator.getGroundEnemies() == null || screen.creator.getGroundEnemies().size <= screen.kill){
             screen.passThisRound = true;
+            //UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
         }
 
     }

@@ -98,8 +98,8 @@ public class Knight extends Sprite {
         untilCount = UNTIL_COOL_DOWN;
         isRunningRight = true;
 
-        health = 100;
-        healthMax = 100;
+        health = 500;
+        healthMax = 500;
 
         prepareAnimation();
         prepareSound();
