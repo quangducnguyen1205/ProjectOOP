@@ -24,7 +24,8 @@ import com.projectoop.game.sprites.items.Potion1;
 import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.tools.B2WorldCreator;
 import com.projectoop.game.tools.WorldContactListener;
-import com.projectoop.game.ui.GameOverScreen;
+import com.projectoop.game.ui.GameOverCanvas;
+import com.projectoop.game.ui.GameOverCanvas;
 import com.projectoop.game.ui.LevelCompleteCanvas;
 import com.projectoop.game.ui.UIManager;
 
@@ -175,7 +176,7 @@ public class SecondMapScreen extends PlayScreen {
         batch.end();
 
         if (gameOver()) {
-            UIManager.getInstance(UIManager.class).openUI(GameOverScreen.class);
+            UIManager.getInstance(UIManager.class).openUI(GameOverCanvas.class);
             //dispose();
         }
 

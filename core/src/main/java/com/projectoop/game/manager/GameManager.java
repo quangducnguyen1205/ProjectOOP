@@ -59,6 +59,10 @@ public class GameManager extends Singleton<GameManager> {
         return gameWorld;
     }
 
+    public ScreenManager getScreenManager() {
+        return screenManager;
+    }
+
     public PlayerData getPlayerData() {
         return playerData;
     }
