@@ -13,7 +13,6 @@ public class GameWorld extends Game {
     public static final int V_HEIGHT = 300;
     public static final float PPM = 100;//pixel per meter
 
-    public static final short ENEMY1_BIT = 3;
     public static final short PRINCESS_BIT = 5;
 
     public static final short GROUND_BIT = 1;

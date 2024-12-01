@@ -25,7 +25,6 @@ import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.tools.B2WorldCreator;
 import com.projectoop.game.tools.WorldContactListener;
 import com.projectoop.game.ui.GameOverCanvas;
-import com.projectoop.game.ui.GameOverCanvas;
 import com.projectoop.game.ui.LevelCompleteCanvas;
 import com.projectoop.game.ui.UIManager;
 
@@ -177,13 +176,11 @@ public class SecondMapScreen extends PlayScreen {
 
         if (gameOver()) {
             UIManager.getInstance(UIManager.class).openUI(GameOverCanvas.class);
-            //dispose();
         }
 
         if (passThisRound){
             UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
             GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
-            //dispose();
         }
     }
 }

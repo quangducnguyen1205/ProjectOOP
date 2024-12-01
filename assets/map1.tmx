@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="142">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="200" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="148">
  <tileset firstgid="1" source="finished_map.tsx"/>
  <layer id="1" name="Background" width="200" height="22">
   <data encoding="base64" compression="zlib">
@@ -8,7 +8,7 @@
  </layer>
  <layer id="2" name="Graphic Layer" width="200" height="22">
   <data encoding="base64" compression="zlib">
-   eJzt10EOgjAQhWEidetl3NgzejHxRu7EEBIyqS0tKe20/5e8VImpI+ShDgMAAAAAAAAAAAAAQANbegDA4WlKT7BovR/reZZri26b4BgrVqC0S+TxnOhHf+zA9Q6RveB89eOsfvx+w67Rhn70wfVf5Ix+bLsR6si/18QeT53T9TimH6NY5X613h/k9fmIVfP97Yjc/XB1Q9t55vujXzn74euGpo7Qj37l6seebmjpSKl+7HmfFrv6uKblZZZMc94mfR/f3rn2T51pMu7ZUmes7TPGXptaZ5dzhZ77ch8JIYSQ+HwBUFbFsQ==
+   eJzt10EOgjAQheFG6pbLuJEzejHxRu7EEBIyKS0tKe3Q/0teUGLqSPNQjQEAAAAAAAAAAAAAaDCUHgBweNnSE8zduHo/lussj1fUr4JjBtNGP6DHLfJ8LoOhHy1iv8NkN7he7Thrv/+/YZdoQz/a4PovcsZ+r7sR6sjWa2LPp87pehzTj04c5Xq13h/k/nzFUfP97Yjc/XB1Q9t1Lv390W8E+eXcb183NHWkdD9QTq793tMNLR0p1Y8973PFrj7vaXnbOeOUj01fx7d2rvVTZxqte7bUGWv7jLF7U+vscq7Qc18eHSGEEBKfH9EDyZU=
   </data>
  </layer>
  <objectgroup id="3" name="Ground">
@@ -43,6 +43,7 @@
   <object id="80" x="1632" y="240" width="16" height="16"/>
   <object id="81" x="1680" y="240" width="16" height="16"/>
   <object id="84" x="1728" y="208" width="16" height="96"/>
+  <object id="143" x="1728" y="208" width="16" height="96"/>
   <object id="85" x="1760" y="176" width="16" height="128"/>
   <object id="87" x="1792" y="144" width="16" height="160"/>
   <object id="99" x="1136" y="240" width="48" height="16"/>
@@ -66,6 +67,9 @@
   <object id="139" x="1936" y="240" width="16" height="16"/>
   <object id="140" x="2000" y="240" width="16" height="16"/>
   <object id="141" x="2032" y="240" width="16" height="16"/>
+  <object id="144" x="1744" y="192.596" width="16.2991" height="110.435"/>
+  <object id="145" x="1776.27" y="160.33" width="15.6338" height="142.7"/>
+  <object id="147" x="2240.27" y="256.597" width="95.3402" height="15.0537"/>
  </objectgroup>
  <objectgroup id="4" name="Pilar">
   <object id="3" x="288" y="224.25" width="2.75" height="79.5"/>
