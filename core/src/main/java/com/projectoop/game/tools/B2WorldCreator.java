@@ -225,63 +225,56 @@ public class B2WorldCreator {
         }
 
 
-        /// //////  Test map a Chinh la map Dinh
-        if (screen instanceof FirstMapScreen){
-            for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
+        /////// Map của Định
+        if (screen instanceof FirstMapScreen) {
+            //ground_ however if we need to make it short
+            for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
                 bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set((rect.getX() + rect.getWidth()/2)/ GameWorld.PPM, (rect.getY() + rect.getHeight()/2)/GameWorld.PPM);
+                bdef.position.set((rect.getX() + rect.getWidth() / 2) / GameWorld.PPM, (rect.getY() + rect.getHeight() / 2) / GameWorld.PPM);
 
                 body = world.createBody(bdef);
 
-                shape.setAsBox(rect.getWidth()/2/GameWorld.PPM, rect.getHeight()/2/GameWorld.PPM);
+                shape.setAsBox(rect.getWidth() / 2 / GameWorld.PPM, rect.getHeight() / 2 / GameWorld.PPM);
                 fdef.shape = shape;
                 fdef.filter.categoryBits = GameWorld.GROUND_BIT;//if (automatic) enemy collide with object, then change direction
                 body.createFixture(fdef);
             }
             //trap
-            for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
                 new Trap(screen, object);
             }
-
-            // crete pipes
-            for(MapObject object: map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            //pilar
+            for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
                 new Pilar(screen, object);
             }
             //list of enemies
             groundEnemies = new Array<>();
             //create all skeleton
-            for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
-                groundEnemies.add(new Skeleton(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
+            for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                groundEnemies.add(new Mushroom(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
-            //create all orcs
-            for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
-                groundEnemies.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
+            //create all goblins
+            for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                groundEnemies.add(new Goblin(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
-
             //create all flyenemies;
-            for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 groundEnemies.add(new FlyEnemy(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
             //create all chests
             chests = new Array<>();
-            for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 chests.add(new Chest(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
-            //create all chest1s
-            chest1s = new Array<>();
-            for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
-                chest1s.add(new Chest1(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
-            }
-
-            for (MapObject object : map.getLayers().get(11).getObjects().getByType(RectangleMapObject.class)){
-                portal2 = new Portal(screen, object);
+            // create a portal to tranverse through each map
+            for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
+                portal3 = new Portal(screen, object);
             }
         }
     }
