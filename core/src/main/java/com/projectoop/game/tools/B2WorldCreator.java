@@ -1,5 +1,6 @@
 package com.projectoop.game.tools;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -19,6 +20,7 @@ public class B2WorldCreator {
     private Array<Enemy> groundEnemies;
     private Array<Chest> chests;
     private Array<Chest1> chest1s;
+    public Portal portal1;
     public Portal portal2;
     public Portal portal3;
     public float savePrincessPointX;
@@ -273,8 +275,8 @@ public class B2WorldCreator {
                 chests.add(new Chest(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
             // create a portal to tranverse through each map
-            for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
-                portal3 = new Portal(screen, object);
+            for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+                portal1 = new Portal(screen, object);
             }
         }
     }

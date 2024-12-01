@@ -34,11 +34,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class FourthMapScreen extends PlayScreen{
     public FourthMapScreen(GameWorld gameWorld){
         super(gameWorld);
+        passThisRound = true; // test
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map4.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/GameWorld.PPM);
-        gameCam.position.set(gamePort.getWorldWidth() /2, gamePort.getWorldHeight() /2, 0);
+        gameCam.position.set( gamePort.getWorldWidth() /2, gamePort.getWorldHeight() /2, 0);
 
         world = new World(new Vector2(0, -10), true);//vector gravity
         b2dr = new Box2DDebugRenderer();
@@ -229,6 +230,7 @@ public class FourthMapScreen extends PlayScreen{
 
     // Thêm phương thức này vào FourthMapScreen
     public void moveKnightToSavePrincessPoint() {
+        passThisRound = false; // test
         // Di chuyển Knight tới vị trí Princess
         player.b2body.setTransform(creator.savePrincessPointX, creator.savePrincessPointY, player.b2body.getAngle());
         // Có thể gọi hàm khác nếu cần, ví dụ: animation chuyển động của Knight
