@@ -207,6 +207,18 @@ public class B2WorldCreator {
                 //  groundEnemies.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
                 groundEnemies.add(new Boss(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM,35,1.5f,15));
             }
+            for (MapObject object : map.getLayers().get(18).getObjects().getByType(RectangleMapObject.class)){
+                Rectangle rect = ((RectangleMapObject)object).getRectangle();
+                groundEnemies.add(new Princess(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
+
+            }
+            for (MapObject object : map.getLayers().get(20).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject)object).getRectangle();
+                // Lưu trữ vị trí của Princess để có thể sử dụng sau
+                float princessX = rect.getX() / GameWorld.PPM;
+                float princessY = rect.getY() / GameWorld.PPM;
+            }
+
         }
 
 

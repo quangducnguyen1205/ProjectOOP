@@ -162,7 +162,7 @@ public class ThirdMapScreen extends PlayScreen {
 
         if (passThisRound){
             UIManager.getInstance(UIManager.class).openUI(LevelCompleteCanvas.class);
-            GameManager.getInstance(GameManager.class).setScreen(new SecondMapScreen(GameManager.getInstance(GameManager.class).getGameWorld()));
+            GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
             //dispose();
         }
     }

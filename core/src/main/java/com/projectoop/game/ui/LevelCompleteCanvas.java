@@ -15,6 +15,7 @@ import com.projectoop.game.ui.story.StoryLevel2;
 import com.projectoop.game.ui.story.StoryLevel3;
 import com.projectoop.game.ui.story.StoryLevel4;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +92,7 @@ public class LevelCompleteCanvas extends UICanvas {
 
         // Chuyển sang màn tiếp theo
         closeDirectly();
+        System.out.println(nextLevel);
         UIManager.getInstance(UIManager.class).openUI(storyCanvasMap.get(nextLevel));
     }
 

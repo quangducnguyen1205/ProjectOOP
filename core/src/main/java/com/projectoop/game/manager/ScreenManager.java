@@ -31,5 +31,9 @@ public class ScreenManager {
             currentScreen = null;  // Set null để tránh truy cập sai
         }
     }
+
+    public Screen getCurrentScreen() {
+        return currentScreen;
+    }
 }
 

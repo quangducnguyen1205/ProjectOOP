@@ -27,12 +27,14 @@ import com.projectoop.game.tools.WorldContactListener;
 import com.projectoop.game.ui.GameOverCanvas;
 import com.projectoop.game.ui.LevelCompleteCanvas;
 import com.projectoop.game.ui.UIManager;
+import com.projectoop.game.ui.lastlevel.EndGameChoiceCanvas;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class FourthMapScreen extends PlayScreen{
     public FourthMapScreen(GameWorld gameWorld){
         super(gameWorld);
+        //passThisRound = true; // test
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map4.tmx");
@@ -185,39 +187,44 @@ public class FourthMapScreen extends PlayScreen{
         b2dr.render(world, gameCam.combined);//box2d
 
         //draw all sprite
-        game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
-        player.draw(game.batch);
+        batch.setProjectionMatrix(gameCam.combined);
+        batch.begin();
+        player.draw(batch);
         for (Enemy enemy : creator.getGroundEnemies()){
-            enemy.draw(game.batch);
+            enemy.draw(batch);
         }
-//        creator.getBoss().draw(game.batch);
+//        creator.getBoss().draw(batch);
 //        for (Enemy enemy : creator.getFlyEnemies()){
-//            enemy.draw(game.batch);
+//            enemy.draw(batch);
 //        }
 
 
         for (EffectedObject eobj : creator.getChests()){
-            eobj.draw(game.batch);
+            eobj.draw(batch);
         }
         for (EffectedObject eobj : creator.getChest1s()){
-            eobj.draw(game.batch);
+            eobj.draw(batch);
         }
         for (Item item : items){
-            item.draw(game.batch);
+            item.draw(batch);
         }
         //
         healthBar.draw(delta);
         energyBar.draw(delta);
-        game.batch.end();
+        batch.end();
 
         //draw head of display
         // healthbar.update(delta);
-//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);//select camera position
+//        batch.setProjectionMatrix(hud.stage.getCamera().combined);//select camera position
 //        hud.stage.draw();
 
         if (gameOver()) {
             UIManager.getInstance(UIManager.class).openUI(GameOverCanvas.class);
+            //dispose();
+        }
+        if (passThisRound){
+            UIManager.getInstance(UIManager.class).openUI(EndGameChoiceCanvas.class);
+            GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
             //dispose();
         }
     }
