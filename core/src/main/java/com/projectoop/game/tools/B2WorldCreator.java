@@ -21,6 +21,8 @@ public class B2WorldCreator {
     private Array<Chest1> chest1s;
     public Portal portal2;
     public Portal portal3;
+    public float savePrincessPointX;
+    public float savePrincessPointY;
 
     public B2WorldCreator(PlayScreen screen){
         World world = screen.getWorld();
@@ -175,7 +177,7 @@ public class B2WorldCreator {
 //            orcs.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
 //        }
             groundEnemies = new Array<>();
-            for (MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)){
+            for (MapObject object : map.getLayers().get(18).getObjects().getByType(RectangleMapObject.class)){
                 Rectangle rect = ((RectangleMapObject)object).getRectangle();
                 //  groundEnemies.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
                 groundEnemies.add(new Skeleton(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
@@ -207,16 +209,17 @@ public class B2WorldCreator {
                 //  groundEnemies.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
                 groundEnemies.add(new Boss(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM,35,1.5f,15));
             }
-            for (MapObject object : map.getLayers().get(18).getObjects().getByType(RectangleMapObject.class)){
+            for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
                 Rectangle rect = ((RectangleMapObject)object).getRectangle();
                 groundEnemies.add(new Princess(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
 
             }
-            for (MapObject object : map.getLayers().get(20).getObjects().getByType(RectangleMapObject.class)) {
+
+            for (MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)) {
                 Rectangle rect = ((RectangleMapObject)object).getRectangle();
                 // Lưu trữ vị trí của Princess để có thể sử dụng sau
-                float princessX = rect.getX() / GameWorld.PPM;
-                float princessY = rect.getY() / GameWorld.PPM;
+                savePrincessPointX = rect.getX() / GameWorld.PPM;
+                savePrincessPointY = rect.getY() / GameWorld.PPM;
             }
 
         }

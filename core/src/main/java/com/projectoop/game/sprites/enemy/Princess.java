@@ -39,7 +39,7 @@ public class Princess extends GroundEnemy {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(6/GameWorld.PPM, 15/GameWorld.PPM);
         //type bit
-        fdef.filter.categoryBits = GameWorld.ENEMY1_BIT;
+        fdef.filter.categoryBits = GameWorld.PRINCESS_BIT;
         //Collision bit list
         fdef.filter.maskBits = GameWorld.GROUND_BIT |
             GameWorld.TRAP_BIT | GameWorld.CHEST_BIT |

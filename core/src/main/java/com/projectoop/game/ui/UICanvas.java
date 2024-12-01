@@ -57,6 +57,7 @@ public abstract class UICanvas extends Table {
 
     // Setup canvas (thêm vào BackStack)
     public void setup() {
+
         // Thêm vào BackStack trong UIManager
         UIManager.getInstance(UIManager.class).addToBackStack(this);
     }

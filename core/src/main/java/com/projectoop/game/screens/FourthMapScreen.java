@@ -34,7 +34,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class FourthMapScreen extends PlayScreen{
     public FourthMapScreen(GameWorld gameWorld){
         super(gameWorld);
-        //passThisRound = true; // test
+        passThisRound = true; // test
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map4.tmx");
@@ -224,8 +224,18 @@ public class FourthMapScreen extends PlayScreen{
         }
         if (passThisRound){
             UIManager.getInstance(UIManager.class).openUI(EndGameChoiceCanvas.class);
-            GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
             //dispose();
         }
     }
+
+    // Thêm phương thức này vào FourthMapScreen
+    public void moveKnightToSavePrincessPoint() {
+        passThisRound = false; // test
+        // Di chuyển Knight tới vị trí Princess
+        player.b2body.setTransform(creator.savePrincessPointX, creator.savePrincessPointY, player.b2body.getAngle());
+        // Có thể gọi hàm khác nếu cần, ví dụ: animation chuyển động của Knight
+        player.setPosition(creator.savePrincessPointX, creator.savePrincessPointY);
+        gameCam.position.x = player.b2body.getPosition().x;
+    }
+
 }

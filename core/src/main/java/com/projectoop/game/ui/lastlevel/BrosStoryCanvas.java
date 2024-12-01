@@ -37,13 +37,6 @@ public class BrosStoryCanvas extends UICanvas {
         this.addActor(backgroundImage);
 
         // Nút để tiếp tục hoặc quay lại
-        TextButton continueButton = new TextButton("Continue", skin);
-        continueButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                handleContinue();
-            }
-        });
 
         TextButton exitButton = new TextButton("Exit", skin);
         exitButton.addListener(new ClickListener() {
@@ -57,17 +50,10 @@ public class BrosStoryCanvas extends UICanvas {
         Table layout = new Table();
         layout.setFillParent(true);
         layout.center(); // Đặt nút ở giữa
-        layout.add(continueButton).width(200).height(50).padRight(20);
         layout.row().padTop(10); // Thêm khoảng cách
         layout.add(exitButton).width(200).height(50);
 
         this.addActor(layout);
-    }
-
-    // Xử lý khi bấm Continue
-    private void handleContinue() {
-        closeDirectly();
-        GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
     }
 
     // Xử lý khi bấm Exit

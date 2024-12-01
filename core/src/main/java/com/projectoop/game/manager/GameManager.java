@@ -5,6 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.projectoop.game.GameWorld;
+import com.projectoop.game.screens.FourthMapScreen;
+import com.projectoop.game.screens.PlayScreen;
+import com.projectoop.game.screens.ThirdMapScreen;
 import com.projectoop.game.sprites.PlayerData;
 import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.ui.MainMenuCanvas;
@@ -16,6 +19,7 @@ public class GameManager extends Singleton<GameManager> {
     private PlayerData playerData;
     private ScreenManager screenManager;  // Khai báo ScreenManager
     public GameWorld gameWorld;
+    public FourthMapScreen lastScreen;
 
     public void initialize(Game game) {
         this.game = game;
@@ -36,8 +40,11 @@ public class GameManager extends Singleton<GameManager> {
     public void setScreen(Screen screen) {
         if (game != null) {
             screenManager.setScreen(screen);  // Dùng ScreenManager để chuyển màn
-        } else {
+        } else  {
             throw new IllegalStateException("Game instance is not initialized. Call initialize() first.");
+        }
+        if (screen instanceof FourthMapScreen) {
+            lastScreen = (FourthMapScreen) screen;
         }
     }
 
@@ -59,8 +66,8 @@ public class GameManager extends Singleton<GameManager> {
         return gameWorld;
     }
 
-    public ScreenManager getScreenManager() {
-        return screenManager;
+    public FourthMapScreen getLastScreen () {
+        return lastScreen;
     }
 
     public PlayerData getPlayerData() {

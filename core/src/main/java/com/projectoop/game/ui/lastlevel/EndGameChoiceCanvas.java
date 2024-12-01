@@ -2,6 +2,7 @@ package com.projectoop.game.ui.lastlevel;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -70,9 +71,8 @@ public class EndGameChoiceCanvas extends UICanvas {
     // Xử lý khi chọn Crush
     private void handleCrushChoice() {
         closeDirectly();
-        UIManager.getInstance(UIManager.class).openUI(CrushStoryCanvas.class);  // UI hiển thị về Crush
-        // Khi chọn Crush, sẽ chuyển đến cửa (cổng mở)
-        // Và cũng cần đóng màn chơi với NullScreen
-        GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
+        GameManager.getInstance(GameManager.class).getLastScreen().moveKnightToSavePrincessPoint();
+        //UIManager.getInstance(UIManager.class).removeFromBackStack(this);
     }
+
 }

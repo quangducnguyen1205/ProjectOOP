@@ -3,6 +3,8 @@ package com.projectoop.game.tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 import com.projectoop.game.GameWorld;
+import com.projectoop.game.manager.GameManager;
+import com.projectoop.game.screens.NullScreen;
 import com.projectoop.game.screens.PlayScreen;
 import com.projectoop.game.screens.ThirdMapScreen;
 import com.projectoop.game.sprites.Knight;
@@ -15,6 +17,8 @@ import com.projectoop.game.sprites.trap.Portal;
 import com.projectoop.game.sprites.weapons.Arrow;
 import com.projectoop.game.sprites.weapons.BossBall;
 import com.projectoop.game.sprites.weapons.FireBall;
+import com.projectoop.game.ui.UIManager;
+import com.projectoop.game.ui.lastlevel.CrushStoryCanvas;
 
 public class WorldContactListener implements ContactListener {
     private PlayScreen screen;
@@ -54,6 +58,11 @@ public class WorldContactListener implements ContactListener {
 //        }
 
         switch (cDef){
+            //va chạm công chúa
+            case GameWorld.KNIGHT_BIT | GameWorld.PRINCESS_BIT:
+                GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
+                UIManager.getInstance(UIManager.class).openUI(CrushStoryCanvas.class);
+                break;
             //trap collision
             case GameWorld.KNIGHT_SWORD_RIGHT | GameWorld.PORTAL_BIT:
                 Gdx.app.log("knight", "portal");

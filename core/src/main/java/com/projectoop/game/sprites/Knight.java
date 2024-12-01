@@ -89,7 +89,7 @@ public class Knight extends Sprite {
         currentState = State.STANDING;
         previousState = State.STANDING;
 
-        startPosition = new Vector2(2200/GameWorld.PPM, 180/GameWorld.PPM); //32 100
+        startPosition = new Vector2(2300/GameWorld.PPM, 180/GameWorld.PPM); //32 100
 
         stateTimer = 0;
         timeCountShoot = 2;
