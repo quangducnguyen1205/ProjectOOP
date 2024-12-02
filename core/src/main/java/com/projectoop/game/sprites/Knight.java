@@ -89,7 +89,7 @@ public class Knight extends Sprite {
         currentState = State.STANDING;
         previousState = State.STANDING;
 
-        startPosition = new Vector2(2200/GameWorld.PPM, 180/GameWorld.PPM); //32 100
+        startPosition = new Vector2(32/GameWorld.PPM, 180/GameWorld.PPM); //32 100
 
         stateTimer = 0;
         timeCountShoot = 2;
@@ -181,7 +181,7 @@ public class Knight extends Sprite {
         shape.setRadius(6/GameWorld.PPM);
         fdef.filter.categoryBits = GameWorld.KNIGHT_BIT;
         fdef.filter.maskBits =
-            GameWorld.GROUND_BIT | GameWorld.FIREBALL_BIT |
+            GameWorld.GROUND_BIT | GameWorld.FIREBALL_BIT | GameWorld.BOSSBALL_BIT |
             GameWorld.TRAP_BIT | GameWorld.CHEST_BIT | GameWorld.CHEST1_BIT |
             GameWorld.ENEMY_BIT | GameWorld.ITEM_BIT | GameWorld.PORTAL_BIT;
 

@@ -64,7 +64,7 @@ public class FlyEnemy extends GroundEnemy{//test th, code sau
         timeCount += dt;
         //System.out.println("TimeCount: " + timeCount);
         if(timeCount > COOL_DOWN) {
-            System.out.println("khac dom");
+            //System.out.println("khac dom");
             int direction = (runningRight) ? 1 : -1;
             bulletManager.addBullet(b2body.getPosition().x, b2body.getPosition().y, direction, "FireBall");
             timeCount = 0;

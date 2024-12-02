@@ -24,8 +24,6 @@ public class B2WorldCreator {
     public Portal portal1;
     public Portal portal2;
     public Portal portal3;
-    public float savePrincessPointX;
-    public float savePrincessPointY;
 
     public B2WorldCreator(PlayScreen screen){
         World world = screen.getWorld();
@@ -258,14 +256,20 @@ public class B2WorldCreator {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 groundEnemies.add(new FlyEnemy(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
-            //create all chests
+            //create chest type 1
             chests = new Array<>();
             for (MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
                 Rectangle rect = ((RectangleMapObject) object).getRectangle();
                 chests.add(new Chest(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
             }
+            // create chest type 2
+            chest1s = new Array<>();
+            for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                chest1s.add(new Chest1(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
+            }
             // create a portal to tranverse through each map
-            for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+            for (MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
                 portal1 = new Portal(screen, object);
             }
         }

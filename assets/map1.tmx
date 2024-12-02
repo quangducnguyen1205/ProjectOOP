@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="160" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="158">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="160" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="160">
  <tileset firstgid="1" source="finished_map.tsx"/>
  <layer id="1" name="Background" width="160" height="22">
   <data encoding="base64" compression="zlib">
-   eJzt2MdRxFAQRdE/hfcQD95DDIP3rAfviQHvIR68h2y4KVDSon//tzjLW/VU6o1UDCGMYBRjGMcEJjGFacxgFnOYxwIWUVSrNmN7gEMc4RgnOMUZznGBS1zhGje4xZ1atTm093jAI57wjBe84g3v+MAnvvCNH/yqVZtDW1YIoRwVqEQVqlGDWtShHg1oRBOa0VJQqzZ724o2tKMDnehCN3rQiz70YwCDGMKwWrU5tCUsYRkrWMUa1rGBTWxhGzvYxR721arNobW+T63v1vo+tb5b6/vU+m6t70u9LUW4Wffnp81yfzHcrvV9qbe6P1vvI7VW92frfaTWxnBDuj+1sbbW96n13Vrfp9Z3a32fWt+t9X1qfbfW96mNr/3PN3tsz5ZaG+P/F92fn9b7/f0BU4Fp3w==
+   eJzt2DdSQ0EQRdFR4YRHy6HwXqxBeE8svGcNeA/rwXvYDZecItEPpvu/4IS3qqf0Ev1CCGEIwxjBKMYwjglMYgrTmMEs5jCPglq1JbZ72McBDnGEY5zgFGc4xwUucYVr3KhVm0B7izvc4wGPeMIzXvCKN7zjA5/4wrdatQm0ZZkQylGBSlQhi2rUoBZ1qEcDGtGEXEat2tLbFrSiDe3oQCe60I0e9KIP/RhAHoNq1SbQFrGARSxhGStYxRrWsYFNbGEbO9hVqzaBNvb71PpuY79Pre829vvU+m5jvy/tbdHgzdqfn/a//TUH+9uN/b60t9pfXL9H2tq/NvS7O+1Pbez7s/De2O9Tq/1ZfZvXVvuz8TavrfZn421eW+3Pxtu8ttqfjbepjec/u/Zns7XwDU/789t6398PW7Zl3Q==
   </data>
  </layer>
  <layer id="2" name="Graphic Layer" width="160" height="22">
@@ -51,6 +51,8 @@
   <object id="141" x="2032" y="240" width="16" height="16"/>
   <object id="145" x="1519.5" y="320.5" width="64.5" height="31.5"/>
   <object id="155" x="1632" y="240" width="64" height="16"/>
+  <object id="158" x="1744.17" y="192.094" width="15.5452" height="111.703"/>
+  <object id="159" x="1775.76" y="160.252" width="16.1695" height="143.216"/>
  </objectgroup>
  <objectgroup id="4" name="Pilar">
   <object id="3" x="288" y="224.25" width="2.75" height="79.5"/>

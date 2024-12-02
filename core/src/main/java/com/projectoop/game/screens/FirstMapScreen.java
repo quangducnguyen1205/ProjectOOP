@@ -37,11 +37,11 @@ public class FirstMapScreen extends PlayScreen {
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("map1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / GameWorld.PPM);
-        gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        renderer = new OrthogonalTiledMapRenderer(map, 1/GameWorld.PPM);
+        gameCam.position.set( gamePort.getWorldWidth() /2, gamePort.getWorldHeight() /2, 0);
 
         world = new World(new Vector2(0, -10), true);//vector gravity
-        b2dr = new Box2DDebugRenderer();
+//        b2dr = new Box2DDebugRenderer();
 
         creator = new B2WorldCreator(this);
         player = new Knight(this);
@@ -60,48 +60,58 @@ public class FirstMapScreen extends PlayScreen {
     }
 
     //add item that need to be spawned to a Queue
-    public void spawnItem(ItemDef idef) {
+    public void spawnItem(ItemDef idef){
         itemsToSpawn.add(idef);
     }
 
     //spawn all item in Queue
-    public void handleSpawningItems() {
-        if (!itemsToSpawn.isEmpty()) {
+    public void handleSpawningItems(){
+        if(!itemsToSpawn.isEmpty()){
             ItemDef idef = itemsToSpawn.poll();
-            if (idef.type == Potion.class) {
+            if(idef.type == Potion.class){
                 items.add(new Potion(this, idef.position.x, idef.position.y));
+            }
+            else if(idef.type == Potion1.class){
+                items.add(new Potion1(this, idef.position.x, idef.position.y));
             }
         }
     }
 
 
-    public void update(float dt) {//dt = delta time
+    public void update(float dt){//dt = delta time
         handleInput(dt);
         handleSpawningItems();
 
         //FPS = 60
-        world.step(1 / 60f, 6, 2);
+        world.step(1/60f, 6, 2);
 
         player.update(dt);
 
-        for (Enemy enemy : creator.getGroundEnemies()) {
+        for (Enemy enemy : creator.getGroundEnemies()){
             if (enemy.inRangeAttack && player.isAttack() && enemy.getCurrentState() != Enemy.State.HURTING) {
                 enemy.hurtingCallBack();
             }
             enemy.update(dt);
-            if (enemy.getX() < player.getX() + (GameWorld.V_WIDTH / 2 + 4 * 16) / GameWorld.PPM) {
+            if (enemy.getX() < player.getX() + (GameWorld.V_WIDTH/2 + 4 * 16)/GameWorld.PPM){
                 enemy.b2body.setActive(true);//optimize to avoid lagging
             }
         }
 
-        for (EffectedObject eobj : creator.getChests()) {
+        for (EffectedObject eobj : creator.getChests()){
             eobj.update(dt);
-            if (eobj.getX() < player.getX() + (GameWorld.V_WIDTH / 2 + 4 * 16) / GameWorld.PPM) {
+            if (eobj.getX() < player.getX() + (GameWorld.V_WIDTH/2 + 4 * 16)/GameWorld.PPM){
                 eobj.b2body.setActive(true);
             }
         }
 
-        for (Item item : items) {
+        for (EffectedObject eobj : creator.getChest1s()){
+            eobj.update(dt);
+            if (eobj.getX() < player.getX() + (GameWorld.V_WIDTH/2 + 4 * 16)/GameWorld.PPM){
+                eobj.b2body.setActive(true);
+            }
+        }
+
+        for (Item item : items){
             item.update(dt);
         }
         items.removeAll(itemsToRemove, true);
@@ -109,7 +119,7 @@ public class FirstMapScreen extends PlayScreen {
         //hud.update(dt);
 
         //attack gamecam to x coordinate of player
-        if (player.b2body.getPosition().x >= gamePort.getWorldWidth() / 2 &&
+        if (player.b2body.getPosition().x >= gamePort.getWorldWidth() /2 &&
             player.b2body.getPosition().x <= 160 * 16 / GameWorld.PPM - gamePort.getWorldWidth() / 2) {
             gameCam.position.x = player.b2body.getPosition().x;
         }
@@ -133,20 +143,23 @@ public class FirstMapScreen extends PlayScreen {
 
         renderer.render();//map
 
-        b2dr.render(world, gameCam.combined);//box2d
+//        b2dr.render(world, gameCam.combined);//box2d
 
         //draw all sprite
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         player.draw(batch);
-        for (Enemy enemy : creator.getGroundEnemies()) {
+        for (Enemy enemy : creator.getGroundEnemies()){
             enemy.draw(batch);
         }
 
-        for (EffectedObject eobj : creator.getChests()) {
+        for (EffectedObject eobj : creator.getChests()){
             eobj.draw(batch);
         }
-        for (Item item : items) {
+        for (EffectedObject eobj : creator.getChest1s()){
+            eobj.draw(batch);
+        }
+        for (Item item : items){
             item.draw(batch);
         }
         healthBar.draw(delta);
