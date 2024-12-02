@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -13,11 +14,11 @@ import com.projectoop.game.screens.PlayScreen;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 public class Princess extends GroundEnemy {
     public Princess(PlayScreen screen, float x, float y) {
         super(screen, x, y, 0.3f, 2, 10);
-
     }
 
     @Override
@@ -31,7 +32,7 @@ public class Princess extends GroundEnemy {
     @Override
     protected void defineEnemy(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX()+15/GameWorld.PPM, getY()+15/GameWorld.PPM);
+        bdef.position.set(getX()+15/GameWorld.PPM, getY()+15/GameWorld.PPM); //(2506.8,60.18799)
         bdef.type = BodyDef.BodyType.StaticBody;
 
         b2body = world.createBody(bdef);

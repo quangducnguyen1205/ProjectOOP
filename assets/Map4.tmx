@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="160" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="22" nextobjectid="123">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="160" height="22" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="121">
  <tileset firstgid="1" source="xml/Tilesetv3.tsx"/>
  <layer id="1" name="Background" width="160" height="22">
   <data encoding="csv">
@@ -258,21 +258,13 @@
   <object id="113" x="2224" y="272" width="32" height="32"/>
   <object id="117" x="2448" y="208" width="16" height="96"/>
   <object id="118" x="2528" y="208" width="16" height="96"/>
-  <object id="119" x="2214.08" y="146.304" width="15.1675" height="157.65"/>
-  <object id="120" x="2419.91" y="145.241" width="14.7079" height="158.57"/>
- </objectgroup>
- <objectgroup id="21" name="Princess">
-  <object id="122" x="2506.8" y="291.812"/>
+  <object id="119" x="2240.46" y="145.336" width="15.5134" height="157.583"/>
+  <object id="120" x="2420.49" y="144.928" width="15.1051" height="159.216"/>
  </objectgroup>
  <objectgroup id="7" name="Killzone">
   <object id="18" x="960" y="336" width="48" height="16"/>
   <object id="19" x="304" y="336" width="48" height="16"/>
   <object id="61" x="2032" y="336" width="48" height="16"/>
- </objectgroup>
- <objectgroup id="20" name="SavePrincess">
-  <object id="121" x="2153.33" y="150.297">
-   <point/>
-  </object>
  </objectgroup>
  <objectgroup id="8" name="Pilar">
   <object id="96" x="944" y="144" width="16" height="160"/>

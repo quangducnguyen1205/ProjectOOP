@@ -230,12 +230,14 @@ public class FourthMapScreen extends PlayScreen{
 
     // Thêm phương thức này vào FourthMapScreen
     public void moveKnightToSavePrincessPoint() {
+        Vector2 savePrincessPoint = new Vector2(21.5333f, 2.01703f);
         passThisRound = false; // test
         // Di chuyển Knight tới vị trí Princess
-        player.b2body.setTransform(creator.savePrincessPointX, creator.savePrincessPointY, player.b2body.getAngle());
+        player.b2body.setTransform(savePrincessPoint.x, savePrincessPoint.y, player.b2body.getAngle());
         // Có thể gọi hàm khác nếu cần, ví dụ: animation chuyển động của Knight
-        player.setPosition(creator.savePrincessPointX, creator.savePrincessPointY);
+        player.setPosition(savePrincessPoint.x, savePrincessPoint.y);
         gameCam.position.x = player.b2body.getPosition().x;
+        System.out.println(player.b2body.getPosition());
     }
 
 }

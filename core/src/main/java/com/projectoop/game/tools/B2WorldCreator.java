@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.projectoop.game.GameWorld;
@@ -179,7 +180,7 @@ public class B2WorldCreator {
 //            orcs.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
 //        }
             groundEnemies = new Array<>();
-            for (MapObject object : map.getLayers().get(18).getObjects().getByType(RectangleMapObject.class)){
+            for (MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)){
                 Rectangle rect = ((RectangleMapObject)object).getRectangle();
                 //  groundEnemies.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
                 groundEnemies.add(new Skeleton(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
@@ -211,23 +212,12 @@ public class B2WorldCreator {
                 //  groundEnemies.add(new Orc(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
                 groundEnemies.add(new Boss(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM,35,1.5f,15));
             }
-            for (MapObject object : map.getLayers().get(10).getObjects().getByType(RectangleMapObject.class)){
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
-                groundEnemies.add(new Princess(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM));
 
-            }
-
-            for (MapObject object : map.getLayers().get(12).getObjects().getByType(RectangleMapObject.class)) {
-                Rectangle rect = ((RectangleMapObject)object).getRectangle();
-                // Lưu trữ vị trí của Princess để có thể sử dụng sau
-                savePrincessPointX = rect.getX() / GameWorld.PPM;
-                savePrincessPointY = rect.getY() / GameWorld.PPM;
-            }
-
+            groundEnemies.add(new Princess(screen, 2506.4f / GameWorld.PPM, 60.2f / GameWorld.PPM));
         }
 
 
-        /////// Map của Định
+        //////////////////////// Map của Định
         if (screen instanceof FirstMapScreen) {
             //ground_ however if we need to make it short
             for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {

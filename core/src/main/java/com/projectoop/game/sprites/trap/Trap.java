@@ -18,7 +18,6 @@ public class Trap extends InteractiveTileObject {
 
     @Override
     public void onFootHit(Knight knight) {
-        Gdx.app.log("Spike", "Collision");
         //AudioManager.manager.get(AudioManager.knightDieAudio, Sound.class).play();
         screen.getPlayer().setDie();
     }
