@@ -1,6 +1,7 @@
 package com.projectoop.game.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,6 +13,7 @@ import com.projectoop.game.screens.SecondMapScreen;
 import com.projectoop.game.screens.ThirdMapScreen;
 import com.projectoop.game.screens.FourthMapScreen;
 import com.projectoop.game.sprites.PlayerData;
+import com.projectoop.game.tools.AudioManager;
 
 public class GameOverCanvas extends UICanvas {
 
@@ -35,12 +37,12 @@ public class GameOverCanvas extends UICanvas {
         backgroundImage.setFillParent(true);
         this.addActor(backgroundImage);
 
-
         // Buttons
         TextButton playAgainButton = new TextButton("Play Again", skin);
         playAgainButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 handlePlayAgain();
             }
         });
@@ -49,26 +51,32 @@ public class GameOverCanvas extends UICanvas {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 handleExit();
             }
         });
 
-        // Layout for buttons (similar to LevelCompleteCanvas)
+        // Layout for buttons (centered and with appropriate padding)
         Table layout = new Table();
         layout.setFillParent(true);
-        layout.bottom(); // Buttons placed at the bottom
+        layout.top().padTop(150);  // Đặt khoảng cách từ đỉnh để không quá sát với đỉnh của màn hình
 
-        layout.add(playAgainButton).width(200).height(50).padBottom(20).padRight(20);
-        layout.add(exitButton).width(200).height(50).padBottom(20);
+        // Tạo một bảng con chứa các nút và căn giữa
+        Table buttonsTable = new Table();
+        buttonsTable.center();  // Căn giữa bảng con
 
-        // Layout for the labels (centered)
-        Table labelTable = new Table();
-        labelTable.top().padTop(100); // Add some padding for the game over label
+        // Đặt các nút và thêm khoảng cách
+        buttonsTable.row().padBottom(20); // Đặt khoảng cách giữa các nút
+        buttonsTable.add(playAgainButton).width(200).height(50).padBottom(10).row();
+        buttonsTable.add(exitButton).width(200).height(50).padTop(10);
 
-        // Combine the label and button layout
-        this.addActor(labelTable);
+        // Thêm bảng chứa các nút vào layout chính
+        layout.add(buttonsTable).expandY(); // Expand để bảng chiếm không gian còn lại
+
+        // Thêm vào Actor
         this.addActor(layout);
     }
+
 
     // Handle Play Again action (destroy current screen and load the current level again)
     private void handlePlayAgain() {

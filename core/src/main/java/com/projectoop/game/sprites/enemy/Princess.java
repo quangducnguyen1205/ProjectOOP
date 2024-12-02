@@ -10,7 +10,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.projectoop.game.GameWorld;
+import com.projectoop.game.manager.GameManager;
+import com.projectoop.game.screens.NullScreen;
 import com.projectoop.game.screens.PlayScreen;
+import com.projectoop.game.ui.UIManager;
+import com.projectoop.game.ui.lastlevel.CrushStoryCanvas;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,7 +36,7 @@ public class Princess extends GroundEnemy {
     @Override
     protected void defineEnemy(){
         BodyDef bdef = new BodyDef();
-        bdef.position.set(getX()+15/GameWorld.PPM, getY()+15/GameWorld.PPM); //(2506.8,60.18799)
+        bdef.position.set(getX()+15/GameWorld.PPM, getY()+25/GameWorld.PPM); //(2506.8,60.18799)
         bdef.type = BodyDef.BodyType.StaticBody;
 
         b2body = world.createBody(bdef);
@@ -90,13 +94,13 @@ public class Princess extends GroundEnemy {
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
+                        GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
+                        UIManager.getInstance(UIManager.class).openUI(CrushStoryCanvas.class);
                     }
                 });
             }
-        }, 3000); // 5000 milliseconds = 5 seconds
-
+        }, 2000); // 5000 milliseconds = 5 seconds
     }
-
 
     @Override
     public void attackingCallBack() {

@@ -1,6 +1,7 @@
 package com.projectoop.game.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.projectoop.game.manager.GameManager;
 import com.projectoop.game.sprites.PlayerData;
+import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.ui.story.StoryLevel1;
 import com.projectoop.game.ui.story.StoryLevel2;
 import com.projectoop.game.ui.story.StoryLevel3;
@@ -55,6 +57,7 @@ public class LevelCompleteCanvas extends UICanvas {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 closeDirectly();
                 handleContinue();
             }
@@ -64,6 +67,7 @@ public class LevelCompleteCanvas extends UICanvas {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 handleExit();
             }
         });
@@ -71,12 +75,23 @@ public class LevelCompleteCanvas extends UICanvas {
         // Layout
         Table layout = new Table();
         layout.setFillParent(true);
-        layout.bottom(); // Đặt nút ở phía dưới
-        layout.add(continueButton).width(200).height(50).padRight(20);
-        layout.add(exitButton).width(200).height(50);
+        layout.top().padTop(240);  // Đặt nút ở phía trên một chút, không quá sát mép
+
+        // Tạo một bảng con chứa các nút và căn giữa
+        Table buttonsTable = new Table();
+        buttonsTable.center();  // Căn giữa bảng con
+
+        // Đặt các nút và thêm khoảng cách
+        buttonsTable.row().padBottom(20); // Đặt khoảng cách giữa các nút
+        buttonsTable.add(continueButton).width(200).height(50).padBottom(10).row();
+        buttonsTable.add(exitButton).width(200).height(50).padTop(10);
+
+        // Thêm bảng chứa các nút vào layout chính
+        layout.add(buttonsTable).expandY(); // Expand để bảng chiếm không gian còn lại
 
         this.addActor(layout);
     }
+
 
     // Xử lý khi bấm Continue
     private void handleContinue() {

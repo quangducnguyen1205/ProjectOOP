@@ -1,6 +1,7 @@
 package com.projectoop.game.ui.lastlevel;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,9 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.projectoop.game.manager.GameManager;
 import com.projectoop.game.screens.NullScreen;
+import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.ui.UICanvas;
 import com.projectoop.game.ui.UIManager;
-
 
 public class EndGameChoiceCanvas extends UICanvas {
 
@@ -32,30 +33,41 @@ public class EndGameChoiceCanvas extends UICanvas {
             throw new RuntimeException("Skin file not found or invalid: skin/uiskin.json", e);
         }
 
+        // Đặt Background
+        Image backgroundImage = new Image(new Texture("assets/UI/BrosCrush_BG.png"));
+        backgroundImage.setFillParent(true);
+        this.addActor(backgroundImage);
+
         // Buttons
         TextButton brosButton = new TextButton("Bros", skin);
         brosButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 handleBrosChoice();
             }
         });
+        brosButton.getLabel().setFontScale(2); // Phóng to chữ của nút
 
         TextButton crushButton = new TextButton("Crush", skin);
         crushButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 handleCrushChoice();
             }
         });
+        crushButton.getLabel().setFontScale(2); // Phóng to chữ của nút
 
         // Layout
         Table layout = new Table();
         layout.setFillParent(true);
-        layout.center(); // Đặt nút ở giữa
-        layout.add(brosButton).width(200).height(50).padRight(20);
-        layout.row().padTop(10); // Thêm khoảng cách
-        layout.add(crushButton).width(200).height(50);
+        layout.top(); // Đặt layout ở phía trên
+        layout.top().padTop(160);
+
+        // Cột đầu tiên cho "Bros" và cột thứ hai cho "Crush"
+        layout.add(brosButton).width(500).height(140).padRight(80).padTop(150); // Nút "Bros"
+        layout.add(crushButton).width(500).height(140).padLeft(80).padTop(150); // Nút "Crush"
 
         this.addActor(layout);
     }
@@ -74,5 +86,4 @@ public class EndGameChoiceCanvas extends UICanvas {
         GameManager.getInstance(GameManager.class).getLastScreen().moveKnightToSavePrincessPoint();
         //UIManager.getInstance(UIManager.class).removeFromBackStack(this);
     }
-
 }

@@ -151,7 +151,7 @@ public class SecondMapScreen extends PlayScreen {
 
         renderer.render();//map
 
-        b2dr.render(world, gameCam.combined);//box2d
+        //b2dr.render(world, gameCam.combined);//box2d
 
         //draw all sprite
         batch.setProjectionMatrix(gameCam.combined);

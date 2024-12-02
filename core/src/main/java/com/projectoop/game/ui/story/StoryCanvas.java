@@ -1,6 +1,7 @@
 package com.projectoop.game.ui.story;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,6 +14,7 @@ import com.projectoop.game.screens.FirstMapScreen;
 import com.projectoop.game.screens.FourthMapScreen;
 import com.projectoop.game.screens.SecondMapScreen;
 import com.projectoop.game.screens.ThirdMapScreen;
+import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.ui.MainMenuCanvas;
 import com.projectoop.game.ui.UICanvas;
 import com.projectoop.game.ui.UIManager;
@@ -46,6 +48,7 @@ public class StoryCanvas extends UICanvas {
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 // Đánh dấu màn này đã được chơi lần đầu
                 GameManager.getInstance(GameManager.class)
                     .getPlayerData()
@@ -73,6 +76,7 @@ public class StoryCanvas extends UICanvas {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 closeDirectly();
                 UIManager.getInstance(UIManager.class).openUI(MainMenuCanvas.class);
             }

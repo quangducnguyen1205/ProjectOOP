@@ -24,9 +24,13 @@ public class AudioManager {
     public static String orgDieAudio = "Audio/SoundEffect/org_die.mp3";
     public static String orgHurtAudio = "Audio/SoundEffect/org_hurt.mp3";
     public static String orgAttackAudio = "Audio/SoundEffect/org_attack.mp3";
+    public static String bamUIAudio = "Audio/SoundEffect/bamUI.mp3";
 
     public static void setUp(){
         manager = new AssetManager();
+
+        manager.load(bamUIAudio, Sound.class);
+
         manager.load(backgroundMusic, Music.class);
 
         manager.load(knightHurtAudio, Sound.class);

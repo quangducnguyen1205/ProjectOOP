@@ -258,8 +258,6 @@
   <object id="113" x="2224" y="272" width="32" height="32"/>
   <object id="117" x="2448" y="208" width="16" height="96"/>
   <object id="118" x="2528" y="208" width="16" height="96"/>
-  <object id="119" x="2240.46" y="145.336" width="15.5134" height="157.583"/>
-  <object id="120" x="2420.49" y="144.928" width="15.1051" height="159.216"/>
  </objectgroup>
  <objectgroup id="7" name="Killzone">
   <object id="18" x="960" y="336" width="48" height="16"/>

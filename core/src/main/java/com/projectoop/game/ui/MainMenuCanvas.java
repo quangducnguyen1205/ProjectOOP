@@ -1,6 +1,7 @@
 package com.projectoop.game.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,6 +13,7 @@ import com.projectoop.game.screens.FourthMapScreen;
 import com.projectoop.game.screens.SecondMapScreen;
 import com.projectoop.game.screens.ThirdMapScreen;
 import com.projectoop.game.sprites.PlayerData;
+import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.ui.description.DescriptionPage1;
 import com.projectoop.game.ui.description.DescriptionPage2;
 import com.projectoop.game.ui.story.StoryLevel1;
@@ -82,26 +84,37 @@ public class MainMenuCanvas extends UICanvas {
         // Nút Exit
         TextButton exitButton = createExitButton();
 
+        // Nút Hướng dẫn
+        TextButton guideButton = createGuideButton();
+
         // Bố cục UI
         Table layout = new Table();
         layout.setFillParent(true);
-        layout.center();
+        layout.center();  // Căn giữa toàn bộ layout
+
+        // Tạo một khoảng cách phía trên
+        layout.row().padTop(200);
 
         // Tạo hai nhóm nút
-        Table upperButtons = new Table();
-        upperButtons.add(levelSelector).width(200).height(50).padBottom(10).row();
-        upperButtons.add(playButton).width(200).height(50);
+        Table leftButtons = new Table();
+        leftButtons.add(levelSelector).width(200).height(50).padBottom(10).row();
+        leftButtons.add(playButton).width(200).height(50);
 
-        Table lowerButtons = new Table();
-        lowerButtons.add(descriptionButton).width(200).height(50).padBottom(10).row();
-        lowerButtons.add(exitButton).width(200).height(50);
+        Table rightButtons = new Table();
+        rightButtons.add(descriptionButton).width(200).height(50).padBottom(10).row();
+        rightButtons.add(guideButton).width(200).height(50).padBottom(10).row();
 
-        layout.add(upperButtons).padBottom(0).row(); // Đẩy nhóm nút trên lên
-        layout.add(new Label("", skin, "default")).padBottom(110).row(); // Tên quán nằm giữa
-        layout.add(lowerButtons).padBottom(-50).row(); // Đặt nhóm nút dưới cùng
+        // Đặt các nút vào bảng chính (layout), căn giữa theo chiều ngang
+        layout.add(leftButtons).align(Align.center).padRight(-60).expandX().fillX(); // Bảng bên trái
+        layout.add(rightButtons).align(Align.center).padLeft(-60).expandX().fillX(); // Bảng bên phải
+
+        // Thêm dòng chứa nút Exit vào giữa dưới
+        layout.row().padTop(120); // Tạo một khoảng cách phía trên
+        layout.add(exitButton).colspan(2).align(Align.center).width(200).height(50); // Nút Exit căn giữa dưới
 
         this.addActor(layout);
     }
+
 
     private TextButton createPlayButton(SelectBox<String> levelSelector) {
         TextButton playButton = new TextButton("Play", skin);
@@ -109,6 +122,7 @@ public class MainMenuCanvas extends UICanvas {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 String selectedLevel = levelSelector.getSelected();
                 String levelName = "level" + selectedLevel.split(" ")[1];
 
@@ -151,6 +165,7 @@ public class MainMenuCanvas extends UICanvas {
         descriptionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 closeDirectly();
                 UIManager.getInstance(UIManager.class).openUI(descriptionPages.get(0));
             }
@@ -164,10 +179,25 @@ public class MainMenuCanvas extends UICanvas {
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
                 Gdx.app.exit();
             }
         });
         return exitButton;
+    }
+
+    private TextButton createGuideButton() {
+        TextButton guideButton = new TextButton("Guide", skin);
+        guideButton.getLabel().setFontScale(1f);
+        guideButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                AudioManager.manager.get(AudioManager.bamUIAudio, Sound.class).play();
+                closeDirectly();
+                UIManager.getInstance(UIManager.class).openUI(GuideUI.class);  // Mở UI Hướng dẫn
+            }
+        });
+        return guideButton;
     }
 
     private void initBackground() {

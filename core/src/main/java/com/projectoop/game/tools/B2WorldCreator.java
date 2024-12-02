@@ -211,7 +211,7 @@ public class B2WorldCreator {
                 groundEnemies.add(new Boss(screen, rect.getX() / GameWorld.PPM, rect.y / GameWorld.PPM,35,1.5f,15));
             }
 
-            groundEnemies.add(new Princess(screen, 2506.4f / GameWorld.PPM, 60.2f / GameWorld.PPM));
+            groundEnemies.add(new Princess(screen, 2506.4f / GameWorld.PPM, 45f / GameWorld.PPM));
         }
 
 

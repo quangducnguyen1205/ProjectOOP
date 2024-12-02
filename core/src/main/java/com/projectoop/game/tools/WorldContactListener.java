@@ -60,8 +60,8 @@ public class WorldContactListener implements ContactListener {
         switch (cDef){
             //va chạm công chúa
             case GameWorld.KNIGHT_BIT | GameWorld.PRINCESS_BIT:
-                GameManager.getInstance(GameManager.class).setScreen(new NullScreen());
-                UIManager.getInstance(UIManager.class).openUI(CrushStoryCanvas.class);
+                Enemy enemyRight1 = (Enemy) ((fixA.getFilterData().categoryBits == GameWorld.PRINCESS_BIT) ? fixA.getUserData() : fixB.getUserData());
+                enemyRight1.hurtingCallBack();
                 break;
             //trap collision
             case GameWorld.KNIGHT_SWORD_RIGHT | GameWorld.PORTAL_BIT:
