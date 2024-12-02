@@ -30,7 +30,7 @@ public class DescriptionPage1 extends UICanvas {
         }
 
         // Background image
-        Image backgroundImage = new Image(new Texture("assets/UI/BG_quanan_1.png"));
+        Image backgroundImage = new Image(new Texture("assets/UI/description1_BG.png"));
         backgroundImage.setFillParent(true);
         this.addActor(backgroundImage);
 

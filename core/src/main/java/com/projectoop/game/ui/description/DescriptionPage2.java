@@ -30,7 +30,7 @@ public class DescriptionPage2 extends UICanvas {
         }
 
         // Background image
-        Image backgroundImage = new Image(new Texture("assets/UI/BG_quanan_2.png"));
+        Image backgroundImage = new Image(new Texture("assets/UI/description2_BG.png"));
         backgroundImage.setFillParent(true);
         this.addActor(backgroundImage);
 
@@ -41,7 +41,7 @@ public class DescriptionPage2 extends UICanvas {
             public void clicked(InputEvent event, float x, float y) {
                 // Quay lại trang trước (DescriptionPage1)
                 closeDirectly();
-                UIManager.getInstance(UIManager.class).openUI(DescriptionPage1.class);
+                UIManager.getInstance(UIManager.class).openUI(DescriptionPage3.class);
             }
         });
 
@@ -51,7 +51,7 @@ public class DescriptionPage2 extends UICanvas {
             public void clicked(InputEvent event, float x, float y) {
                 // Quay lại trang đầu tiên (DescriptionPage1)
                 closeDirectly();
-                UIManager.getInstance(UIManager.class).openUI(DescriptionPage1.class);
+                UIManager.getInstance(UIManager.class).openUI(DescriptionPage3.class);
             }
         });
 
