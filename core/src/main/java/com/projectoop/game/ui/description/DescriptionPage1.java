@@ -41,7 +41,7 @@ public class DescriptionPage1 extends UICanvas {
             public void clicked(InputEvent event, float x, float y) {
                 // Chuyển đến trang cuối cùng nếu đây là trang đầu tiên
                 closeDirectly();
-                UIManager.getInstance(UIManager.class).openUI(DescriptionPage2.class);
+                UIManager.getInstance(UIManager.class).openUI(DescriptionPage3.class);
             }
         });
 

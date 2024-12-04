@@ -23,9 +23,9 @@ public class Portal extends InteractiveTileObject{
 
     public void passThisRound(Knight player){
         System.out.println("max_monster: " + screen.creator.getGroundEnemies().size + "  killed: " + screen.kill);
-        if (screen.creator.getGroundEnemies() == null || screen.creator.getGroundEnemies().size <= screen.kill){
+        //if (screen.creator.getGroundEnemies() == null || screen.creator.getGroundEnemies().size <= screen.kill){
             screen.passThisRound = true;
-        }
+        //}
 
     }
 }

@@ -74,11 +74,10 @@ public class ThirdMapScreen extends PlayScreen {
 
 
     public void update(float dt){//dt = delta time
+        super.update(dt);
+
         handleInput(dt);
         handleSpawningItems();
-
-        //FPS = 60
-        world.step(1/60f, 6, 2);
 
         player.update(dt);
 

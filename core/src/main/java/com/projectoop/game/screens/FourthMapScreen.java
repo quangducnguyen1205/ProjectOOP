@@ -34,7 +34,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class FourthMapScreen extends PlayScreen{
     public FourthMapScreen(GameWorld gameWorld){
         super(gameWorld);
-        passThisRound = true; // test
+        //passThisRound = true; // test
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map4.tmx");
@@ -109,6 +109,8 @@ public class FourthMapScreen extends PlayScreen{
     }
 
     public void update(float dt){//dt = data time
+        super.update(dt);
+
         handleInput(dt);
         handleSpawningItems();
 

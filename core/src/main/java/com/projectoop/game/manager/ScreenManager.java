@@ -32,8 +32,5 @@ public class ScreenManager {
         }
     }
 
-    public Screen getCurrentScreen() {
-        return currentScreen;
-    }
 }
 

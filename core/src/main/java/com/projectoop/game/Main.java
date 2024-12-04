@@ -23,6 +23,7 @@ public class Main extends Game {
         super.render();
         // GameManager xử lý logic bổ sung nếu cần
         GameManager.getInstance(GameManager.class).update();
+
     }
 
     @Override
