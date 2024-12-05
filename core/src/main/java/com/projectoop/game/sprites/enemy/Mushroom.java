@@ -18,10 +18,10 @@ public class Mushroom extends GroundEnemy{
         atlasDieing = new TextureAtlas("E_Mushroom/Pack/Death.pack");
         atlasHurting = new TextureAtlas("E_Mushroom/Pack/Hurt.pack");
 
-        walkAnimation = new Animation<TextureRegion>(0.3f, atlasWalking.getRegions());
-        attackAnimation = new Animation<TextureRegion>(0.2f, atlasAttacking.getRegions());
-        dieAnimation = new Animation<TextureRegion>(0.2f, atlasDieing.getRegions());
-        hurtAnimation = new Animation<TextureRegion>(0.3f, atlasHurting.getRegions());
+        walkAnimation = new Animation<TextureRegion>(0.6f, atlasWalking.getRegions());
+        attackAnimation = new Animation<TextureRegion>(0.4f, atlasAttacking.getRegions());
+        dieAnimation = new Animation<TextureRegion>(0.4f, atlasDieing.getRegions());
+        hurtAnimation = new Animation<TextureRegion>(0.6f, atlasHurting.getRegions());
     }
 
     @Override

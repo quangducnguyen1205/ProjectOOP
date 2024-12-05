@@ -98,8 +98,8 @@ public class Knight extends Sprite {
         untilCount = UNTIL_COOL_DOWN;
         isRunningRight = true;
 
-        health = 200;
-        healthMax = 200;
+        health = 500;
+        healthMax = 500;
 
         prepareAnimation();
         prepareSound();
@@ -126,14 +126,14 @@ public class Knight extends Sprite {
         atlasBeingHurt = new TextureAtlas("KnightAsset/Pack/Hurt.pack");
         atlasStanding = new TextureAtlas("KnightAsset/Pack/Idle.pack");
 
-        knightRun = new Animation<TextureRegion>(0.05f, atlasRunning.getRegions());
-        knightJump = new Animation<TextureRegion>(0.05f, atlasJumping.getRegions());
-        knightStand = new Animation<TextureRegion>(0.1f, atlasStanding.getRegions());
-        knightDie = new Animation<TextureRegion>(0.5f, atlasDieing.getRegions());
-        knightAttack1 = new Animation<TextureRegion>(0.05f, atlasAttacking1.getRegions());
-        knightAttack2 = new Animation<TextureRegion>(0.05f, atlasAttacking2.getRegions());
-        knightAttack3 = new Animation<TextureRegion>(0.05f, atlasAttacking3.getRegions());
-        knightHurt = new Animation<TextureRegion>(0.05f, atlasBeingHurt.getRegions());
+        knightRun = new Animation<TextureRegion>(0.1f, atlasRunning.getRegions());
+        knightJump = new Animation<TextureRegion>(0.1f, atlasJumping.getRegions());
+        knightStand = new Animation<TextureRegion>(0.2f, atlasStanding.getRegions());
+        knightDie = new Animation<TextureRegion>(1f, atlasDieing.getRegions());
+        knightAttack1 = new Animation<TextureRegion>(0.1f, atlasAttacking1.getRegions());
+        knightAttack2 = new Animation<TextureRegion>(0.1f, atlasAttacking2.getRegions());
+        knightAttack3 = new Animation<TextureRegion>(0.1f, atlasAttacking3.getRegions());
+        knightHurt = new Animation<TextureRegion>(0.1f, atlasBeingHurt.getRegions());
     }
 
     private void prepareAnimation1(){//anim của nguyễn bá

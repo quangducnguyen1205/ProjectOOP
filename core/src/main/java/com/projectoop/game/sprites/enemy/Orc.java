@@ -19,10 +19,10 @@ public class Orc extends GroundEnemy{
         atlasDieing = new TextureAtlas("E_Orc/Pack/Die.pack");
         atlasHurting = new TextureAtlas("E_Orc/Pack/Hurt.pack");
 
-        walkAnimation = new Animation<TextureRegion>(0.3f, atlasWalking.getRegions());
-        attackAnimation = new Animation<TextureRegion>(0.3f, atlasAttacking.getRegions());
-        dieAnimation = new Animation<TextureRegion>(0.2f, atlasDieing.getRegions());
-        hurtAnimation = new Animation<TextureRegion>(0.3f, atlasHurting.getRegions());
+        walkAnimation = new Animation<TextureRegion>(0.6f, atlasWalking.getRegions());
+        attackAnimation = new Animation<TextureRegion>(0.6f, atlasAttacking.getRegions());
+        dieAnimation = new Animation<TextureRegion>(0.4f, atlasDieing.getRegions());
+        hurtAnimation = new Animation<TextureRegion>(0.6f, atlasHurting.getRegions());
     }
 
     @Override

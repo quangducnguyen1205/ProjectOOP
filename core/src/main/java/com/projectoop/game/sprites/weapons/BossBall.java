@@ -36,7 +36,7 @@ public class BossBall extends Bullet{
                 break;
         }
         // atlasShooting = new TextureAtlas("E_FlyingEye/Pack/FireBall.pack");
-        shootingAnim = new Animation<TextureRegion>(0.1f, atlasShooting.getRegions());
+        shootingAnim = new Animation<TextureRegion>(0.2f, atlasShooting.getRegions());
     }
     @Override
     protected void defineBullet() {

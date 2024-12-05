@@ -34,7 +34,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class FourthMapScreen extends PlayScreen{
     public FourthMapScreen(GameWorld gameWorld){
         super(gameWorld);
-        //passThisRound = true; // test
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map4.tmx");
@@ -113,9 +112,6 @@ public class FourthMapScreen extends PlayScreen{
 
         handleInput(dt);
         handleSpawningItems();
-
-        //FPS = 60
-        world.step(1/60f, 6, 2);
 
         player.update(dt);
 
@@ -215,25 +211,17 @@ public class FourthMapScreen extends PlayScreen{
         energyBar.draw(delta);
         batch.end();
 
-        //draw head of display
-        // healthbar.update(delta);
-//        batch.setProjectionMatrix(hud.stage.getCamera().combined);//select camera position
-//        hud.stage.draw();
-
         if (gameOver()) {
             UIManager.getInstance(UIManager.class).openUI(GameOverCanvas.class);
-            //dispose();
         }
         if (passThisRound){
             UIManager.getInstance(UIManager.class).openUI(EndGameChoiceCanvas.class);
-            //dispose();
         }
     }
 
-    // Thêm phương thức này vào FourthMapScreen
     public void moveKnightToSavePrincessPoint() {
         Vector2 savePrincessPoint = new Vector2(21.5333f, 2.01703f);
-        passThisRound = false; // test
+        passThisRound = false;
         // Di chuyển Knight tới vị trí Princess
         player.b2body.setTransform(savePrincessPoint.x, savePrincessPoint.y, player.b2body.getAngle());
         // Có thể gọi hàm khác nếu cần, ví dụ: animation chuyển động của Knight

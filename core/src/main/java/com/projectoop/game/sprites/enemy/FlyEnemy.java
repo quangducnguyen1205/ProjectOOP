@@ -53,10 +53,10 @@ public class FlyEnemy extends GroundEnemy{//test th, code sau
         atlasDieing = new TextureAtlas("E_FlyingEye/Pack/Death.pack");
         atlasHurting = new TextureAtlas("E_FlyingEye/Pack/Hurt.pack");
 
-        walkAnimation = new Animation<TextureRegion>(0.3f, atlasWalking.getRegions());
-        attackAnimation = new Animation<TextureRegion>(0.3f, atlasAttacking.getRegions());
-        dieAnimation = new Animation<TextureRegion>(0.2f, atlasDieing.getRegions());
-        hurtAnimation = new Animation<TextureRegion>(0.3f, atlasHurting.getRegions());
+        walkAnimation = new Animation<TextureRegion>(0.6f, atlasWalking.getRegions());
+        attackAnimation = new Animation<TextureRegion>(0.6f, atlasAttacking.getRegions());
+        dieAnimation = new Animation<TextureRegion>(0.4f, atlasDieing.getRegions());
+        hurtAnimation = new Animation<TextureRegion>(0.6f, atlasHurting.getRegions());
     }
 
     @Override

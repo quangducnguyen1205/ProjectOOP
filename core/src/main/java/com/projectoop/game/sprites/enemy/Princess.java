@@ -30,8 +30,8 @@ public class Princess extends GroundEnemy {
         atlasWalking = new TextureAtlas("Congchua/Pack/Idle.pack");
         atlasAttacking = new TextureAtlas("Congchua/Pack/Run.pack");
 
-        walkAnimation = new Animation<TextureRegion>(0.3f, atlasWalking.getRegions());
-        attackAnimation = new Animation<TextureRegion>(0.3f, atlasAttacking.getRegions());
+        walkAnimation = new Animation<TextureRegion>(0.6f, atlasWalking.getRegions());
+        attackAnimation = new Animation<TextureRegion>(0.6f, atlasAttacking.getRegions());
     }
     @Override
     protected void defineEnemy(){

@@ -84,6 +84,5 @@ public class EndGameChoiceCanvas extends UICanvas {
     private void handleCrushChoice() {
         closeDirectly();
         GameManager.getInstance(GameManager.class).getLastScreen().moveKnightToSavePrincessPoint();
-        //UIManager.getInstance(UIManager.class).removeFromBackStack(this);
     }
 }

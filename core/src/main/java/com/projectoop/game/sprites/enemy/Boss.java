@@ -92,10 +92,10 @@ public class Boss extends Enemy{
         atlasDieing = new TextureAtlas("Boss/Pack/Death.pack");
         atlasHurting = new TextureAtlas("Boss/Pack/Hurt.pack");
 
-        walkAnimation = new Animation<TextureRegion>(0.3f, atlasWalking.getRegions());
-        attackAnimation = new Animation<TextureRegion>(0.3f, atlasAttacking.getRegions());
-        dieAnimation = new Animation<TextureRegion>(0.2f, atlasDieing.getRegions());
-        hurtAnimation = new Animation<TextureRegion>(0.3f, atlasHurting.getRegions());
+        walkAnimation = new Animation<TextureRegion>(0.6f, atlasWalking.getRegions());
+        attackAnimation = new Animation<TextureRegion>(0.6f, atlasAttacking.getRegions());
+        dieAnimation = new Animation<TextureRegion>(0.4f, atlasDieing.getRegions());
+        hurtAnimation = new Animation<TextureRegion>(0.6f, atlasHurting.getRegions());
     }
     protected void prepareAudio(){
         attackSound = AudioManager.manager.get(AudioManager.orgAttackAudio, Sound.class);
@@ -173,7 +173,6 @@ public class Boss extends Enemy{
 
     public TextureRegion getFrame(float dt){
         timeCount += dt;
-        System.out.println("TimeCount: " + timeCount);
         if(timeCount > COOL_DOWN) {
             //System.out.println("dcmmm");
             int direction = (runningRight) ? 1 : -1;
@@ -316,7 +315,6 @@ public class Boss extends Enemy{
                 frame.getRegionHeight() / GameWorld.PPM * scaleY);
             setRegion(frame);
         }
-        System.out.println(velocity.x);
         bulletManager.update(dt);
     }
 

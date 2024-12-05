@@ -66,7 +66,7 @@ public class Chest extends EffectedObject {
     @Override
     protected void prepareAnimation() {
         atlasOpenChest = new TextureAtlas("Chest/Chest.pack");
-        chestOpening = new Animation<TextureRegion>(0.5f, atlasOpenChest.getRegions());
+        chestOpening = new Animation<TextureRegion>(1f, atlasOpenChest.getRegions());
         usedFrame = new TextureRegion(atlasOpenChest.findRegion("goldchest7"));
         notuseFrame = new TextureRegion(atlasOpenChest.findRegion("goldchest1"));
     }
