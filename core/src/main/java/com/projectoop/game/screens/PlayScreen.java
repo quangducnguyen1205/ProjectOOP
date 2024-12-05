@@ -100,7 +100,7 @@ public abstract class PlayScreen implements Screen {
     public abstract void spawnItem(ItemDef idef);
     public void update(float dt){
         //fps
-        world.step(1/120f, 6, 2);
+        world.step(1/60f, 6, 2);
     }
     public abstract void show();
     public abstract void render(float delta);

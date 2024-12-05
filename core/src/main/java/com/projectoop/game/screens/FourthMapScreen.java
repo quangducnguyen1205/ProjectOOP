@@ -35,6 +35,8 @@ public class FourthMapScreen extends PlayScreen{
     public FourthMapScreen(GameWorld gameWorld){
         super(gameWorld);
 
+        kill = 1;
+
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("Map4.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1/GameWorld.PPM);
@@ -167,6 +169,13 @@ public class FourthMapScreen extends PlayScreen{
         //update with correct coordinate
         gameCam.update();
         renderer.setView(gameCam);
+
+        if (!passThisRound && this.creator.getGroundEnemies().size == kill){
+            passThisRound = true;
+            kill++;
+        }
+
+        //System.out.println("Enemy count: " + this.creator.getGroundEnemies().size + "  " + kill);
     }
 
     @Override

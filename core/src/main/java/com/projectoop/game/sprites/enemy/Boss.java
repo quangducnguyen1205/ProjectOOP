@@ -293,6 +293,7 @@ public class Boss extends Enemy{
         stateTime += dt;
         if (setToDestroy && !destroyed){
             //world.destroyBody(b2body);
+            screen.kill++;
             destroyed = true;
             b2body.setTransform(0, -10, 0);
             stateTime = 0;
