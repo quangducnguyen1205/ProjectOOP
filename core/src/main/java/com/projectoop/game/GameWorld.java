@@ -31,14 +31,10 @@ public class GameWorld extends Game {
     public static final short BOSSBALL_BIT = 8192;
     public static final short PORTAL_BIT = 16384;
 
-    public SpriteBatch batch;//container hold all images or texture for rendering
-
 
     @Override
     public void create() {
         AudioManager.setUp();
-        batch = new SpriteBatch();
-        setScreen(new FourthMapScreen(this));
     }
 
     @Override
@@ -49,7 +45,6 @@ public class GameWorld extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        //batch.dispose();
         AudioManager.manager.dispose();
     }
 }
