@@ -2,6 +2,7 @@ package com.projectoop.game.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -201,9 +202,8 @@ public class MainMenuCanvas extends UICanvas {
     }
 
     private void initBackground() {
-        Window backgroundWindow = new Window("", skin, "default");
-        backgroundWindow.setFillParent(true);
-        backgroundWindow.setMovable(false);
-        this.addActor(backgroundWindow);
+        Image backgroundImage = new Image(new Texture("assets/UI/BG_MainMenu.png"));
+        backgroundImage.setFillParent(true);
+        this.addActor(backgroundImage);
     }
 }
