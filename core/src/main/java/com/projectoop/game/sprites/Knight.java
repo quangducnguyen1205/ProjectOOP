@@ -146,14 +146,14 @@ public class Knight extends Sprite {
         atlasBeingHurt = new TextureAtlas("KnightAsset2/Pack/Hurt.pack");
         atlasStanding = new TextureAtlas("KnightAsset2/Pack/Idle.pack");
 
-        knightRun = new Animation<TextureRegion>(0.05f, atlasRunning.getRegions());
-        knightJump = new Animation<TextureRegion>(0.05f, atlasJumping.getRegions());
-        knightStand = new Animation<TextureRegion>(0.1f, atlasStanding.getRegions());
-        knightDie = new Animation<TextureRegion>(0.5f, atlasDieing.getRegions());
-        knightAttack1 = new Animation<TextureRegion>(0.05f, atlasAttacking1.getRegions());
+        knightRun = new Animation<TextureRegion>(0.1f, atlasRunning.getRegions());
+        knightJump = new Animation<TextureRegion>(0.1f, atlasJumping.getRegions());
+        knightStand = new Animation<TextureRegion>(0.2f, atlasStanding.getRegions());
+        knightDie = new Animation<TextureRegion>(1f, atlasDieing.getRegions());
+        knightAttack1 = new Animation<TextureRegion>(0.1f, atlasAttacking1.getRegions());
         //knightAttack2 = new Animation<TextureRegion>(0.05f, atlasAttacking2.getRegions());
         //knightAttack3 = new Animation<TextureRegion>(0.05f, atlasAttacking3.getRegions());
-        knightHurt = new Animation<TextureRegion>(0.01f, atlasBeingHurt.getRegions());
+        knightHurt = new Animation<TextureRegion>(0.1f, atlasBeingHurt.getRegions());
     }
 
     private void prepareSound(){
