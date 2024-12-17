@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# OOP_Project
+# Bros||Crush
 
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
@@ -33,6 +32,10 @@ Useful Gradle tasks and flags:
 Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
 For example, `core:clean` removes `build` folder only from the `core` project.
 =======
-# OOP_project_map_merged
-Merge map OOP project
->>>>>>> 2cd4523556210fa973e95b75ee9005a39c38d8ff
+# Team members:
+- `Nguyen Quang Duc`
+- `Ho Minh Dung`
+- `Le Duc Chinh`
+- `Nguyen Ba Duc Anh`
+- `Tran Gia Dinh`
+# Demo video: (https://youtu.be/_yIsIZmzkaY?si=Oo7Q2V0iPWRNlICT)
