@@ -19,14 +19,12 @@ public class UIManager extends Singleton<UIManager> {
         // Khởi tạo Stage
         stage = new Stage(new ScreenViewport());
     }
-
     public Stage getStage() {
         if (stage == null) {
             stage = new Stage(new ScreenViewport());
         }
         return stage;
     }
-
     // Mở UI
     public <T extends UICanvas> T openUI(Class<T> clazz) {
         T canvas = getUI(clazz);
@@ -34,7 +32,6 @@ public class UIManager extends Singleton<UIManager> {
         canvas.open();
         return canvas;
     }
-
     // Đóng UI
     public <T extends UICanvas> void closeUI(Class<T> clazz) {
         T canvas = getUI(clazz);
@@ -42,7 +39,6 @@ public class UIManager extends Singleton<UIManager> {
             canvas.closeDirectly();
         }
     }
-
     // Lấy UI hiện tại hoặc tạo mới
     public <T extends UICanvas> T getUI(Class<T> clazz) {
         if (!uiCanvasMap.containsKey(clazz)) {
@@ -63,19 +59,16 @@ public class UIManager extends Singleton<UIManager> {
         }
         return clazz.cast(uiCanvasMap.get(clazz));
     }
-
     // Thêm vào BackStack
     public void addToBackStack(UICanvas canvas) {
         if (!backStack.contains(canvas)) {
             backStack.add(canvas);
         }
     }
-
     // Xóa khỏi BackStack
     public void removeFromBackStack(UICanvas canvas) {
         backStack.remove(canvas);
     }
-
     // Xử lý nút Back
     public void handleBackKey() {
         if (!backStack.isEmpty()) {
@@ -85,7 +78,6 @@ public class UIManager extends Singleton<UIManager> {
             }
         }
     }
-
     public void openStory(String levelName) {
         StoryCanvas storyCanvas = new StoryCanvas(levelName);
         getStage().addActor(storyCanvas);
