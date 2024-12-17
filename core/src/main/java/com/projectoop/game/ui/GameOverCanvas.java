@@ -12,6 +12,7 @@ import com.projectoop.game.screens.FirstMapScreen;
 import com.projectoop.game.screens.SecondMapScreen;
 import com.projectoop.game.screens.ThirdMapScreen;
 import com.projectoop.game.screens.FourthMapScreen;
+import com.projectoop.game.sprites.Knight;
 import com.projectoop.game.sprites.PlayerData;
 import com.projectoop.game.tools.AudioManager;
 
@@ -81,6 +82,7 @@ public class GameOverCanvas extends UICanvas {
     // Handle Play Again action (destroy current screen and load the current level again)
     private void handlePlayAgain() {
         PlayerData playerData = GameManager.getInstance(GameManager.class).getPlayerData();
+        Knight.deathCount = 3;
         String currentLevel = playerData.getCurrentLevel();
 
         // Reload the level based on current level

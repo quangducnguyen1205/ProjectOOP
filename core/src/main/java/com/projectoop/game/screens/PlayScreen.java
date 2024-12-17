@@ -22,11 +22,13 @@ import com.projectoop.game.scences.PlayerHealthBar;
 import com.projectoop.game.sprites.Knight;
 import com.projectoop.game.sprites.items.Item;
 import com.projectoop.game.sprites.items.ItemDef;
+import com.projectoop.game.tools.AudioManager;
 import com.projectoop.game.tools.B2WorldCreator;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
 public abstract class PlayScreen implements Screen {
+    private static final float VOLUME = 0.1f;
     protected PlayerHealthBar healthBar; // test
     protected PlayerEnergyBar energyBar;
     public GameWorld game;
@@ -62,6 +64,11 @@ public abstract class PlayScreen implements Screen {
 
         passThisRound = false;
         kill = 0;
+
+        music = AudioManager.manager.get(AudioManager.backgroundMusic, Music.class);
+        music.setVolume(VOLUME);
+        music.setLooping(true);
+        music.play();
     }
 
     //Input manager

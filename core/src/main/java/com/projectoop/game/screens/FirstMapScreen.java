@@ -49,11 +49,6 @@ public class FirstMapScreen extends PlayScreen {
         energyBar = new PlayerEnergyBar(this);
         world.setContactListener(new WorldContactListener(this));
 
-        music = AudioManager.manager.get(AudioManager.backgroundMusic, Music.class);
-        music.setVolume(music.getVolume());
-        music.setLooping(true);
-        music.play();
-
         items = new Array<Item>();
         itemsToRemove = new Array<Item>();
         itemsToSpawn = new LinkedBlockingQueue<ItemDef>();
