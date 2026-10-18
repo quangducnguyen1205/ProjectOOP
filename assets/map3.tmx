@@ -110,7 +110,7 @@
   <object id="97" x="2528" y="320" width="16" height="32"/>
   <object id="115" x="1136" y="416" width="16" height="32"/>
  </objectgroup>
- <objectgroup id="15" name="Orcs" visible="0">
+ <objectgroup id="15" name="Orcs">
   <object id="102" x="144" y="432" width="16" height="16"/>
   <object id="104" x="1056" y="432" width="16" height="16"/>
   <object id="105" x="1824" y="336" width="16" height="16"/>
