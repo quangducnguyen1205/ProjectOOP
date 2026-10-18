@@ -1,0 +1,863 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	medium: {
+		file: font-medium-export.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	small: {
+		file: font-small-export.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	button: {
+		file: font-button-export.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	font: {
+		file: font-export.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	sub-title: {
+		file: sub-title-font-export.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	title: {
+		file: title-font-export.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	check-box: {
+		r: 0.2
+		g: 0.38039216
+		b: 0.7411765
+		a: 1
+	}
+	checkbox-disabled: {
+		r: 0.2901961
+		g: 0.2901961
+		b: 0.2901961
+		a: 1
+	}
+	checkbox-over: {
+		r: 0.27058825
+		g: 0.5137255
+		b: 1
+		a: 1
+	}
+	font: {
+		r: 0.6
+		g: 0.74509805
+		b: 1
+		a: 1
+	}
+	font-disabled: {
+		r: 0.42745098
+		g: 0.42745098
+		b: 0.42745098
+		a: 1
+	}
+	font-disabled-alt: {
+		r: 0.40784314
+		g: 0.5411765
+		b: 0.6784314
+		a: 1
+	}
+	font-over: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	font-text-field: {
+		r: 0.27058825
+		g: 0.3372549
+		b: 0.4392157
+		a: 1
+	}
+	button: {
+		r: 0.019607844
+		g: 0.22352941
+		b: 0.3372549
+		a: 1
+	}
+	dialog: {
+		r: 1
+		g: 1
+		b: 1
+		a: 0.6
+	}
+	progress-bar: {
+		r: 0
+		g: 0.07094407
+		b: 1
+		a: 1
+	}
+	selection: {
+		r: 0
+		g: 0.72911096
+		b: 1
+		a: 1
+	}
+	bg: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0.9019608
+	}
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	clear: {
+		r: 1
+		g: 0
+		b: 0
+		a: 0
+	}
+	color: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
+	pressed: {
+		r: 0.2784314
+		g: 0
+		b: 0
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	checkbox-t: {
+		name: checkbox
+		color: check-box
+	}
+	checkbox-checked-t: {
+		name: checkbox-checked
+		color: check-box
+	}
+	radio-t: {
+		name: radio
+		color: check-box
+	}
+	radio-checked-t: {
+		name: radio-checked
+		color: check-box
+	}
+	radio-o: {
+		name: radio
+		color: checkbox-over
+	}
+	radio-checked-o: {
+		name: radio-checked
+		color: checkbox-over
+	}
+	checkbox-o: {
+		name: checkbox
+		color: checkbox-over
+	}
+	checkbox-checked-o: {
+		name: checkbox-checked
+		color: checkbox-over
+	}
+	checkbox-checked-d: {
+		name: checkbox-checked
+		color: checkbox-disabled
+	}
+	checkbox-d: {
+		name: checkbox
+		color: checkbox-disabled
+	}
+	radio-d: {
+		name: radio
+		color: checkbox-disabled
+	}
+	radio-checked-d: {
+		name: radio-checked
+		color: checkbox-disabled
+	}
+	text-field-selection: {
+		name: white
+		color: checkbox-over
+	}
+	checkbox-alt-d: {
+		name: checkbox-alt
+		color: checkbox-disabled
+	}
+	checkbox-alt-o: {
+		name: checkbox-alt
+		color: checkbox-over
+	}
+	checkbox-alt-t: {
+		name: checkbox-alt
+		color: check-box
+	}
+	slider-horizontal-p: {
+		name: slider-horizontal
+		color: progress-bar
+	}
+	slider-vertical-p: {
+		name: slider-vertical
+		color: progress-bar
+	}
+	selection: {
+		name: white
+		color: selection
+	}
+	black: {
+		name: white
+		color: black
+	}
+	dialog: {
+		name: white
+		color: dialog
+	}
+	button-c: {
+		name: button
+		color: color
+	}
+	button-pressed-c: {
+		name: button-pressed
+		color: color
+	}
+	button-over-c: {
+		name: button-over
+		color: color
+	}
+	title-bg-c: {
+		name: title-bg
+		color: color
+	}
+	checkbox-on-c: {
+		name: checkbox-on
+		color: color
+	}
+	checkbox-c: {
+		name: checkbox
+		color: color
+	}
+	close-button-c: {
+		name: close-button
+		color: color
+	}
+	checkbox-on-p: {
+		name: checkbox-on
+		color: pressed
+	}
+	radio-c: {
+		name: radio
+		color: color
+	}
+	radio-on-p: {
+		name: radio-on
+		color: pressed
+	}
+	radio-on-c: {
+		name: radio-on
+		color: color
+	}
+	list-c: {
+		name: list
+		color: color
+	}
+	color: {
+		name: white
+		color: color
+	}
+	progress-bar-c: {
+		name: progress-bar
+		color: color
+	}
+	clear: {
+		name: white
+		color: clear
+	}
+	scrollpane-knob-c: {
+		name: scrollpane-knob
+		color: color
+	}
+	select-box-c: {
+		name: select-box
+		color: color
+	}
+	select-box-over-c: {
+		name: select-box-over
+		color: color
+	}
+	select-box-pressed-c: {
+		name: select-box-pressed
+		color: color
+	}
+	slider-knob-horizontal-c: {
+		name: slider-knob-horizontal
+		color: color
+	}
+	slider-knob-vertical-c: {
+		name: slider-knob-vertical
+		color: color
+	}
+	splitpane-vertical-c: {
+		name: splitpane-vertical
+		color: color
+	}
+	splitpane-horizontal-c: {
+		name: splitpane-horizontal
+		color: color
+	}
+	textfield-c: {
+		name: textfield
+		color: color
+	}
+	pressed: {
+		name: white
+		color: pressed
+	}
+	tooltip-c: {
+		name: tooltip
+		color: color
+	}
+	touchpad-c: {
+		name: touchpad
+		color: color
+	}
+	touchpad-knob-c: {
+		name: touchpad-knob
+		color: color
+	}
+	tree-plus-c: {
+		name: tree-plus
+		color: color
+	}
+	tree-minus-c: {
+		name: tree-minus
+		color: color
+	}
+	window-bg: {
+		name: window
+		color: bg
+	}
+	menu-bg-c: {
+		name: menu-bg
+		color: color
+	}
+	close-button-pressed-c: {
+		name: close-button-pressed
+		color: color
+	}
+	close-button-icon-c: {
+		name: close-button-icon
+		color: color
+	}
+	close-button-icon-b: {
+		name: close-button-icon
+		color: black
+	}
+	home-c: {
+		name: home
+		color: color
+	}
+	home-selected-c: {
+		name: home-selected
+		color: color
+	}
+	home-p: {
+		name: home
+		color: pressed
+	}
+	settings-c: {
+		name: settings
+		color: color
+	}
+	settings-p: {
+		name: settings
+		color: pressed
+	}
+	settings-selected-c: {
+		name: settings-selected
+		color: color
+	}
+	info-c: {
+		name: info
+		color: color
+	}
+	info-p: {
+		name: info
+		color: pressed
+	}
+	info-selected-c: {
+		name: info-selected
+		color: color
+	}
+	button-new-c: {
+		name: button-new
+		color: color
+	}
+	button-new-pressed-c: {
+		name: button-new-pressed
+		color: color
+	}
+	button-new-icon-c: {
+		name: button-new-icon
+		color: color
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button-c
+		down: button-pressed-c
+		over: button-over-c
+	}
+	close: {
+		up: button-close
+		down: button-close-pressed
+		over: button-close-over
+	}
+	switch: {
+		up: switch-off
+		over: switch-off-over
+		disabled: switch-off-disabled
+		checked: switch-on
+		checkedOver: switch-on-over
+	}
+	big: {
+		up: button
+		down: button-pressed
+		over: button-over
+		disabled: button-disabled
+	}
+	plus: {
+		up: button-plus
+		down: button-plus-pressed
+		over: button-plus-over
+		disabled: button-plus-disabled
+	}
+	minus: {
+		up: button-minus
+		down: button-minus-pressed
+		over: button-minus-over
+		disabled: button-minus-disabled
+	}
+	home: {
+		up: home-c
+		down: home-p
+		checked: home-selected-c
+	}
+	settings: {
+		up: settings-c
+		down: settings-p
+		checked: settings-selected-c
+	}
+	info: {
+		up: info-c
+		down: info-p
+		checked: info-selected-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkbox-on-c
+		checkboxOff: checkbox-c
+		font: font
+		fontColor: selection
+		downFontColor: pressed
+	}
+	radio: {
+		checkboxOn: radio-on-c
+		checkboxOff: radio-c
+		font: font
+		fontColor: color
+		downFontColor: pressed
+	}
+	alt: {
+		checkboxOn: checkbox-alt-t
+		checkboxOff: checkbox-t
+		checkboxOnDisabled: checkbox-checked-d
+		checkboxOffDisabled: checkbox-d
+		font: small
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+	}
+	switch: {
+		checkboxOn: switch-on
+		checkboxOff: switch-off
+		checkboxOnDisabled: switch-on-disabled
+		checkboxOffDisabled: switch-off-disabled
+		font: small
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: button-c
+		down: button-pressed-c
+		over: button-over-c
+	}
+	settings-icon: {
+		imageUp: settings-icon-up
+		imageDown: settings-icon-down
+	}
+	close: {
+		imageUp: close-button-icon-b
+		imageDown: close-button-icon
+		imageOver: close-button-icon
+		up: close-button-c
+		down: close-button-pressed-c
+	}
+	new: {
+		imageUp: button-new-icon
+		imageDown: button-new-icon-c
+		up: button-new-c
+		down: button-new-pressed-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: font
+		fontColor: font-over
+		downFontColor: font-over
+		overFontColor: font-over
+		up: button-emphasis
+		down: button-emphasis
+		over: button-emphasis
+	}
+	checkbox: {
+		imageUp: checkbox-c
+		imageDown: checkbox-on-p
+		imageChecked: checkbox-on-c
+		font: font
+		fontColor: color
+		downFontColor: pressed
+	}
+	radio: {
+		imageUp: radio-c
+		imageDown: radio-on-p
+		imageChecked: radio-on-c
+		font: font
+		fontColor: color
+		downFontColor: pressed
+	}
+	checkbox-alt: {
+		imageUp: checkbox-t
+		imageDown: checkbox-o
+		imageOver: checkbox-o
+		imageDisabled: checkbox-d
+		imageChecked: checkbox-alt-t
+		imageCheckedOver: checkbox-alt-o
+		font: small
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+	}
+	switch: {
+		imageUp: switch-off
+		imageDown: switch-on
+		imageOver: switch-off-over
+		imageDisabled: switch-off-disabled
+		imageChecked: switch-on
+		imageCheckedOver: switch-on-over
+		font: small
+	}
+	big: {
+		font: font
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button
+		down: button-pressed
+		over: button-over
+		disabled: button-icon-disabled
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: font
+		fontColor: font-over
+	}
+	white: {
+		font: font
+		fontColor: font-over
+	}
+	small: {
+		font: small
+		fontColor: font
+	}
+	small-white: {
+		font: small
+		fontColor: font-over
+	}
+	title: {
+		font: title
+		fontColor: color
+		background: title-bg-c
+	}
+	title-white: {
+		font: title
+		fontColor: font-over
+	}
+	medium: {
+		font: medium
+		fontColor: font
+	}
+	medium-white: {
+		font: medium
+		fontColor: font-over
+	}
+	button: {
+		font: button
+		fontColor: white
+	}
+	dark: {
+		font: font
+		fontColor: button
+	}
+	sub-title: {
+		font: sub-title
+		fontColor: color
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: font
+		fontColorSelected: font-over
+		fontColorUnselected: dialog
+		selection: file-menu-list-button-over
+		background: file-menu-list-button-over
+	}
+	bg: {
+		font: small
+		fontColorSelected: font-over
+		fontColorUnselected: font-over
+		selection: list-selection
+		background: list
+	}
+	menu: {
+		font: font
+		fontColorSelected: white
+		fontColorUnselected: color
+		selection: color
+		background: menu-bg-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: clear
+		knobBefore: progress-bar-c
+	}
+	default-vertical: {
+		background: clear
+		knobBefore: progress-bar-c
+	}
+	fancy: {
+		background: progress-bar
+		knobBefore: progress-bar-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: bg
+		corner: scrollpane-knob-c
+		hScroll: scroll-bar-horizontal
+		hScrollKnob: scrollpane-knob
+		vScroll: scroll-bar-vertical
+		vScrollKnob: scrollpane-knob
+	}
+	no-bg: {
+		hScroll: scroll-bar-back-horizontal
+		hScrollKnob: scroll-bar-horizontal
+		vScroll: scroll-bar-back-vertical
+		vScrollKnob: scroll-bar-vertical
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: font
+		fontColor: font-over
+		background: button-emphasis
+		scrollStyle: default
+		listStyle: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: progress-bar-c
+		knob: slider-knob-horizontal-c
+	}
+	default-vertical: {
+		background: progress-bar-c
+		knob: slider-knob-vertical-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-horizontal: {
+		handle: splitpane-horizontal-c
+	}
+	default-vertical: {
+		handle: splitpane-vertical-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: font
+		fontColor: font-over
+		downFontColor: white
+		overFontColor: white
+		up: button-emphasis
+		over: button-emphasis-color-over
+		disabled: button-emphasis-color-disabled
+	}
+	number: {
+		font: small
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button-number
+		down: button-number-pressed
+		over: button-number-over
+		disabled: button-number-disabled
+	}
+	small: {
+		font: small
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button-small
+		down: button-small-pressed
+		over: button-small-over
+		disabled: button-small-disabled
+	}
+	menu-button: {
+		font: font
+		fontColor: font
+		overFontColor: font-over
+		up: file-menu-button
+		down: file-menu-button-pressed
+		over: file-menu-button-over
+	}
+	menu-list-button: {
+		font: font
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: file-menu-button
+		down: file-menu-button-pressed
+		over: file-menu-button-over
+	}
+	emphasis: {
+		font: font
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button-emphasis
+		down: button-emphasis-pressed
+		over: button-emphasis-over
+		disabled: button-emphasis-disabled
+	}
+	emphasis-colored: {
+		font: font
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button-emphasis-color
+		down: button-emphasis-color-pressed
+		over: button-emphasis-color-over
+		disabled: button-emphasis-color-disabled
+	}
+	big: {
+		font: font
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button
+		down: button-pressed
+		over: button-over
+		disabled: button-disabled
+	}
+	small-toggle-green: {
+		font: small
+		fontColor: font
+		overFontColor: font-over
+		disabledFontColor: font-disabled
+		up: button-small
+		down: button-small-pressed
+		over: button-small-over
+		disabled: button-small-disabled
+		checked: button-small-checked
+		checkedOver: button-small-checked-over
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: font
+		fontColor: color
+		background: textfield-c
+		cursor: color
+		selection: pressed
+	}
+	spinner: {
+		font: small
+		fontColor: font-text-field
+		background: text-field-spinner
+		cursor: black
+		selection: text-field-selection
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+		background: tooltip-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+	default: {
+		background: touchpad-c
+		knob: touchpad-knob-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+	default: {
+		plus: tree-plus-c
+		minus: tree-minus-c
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: BG_MainMenu
+		titleFont: title
+		titleFontColor: selection
+	}
+	tool: {
+		background: window-tool
+		titleFont: small
+		titleFontColor: font-over
+	}
+	dialog: {
+		background: window
+		titleFont: font
+		titleFontColor: button
+		stageBackground: dialog
+	}
+}
+}

@@ -2,7 +2,6 @@ package com.projectoop.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -16,14 +15,14 @@ import static com.projectoop.utils.Constants.*;
 public class Player extends Characters {
 
     private enum PlayerState {
-        IDLE, RUNNING, JUMPING, FALLING, ATTACKING, DYING
+        IDLE, RUNNING, JUMPING, FALLING, ATTACKING1, ATTACKING2, ATTACKING3, DYING
     }
 
     private final Vector2 position;
     private final float speed;
     private final float jumpForce;
-    private final float frameWidth = 16f / PPM;
-    private final float frameHeight = 16f / PPM;
+    private final float frameWidth = 64f / PPM;
+    private final float frameHeight = 64f / PPM;
     private boolean facingRight = true;
 
     private PlayerState currentState;
@@ -41,14 +40,13 @@ public class Player extends Characters {
     private final float deathDuration = 1.0f;
 
     private boolean levelCompleted;
-    private Vector2 levelEndPoint;
 
     private float maxHp = 100; // Máu tối đa
     private float currentHp; // Máu hiện tại
-
-    // **Thêm texture cho thanh máu**
-    private Texture healthBarBg;
-    private Texture healthBarFg;
+//
+//    // **Thêm texture cho thanh máu**
+//    private Texture healthBarBg;
+//    private Texture healthBarFg;
 
     public Player(World world, Vector2 startPosition, float speed, float jumpForce) {
         this.world = world;
@@ -62,13 +60,11 @@ public class Player extends Characters {
         this.currentState = PlayerState.IDLE;
         this.previousState = PlayerState.IDLE;
 
-        this.levelEndPoint = null;
-
         this.currentHp = maxHp; // Khởi tạo máu đầy đủ
 
         // **Khởi tạo texture cho thanh máu**
-        healthBarBg = new Texture("HealthBar/bg.png");
-        healthBarFg = new Texture("HealthBar/green.png");
+//        healthBarBg = new Texture("HealthBar/bg.png");
+//        healthBarFg = new Texture("HealthBar/green.png");
 
         createBody();
     }
@@ -81,7 +77,7 @@ public class Player extends Characters {
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(frameWidth / 2, frameHeight / 2);
+        shape.setAsBox(frameWidth / 16 , frameHeight / 16);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -97,11 +93,12 @@ public class Player extends Characters {
 
     @Override
     public void onInit() {
-        addAnimation(ANIM_RUN, loadAnimation("assets/Ninja/Run/Run", 10, 0.1f));
-        addAnimation(ANIM_IDLE, loadAnimation("assets/Ninja/Idle/Idle", 10, 0.1f));
-        addAnimation(ANIM_JUMP, loadAnimation("assets/Ninja/Jump/Jump", 6, 0.1f));
-        addAnimation(ANIM_FALL, loadAnimation("assets/Ninja/Fall/Fall", 4, 0.1f));
-        addAnimation(ANIM_DEATH, loadAnimation("assets/Ninja/Dead/Dead", 10, 0.1f));
+        addAnimation(ANIM_ATTACK1,loadAnimation("assets/Animation/KnightAsset/Attack01/Attack01",6,0.1f));
+        addAnimation(ANIM_RUN, loadAnimation("assets/Animation/KnightAsset/Run/Run", 8, 0.1f));
+        addAnimation(ANIM_IDLE, loadAnimation("assets/Animation/KnightAsset/Idle/Idle", 6, 0.1f));
+        addAnimation(ANIM_JUMP, loadAnimation("assets/Animation/KnightAsset/Idle/Idle", 3, 0.1f));
+        addAnimation(ANIM_FALL, loadAnimation("assets/Animation/KnightAsset/Idle/Idle", 4, 0.1f));
+        addAnimation(ANIM_DEATH, loadAnimation("assets/Animation/KnightAsset/Die/Die", 4, 0.1f));
         changeAnim(ANIM_IDLE, true);
     }
 
@@ -154,18 +151,17 @@ public class Player extends Characters {
             previousState = currentState;
         }
 
-        checkLevelCompletion();
     }
 
     @Override
     public void dispose() {
         // Giải phóng tài nguyên liên quan
-        if (healthBarBg != null) {
-            healthBarBg.dispose();
-        }
-        if (healthBarFg != null) {
-            healthBarFg.dispose();
-        }
+//        if (healthBarBg != null) {
+//            healthBarBg.dispose();
+//        }
+//        if (healthBarFg != null) {
+//            healthBarFg.dispose();
+//        }
 
         if (body != null && world != null) {
             world.destroyBody(body); // Hủy body khỏi world
@@ -173,13 +169,13 @@ public class Player extends Characters {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             body.setLinearVelocity(new Vector2(speed, body.getLinearVelocity().y));
             facingRight = true;
             if (currentState != PlayerState.JUMPING && currentState != PlayerState.FALLING) {
                 currentState = PlayerState.RUNNING;
             }
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             body.setLinearVelocity(new Vector2(-speed, body.getLinearVelocity().y));
             facingRight = false;
             if (currentState != PlayerState.JUMPING && currentState != PlayerState.FALLING) {
@@ -190,9 +186,18 @@ public class Player extends Characters {
             currentState = PlayerState.IDLE;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) && isOnGround) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && isOnGround) {
             body.applyLinearImpulse(new Vector2(0, jumpForce), body.getWorldCenter(), true);
             currentState = PlayerState.JUMPING;
+        }
+
+        // Tấn công
+        if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+            attack1();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.K)) {
+            attack2();
+        } else if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+            attack3();
         }
     }
 
@@ -215,10 +220,42 @@ public class Player extends Characters {
             case FALLING:
                 changeAnim(ANIM_FALL, false);
                 break;
+            case ATTACKING1:
+                changeAnim(ANIM_ATTACK1, false);
+                break;
+            case ATTACKING2:
+                changeAnim(ANIM_ATTACK2, false);
+                break;
+            case ATTACKING3:
+                changeAnim(ANIM_ATTACK3, false);
+                break;
             case IDLE:
             default:
                 changeAnim(ANIM_IDLE, true);
                 break;
+        }
+    }
+    // Các phương thức tấn công
+    private void attack1() {
+        if (currentState != PlayerState.ATTACKING1) {
+            currentState = PlayerState.ATTACKING1;
+            // Thực hiện logic tấn công 1
+        }
+    }
+
+    private void attack2() {
+        if (currentState != PlayerState.ATTACKING2) {
+            currentState = PlayerState.ATTACKING2;
+            // Thực hiện logic tấn công 2
+        }
+    }
+
+    private void attack3() {
+        if (currentState != PlayerState.ATTACKING3) {
+            currentState = PlayerState.ATTACKING3;
+            // Thực hiện logic tấn công 3 (ví dụ: bắn kunai)
+            Kunai kunai = new Kunai(world, body.getPosition(), 5f/PPM, 10);
+            kunaiArray.add(kunai);
         }
     }
 
@@ -234,7 +271,7 @@ public class Player extends Characters {
         }
 
         // Vẽ thanh máu
-        drawHealthBar(batch);
+        //drawHealthBar(batch);
 
         // Vẽ Kunai
         for (Kunai kunai : kunaiArray) {
@@ -242,33 +279,8 @@ public class Player extends Characters {
         }
     }
 
-    private void drawHealthBar(Batch batch) {
-        float healthPercentage = currentHp / maxHp;
-        float barWidth = 50 / PPM;
-        float barHeight = 8 / PPM;
-
-        float barX = body.getPosition().x - barWidth / 2;
-        float barY = body.getPosition().y + frameHeight;
-
-        batch.draw(healthBarBg, barX, barY, barWidth, barHeight);
-        batch.draw(healthBarFg, barX, barY, barWidth * healthPercentage, barHeight);
-    }
-
-    private void checkLevelCompletion() {
-        if (levelEndPoint != null) {
-            float distanceToEnd = position.dst(levelEndPoint);
-            if (distanceToEnd < 0.5f) {
-                levelCompleted = true;
-            }
-        }
-    }
-
     public boolean hasCompletedLevel() {
         return levelCompleted;
-    }
-
-    public void setLevelEndPoint(Vector2 endPoint) {
-        this.levelEndPoint = endPoint;
     }
 
     public void resetLevelCompletion() {

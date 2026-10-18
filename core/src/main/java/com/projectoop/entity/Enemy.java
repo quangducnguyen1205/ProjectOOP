@@ -179,7 +179,7 @@ public abstract class Enemy extends Characters {
 
     public void attack(){
         if (isPlayerAttacked() && player != null) {
-            changeAnim(Constants.ANIM_ATTACK, false);
+            changeAnim(Constants.ANIM_ATTACK1, false);
             player.takeDamage(10); // Giảm máu của Player
             System.out.println("Enemy attacks Player!");
         }

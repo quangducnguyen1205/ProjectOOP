@@ -2,6 +2,7 @@ package com.projectoop.manager;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.projectoop.game.PlayerData;
 import com.projectoop.ui.MainMenuCanvas;
@@ -11,6 +12,7 @@ public class GameManager extends Singleton<GameManager> {
 
     private Game game;
     private PlayerData playerData;
+    private ScreenManager screenManager;  // Khai báo ScreenManager
 
     public void initialize(Game game) {
         this.game = game;
@@ -19,20 +21,31 @@ public class GameManager extends Singleton<GameManager> {
         // Khởi tạo và bắt đầu LevelManager
         LevelManager.getInstance(LevelManager.class).start();
 
+        // Tạo một ScreenManager mới
+        screenManager = new ScreenManager(game);
+
         // Thiết lập MainMenu làm màn hình đầu tiên
         UIManager.getInstance(UIManager.class).openUI(MainMenuCanvas.class);
     }
 
-    public void setScreen(com.badlogic.gdx.Screen screen) {
+    public void setScreen(Screen screen) {
         if (game != null) {
-            if (game.getScreen() != null) {
-                game.getScreen().dispose(); // Dọn dẹp màn hình cũ
-            }
-            game.setScreen(screen); // Thiết lập màn hình mới
+            screenManager.setScreen(screen);  // Dùng ScreenManager để chuyển màn
         } else {
             throw new IllegalStateException("Game instance is not initialized. Call initialize() first.");
         }
     }
+
+//    public void setScreen(com.badlogic.gdx.Screen screen) {
+//        if (game != null) {
+//            if (game.getScreen() != null) {
+//                game.getScreen().dispose(); // Dọn dẹp màn hình cũ
+//            }
+//            game.setScreen(screen); // Thiết lập màn hình mới
+//        } else {
+//            throw new IllegalStateException("Game instance is not initialized. Call initialize() first.");
+//        }
+//    }
 
     public void update() {
         Gdx.gl.glClearColor(0, 0, 0, 1); // Xóa màn hình với màu nền

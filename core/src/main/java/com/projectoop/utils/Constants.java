@@ -18,12 +18,15 @@ public class Constants {
     public static final float VIRTUAL_HEIGHT = 300f;  // Height of the game screen
 
     // Animation constants
-    public static final String ANIM_ATTACK = "attack";
+    public static final String ANIM_ATTACK1 = "attack1";
+    public static final String ANIM_ATTACK2 = "attack2";
+    public static final String ANIM_ATTACK3 = "attack3";
     public static final String ANIM_RUN = "run";
     public static final String ANIM_IDLE = "idle";
     public static final String ANIM_DEATH = "death";
     public static final String ANIM_JUMP = "jump";
     public static final String ANIM_FALL = "fall";
+    public static final String ANIM_HURT = "hurt";
     public static final String ANIM_DANCE = "dance";
     public static final String ANIM_GLIDE = "glide";
     public static final String ANIM_CLIMB = "climb";

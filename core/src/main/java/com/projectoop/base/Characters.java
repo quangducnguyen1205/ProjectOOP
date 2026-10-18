@@ -126,8 +126,8 @@ public abstract class Characters extends Sprite {
     // Thêm hàm loadAnimation
     protected Animation<TextureRegion> loadAnimation(String folderPath, int frameCount, float frameDuration) {
         Array<TextureRegion> frames = new Array<>();
-        for (int i = 0; i < frameCount; i++) {
-            String fileName = folderPath + "__00" + i + ".png";
+        for (int i = 1; i <= frameCount; i++) {
+            String fileName = folderPath + "_" + i + ".png";
             frames.add(new TextureRegion(new Texture(Gdx.files.internal(fileName))));
         }
         return new Animation<>(frameDuration, frames, Animation.PlayMode.LOOP);

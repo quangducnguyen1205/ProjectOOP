@@ -25,10 +25,10 @@ public class Orc extends Enemy {
     public void onInit() {
         super.onInit();
         // Thêm animation riêng cho Orc
-        addAnimation(ANIM_RUN, loadAnimation("assets/OrcAsset/Run/Run", 8, 0.1f));
-        addAnimation(ANIM_DEATH, loadAnimation("assets/OrcAsset/Dead/Dead", 4, 0.1f));
-        addAnimation(ANIM_ATTACK, loadAnimation("assets/OrcAsset/Attack/Attack",6, 0.1f));
-        addAnimation(ANIM_IDLE, loadAnimation("assets/OrcAsset/Run/Run", 4, 0.1f));
+        addAnimation(ANIM_RUN, loadAnimation("assets/Animation/E_Orc/Walk/Walk", 8, 0.1f));
+        addAnimation(ANIM_DEATH, loadAnimation("assets/Animation/E_Orc/Die/Die", 4, 0.1f));
+        addAnimation(ANIM_ATTACK1, loadAnimation("assets/Animation/E_Orc/Attack/Attack",6, 0.1f));
+        addAnimation(ANIM_IDLE, loadAnimation("assets/Animation/E_Orc/Walk/Walk", 4, 0.1f));
     }
     @Override
     public void defineBody() {

@@ -8,7 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.projectoop.game.PlayScreen;
+import com.projectoop.game.FirstScreen;
+import com.projectoop.game.FourthScreen;
+import com.projectoop.game.SecondScreen;
+import com.projectoop.game.ThirdScreen;
 import com.projectoop.manager.GameManager;
 import com.projectoop.ui.MainMenuCanvas;
 import com.projectoop.ui.UICanvas;
@@ -51,7 +54,17 @@ public class StoryCanvas extends UICanvas {
 
                 closeDirectly();
                 GameManager.getInstance(GameManager.class).getPlayerData().setCurrentLevel(levelName);
-                GameManager.getInstance(GameManager.class).setScreen(new PlayScreen());
+
+                // Chuyển đến màn chơi tương ứng dựa trên levelName
+                if (levelName.equals("level1")) {
+                    GameManager.getInstance(GameManager.class).setScreen(new FirstScreen()); // Chuyển đến FirstScreen
+                } else if (levelName.equals("level2")) {
+                    GameManager.getInstance(GameManager.class).setScreen(new SecondScreen()); // Chuyển đến SecondScreen
+                } else if (levelName.equals("level3")) {
+                    GameManager.getInstance(GameManager.class).setScreen(new ThirdScreen()); // Chuyển đến ThirdScreen (nếu có)
+                } else if (levelName.equals("level4")) {
+                    GameManager.getInstance(GameManager.class).setScreen(new FourthScreen()); // Chuyển đến FourthScreen (nếu có)
+                }
             }
         });
 

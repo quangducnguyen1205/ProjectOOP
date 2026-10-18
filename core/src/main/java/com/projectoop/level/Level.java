@@ -19,9 +19,8 @@ public abstract class Level {
     private List<Enemy> enemies;// Danh sách Enemy
 
     // Constructor chung cho Level
-    public Level(String levelName, World world) {
+    public Level(String levelName) {
         this.levelName = levelName;
-        this.world = world;
         this.mapBuilder = null; // Khởi tạo MapBuilder sau khi có thông tin
         this.enemies = new ArrayList<>();
     }
@@ -38,9 +37,6 @@ public abstract class Level {
             enemy.dispose(); // Giải phóng tài nguyên của Enemy
         }
         enemies.clear();
-//        if (player != null) {
-//            player.dispose();
-//        }
     }
 
     // Trả về player cho LevelManager quản lý
@@ -68,6 +64,12 @@ public abstract class Level {
         enemies.addAll(mapBuilder.getEnemies());
 
         System.out.println("Static bodies created for all layers in the map.");
+    }
+    public void setWorld(World world) {
+        this.world = world;
+    }
+    public World getWorld() {
+        return world;
     }
 
     public List<Enemy> getEnemies() {

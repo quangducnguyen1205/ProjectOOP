@@ -19,20 +19,24 @@ public class AttackState implements IState<Enemy> {
             // Đổi hướng của Enemy về phía Player
             boolean isPlayerToRight = enemy.getPlayer().getPosition().x > enemy.getPosition().x;
             enemy.changeDirection(isPlayerToRight);
-
+            enemy.move();
             // Dừng di chuyển và thực hiện tấn công
-            enemy.stopMoving();
-            enemy.attack();
+            if (enemy.isPlayerAttacked()) {
+                enemy.attack();
+            }
         }
         timer = 0; // Đặt lại bộ đếm thời gian
     }
 
     @Override
     public void onExecute(Enemy enemy) {
-        timer += enemy.getDeltaTime();
-
-        // Quay lại PatrolState sau 1.5 giây
-        if (timer > 1.5f) {
+//        timer += enemy.getDeltaTime();
+//
+//        // Quay lại PatrolState sau 1.5 giây
+//        if (timer > 1.5f) {
+//            enemy.changeState(PatrolState.getInstance());
+//        }
+        if (!enemy.isPlayerAttacked()){
             enemy.changeState(PatrolState.getInstance());
         }
     }

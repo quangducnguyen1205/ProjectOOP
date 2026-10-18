@@ -6,8 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.projectoop.game.PlayScreen;
+import com.projectoop.game.FirstScreen;
 import com.projectoop.game.PlayerData;
+import com.projectoop.game.SecondScreen;
 import com.projectoop.manager.GameManager;
 import com.projectoop.ui.description.DescriptionPage1;
 import com.projectoop.ui.description.DescriptionPage2;
@@ -126,7 +127,15 @@ public class MainMenuCanvas extends UICanvas {
                     // Nếu màn đã hoàn thành, vào thẳng màn chơi
                     closeDirectly();
                     playerData.setCurrentLevel(levelName);
-                    GameManager.getInstance(GameManager.class).setScreen(new PlayScreen());
+                    // Chuyển đến màn tương ứng
+                    if (levelName.equals("level1")) {
+                        GameManager.getInstance(GameManager.class).setScreen(new FirstScreen());
+                    } else if (levelName.equals("level2")) {
+                        GameManager.getInstance(GameManager.class).setScreen(new SecondScreen());
+                    }
+                    // Thêm các màn khác nếu cần
+                    // else if (levelName.equals("level3")) { ... }
+                    // else if (levelName.equals("level4")) { ... }
                 }
             }
         });
